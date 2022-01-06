@@ -60,9 +60,8 @@ export default function Editor(props) {
               }}
             >
               <div className="reminder__btn" title="Reminder">
-                <a>
-                  <img src={reminder} alt=".." />
-                </a>
+                <img src={reminder} alt=".." />
+
                 <div className={`reminder ${reminderClass}`}>
                   <p>Reminder:</p>
 
@@ -89,39 +88,25 @@ export default function Editor(props) {
               </div>
             </li>
             <li className="editorIcon__item">
-              <a>
-                <img src={colab} alt=".." />
-              </a>
+              <img src={colab} alt=".." />
             </li>
             <li className="editorIcon__item">
-              <a>
-                <img src={background} alt=".." />
-              </a>
+              <img src={background} alt=".." />
             </li>
             <li className="editorIcon__item">
-              <a>
-                <img src={image} alt=".." />
-              </a>
+              <img src={image} alt=".." />
             </li>
             <li className="editorIcon__item">
-              <a>
-                <img src={archive} alt=".." />
-              </a>
+              <img src={archive} alt=".." />
             </li>
             <li className="editorIcon__item">
-              <a>
-                <img src={more} alt=".." />
-              </a>
+              <img src={more} alt=".." />
             </li>
             <li className="editorIcon__item">
-              <a>
-                <img src={undo} alt=".." />
-              </a>
+              <img src={undo} alt=".." />
             </li>
             <li className="editorIcon__item ">
-              <a>
-                <img src={undo} alt=".." className="redo" />
-              </a>
+              <img src={undo} alt=".." className="redo" />
             </li>
           </ul>
         </div>
@@ -131,9 +116,11 @@ export default function Editor(props) {
             alert("Add note success");
             noteItem.title = title.current.value;
             noteItem.text = text.current.value;
+            console.log(timeLeft);
             dispatch({
               type: ADDNOTE,
               noteItem,
+              timeLeft,
             });
             title.current.value = "";
             text.current.value = "";

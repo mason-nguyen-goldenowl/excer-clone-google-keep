@@ -12,12 +12,10 @@ import select from "../../asset/editorIcon/select.svg";
 
 import time from "../../asset/editorIcon/time.svg";
 import "./NoteCard.scss";
-import Modal from "../modal/Modal";
-import Editor from "../editor/Editor";
+
 export default function NoteCard(props) {
   const [remindDate, setRemindDate] = useState(new Date());
   const [isReminderActive, setReminderActive] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
   let reminderClass = "";
   const note = props.content;
   note.setAlert();
@@ -36,15 +34,14 @@ export default function NoteCard(props) {
       <div className="noteCard__feature">
         <ul className="editorIcon__list">
           <li
-            className="editorIcon__item "
+            className="noteCardIcon "
             onClick={() => {
               setReminderActive(!isReminderActive);
             }}
           >
             <div className="reminder__btn" title="Reminder">
-              <a>
-                <img src={reminder} alt=".." />
-              </a>
+              <img src={reminder} alt=".." />
+
               <div className={`reminder ${reminderClass}`}>
                 <p>Reminder:</p>
 
@@ -70,30 +67,20 @@ export default function NoteCard(props) {
               </div>
             </div>
           </li>
-          <li className="editorIcon__item">
-            <a>
-              <img src={colab} alt=".." />
-            </a>
+          <li className="noteCardIcon">
+            <img src={colab} alt=".." />
           </li>
-          <li className="editorIcon__item">
-            <a>
-              <img src={background} alt=".." />
-            </a>
+          <li className="noteCardIcon">
+            <img src={background} alt=".." />
           </li>
-          <li className="editorIcon__item">
-            <a>
-              <img src={image} alt=".." />
-            </a>
+          <li className="noteCardIcon">
+            <img src={image} alt=".." />
           </li>
-          <li className="editorIcon__item">
-            <a>
-              <img src={archive} alt=".." />
-            </a>
+          <li className="noteCardIcon">
+            <img src={archive} alt=".." />
           </li>
-          <li className="editorIcon__item">
-            <a>
-              <img src={more} alt=".." />
-            </a>
+          <li className="noteCardIcon">
+            <img src={more} alt=".." />
           </li>
         </ul>
       </div>
