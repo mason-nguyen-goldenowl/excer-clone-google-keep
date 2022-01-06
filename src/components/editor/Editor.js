@@ -15,7 +15,7 @@ import "./Editor.scss";
 import { useDispatch } from "react-redux";
 import { ADDNOTE } from "../../redux/type/NoteType";
 
-export default function Editor() {
+export default function Editor(props) {
   let noteItem = { title: "", text: "", setAlert: null };
   const dispatch = useDispatch();
   const [isReminderActive, setReminderActive] = useState(false);
@@ -59,7 +59,7 @@ export default function Editor() {
                 setReminderActive(!isReminderActive);
               }}
             >
-              <div className="reminder__btn">
+              <div className="reminder__btn" title="Reminder">
                 <a>
                   <img src={reminder} alt=".." />
                 </a>

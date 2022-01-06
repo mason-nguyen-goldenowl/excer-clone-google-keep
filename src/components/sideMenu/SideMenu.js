@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ADDACTIVECLASS } from "../../redux/type/MenuType";
+import EditLabels from "../editLabels/EditLabels";
+
+import Modal from "../modal/Modal";
 import "./SideMenu.scss";
 export default function SideMenu() {
   const dispatch = useDispatch();
@@ -9,7 +12,8 @@ export default function SideMenu() {
   );
 
   const [listClass, setListClass] = useState("");
-
+  const [modalOpen, setModalOpen] = useState(false);
+  console.log(modalOpen);
   const addActiveClass = (e) => {
     e.preventDefault();
     let idActive = e.target.id;
@@ -69,7 +73,15 @@ export default function SideMenu() {
             </div>
           </a>
         </li>
-        <li className="listItem__item " id="item3" onClick={addActiveClass}>
+        <li
+          className="listItem__item "
+          id="item3"
+          onClick={addActiveClass}
+          onClick={() => {
+            console.log(modalOpen);
+            setModalOpen(true);
+          }}
+        >
           <a href="#">
             <div className="item__content">
               <svg
@@ -115,6 +127,12 @@ export default function SideMenu() {
           </a>
         </li>
       </ul>
+      {modalOpen && (
+        <Modal
+          setOpenModal={setModalOpen}
+          children={<EditLabels setOpenModal={setModalOpen} />}
+        />
+      )}
     </div>
   );
 }
