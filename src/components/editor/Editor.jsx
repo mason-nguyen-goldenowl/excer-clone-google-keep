@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import { ADDNOTE } from "../../redux/type/NoteType";
 
 export default function Editor(props) {
-  let noteItem = { title: "", text: "", setAlert: null };
+  let noteItem = { title: "", text: "", setAlert: null, timeLeft: -1 };
   const dispatch = useDispatch();
   const [isReminderActive, setReminderActive] = useState(false);
   const [remindDate, setRemindDate] = useState(new Date());
@@ -24,10 +24,12 @@ export default function Editor(props) {
   const text = useRef("");
   let reminderClass = "";
   let timeLeft = remindDate - new Date();
+  noteItem.timeLeft = timeLeft;
   if (isReminderActive === true) {
     reminderClass = "active";
   }
   noteItem.remind = moment(remindDate).format();
+  noteItem.timeLeft = timeLeft;
   noteItem.setAlert = () => {
     setTimeout(() => {
       if (timeLeft > 0) {
@@ -116,11 +118,10 @@ export default function Editor(props) {
             alert("Add note success");
             noteItem.title = title.current.value;
             noteItem.text = text.current.value;
-            console.log(timeLeft);
+
             dispatch({
               type: ADDNOTE,
               noteItem,
-              timeLeft,
             });
             title.current.value = "";
             text.current.value = "";

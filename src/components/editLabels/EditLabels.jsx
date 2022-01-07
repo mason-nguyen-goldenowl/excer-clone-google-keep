@@ -9,7 +9,7 @@ import { ADDLABEL, UPDATELABEL } from "../../redux/type/NoteType";
 import "./EditLables.scss";
 export default function EditLabels(props) {
   const dispatch = useDispatch();
-  const { arrLabel } = useSelector((state) => state.NoteReducer);
+  const { arrLabel } = useSelector((state) => state.note);
   const [inputValue, setInputValue] = useState("");
   const [label, setLabel] = useState("");
   console.log(props);

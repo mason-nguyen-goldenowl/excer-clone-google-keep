@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import reminder from "../../asset/editorIcon/reminder.svg";
 import pin from "../../asset/editorIcon/pin.svg";
-import colab from "../../asset/editorIcon/colab.svg";
+import trash from "../../asset/editorIcon/trash.svg";
 import background from "../../asset/editorIcon/background.svg";
 import image from "../../asset/editorIcon/image.svg";
 import archive from "../../asset/editorIcon/archive.svg";
@@ -12,13 +13,35 @@ import select from "../../asset/editorIcon/select.svg";
 
 import time from "../../asset/editorIcon/time.svg";
 import "./NoteCard.scss";
+import { ARCHIVENOTE, DELETENOTE } from "../../redux/type/NoteType";
 
 export default function NoteCard(props) {
+  const dispatch = useDispatch();
   const [remindDate, setRemindDate] = useState(new Date());
   const [isReminderActive, setReminderActive] = useState(false);
   let reminderClass = "";
   const note = props.content;
-  note.setAlert();
+
+  const setAlert = () => {
+    if (note.timeLeft > 0) {
+      setTimeout(alert(note.title), note.timeLeft);
+      note.timeLeft = -1;
+    }
+  };
+  const archiveAction = () => {
+    dispatch({
+      type: ARCHIVENOTE,
+      noteArchive: note,
+    });
+  };
+
+  const deleteAction = () => {
+    dispatch({
+      type: DELETENOTE,
+      noteDelete: note,
+    });
+  };
+  setAlert();
   return (
     <div className="noteCard">
       <div className="noteCard__select">
@@ -67,8 +90,8 @@ export default function NoteCard(props) {
               </div>
             </div>
           </li>
-          <li className="noteCardIcon">
-            <img src={colab} alt=".." />
+          <li className="noteCardIcon" title="Delete" onClick={deleteAction}>
+            <img src={trash} alt=".." />
           </li>
           <li className="noteCardIcon">
             <img src={background} alt=".." />
@@ -76,7 +99,7 @@ export default function NoteCard(props) {
           <li className="noteCardIcon">
             <img src={image} alt=".." />
           </li>
-          <li className="noteCardIcon">
+          <li className="noteCardIcon" onClick={archiveAction}>
             <img src={archive} alt=".." />
           </li>
           <li className="noteCardIcon">

@@ -5,17 +5,19 @@ import storage from "redux-persist/lib/storage";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
 import { MenuReducer } from "./reducer/MenuReducer";
 import { NoteReducer } from "./reducer/NoteReducer";
-
-const rootReducer = combineReducers({
-  MenuReducer,
-  NoteReducer,
-});
 const persistConfig = {
   key: "root",
   storage: storage,
+  // blacklist: ["menu"],
   stateReconciler: autoMergeLevel2,
 };
+const rootReducer = combineReducers({
+  menu: MenuReducer,
+  note: NoteReducer,
+});
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-const pReducer = persistReducer(persistConfig, rootReducer);
-export const store = createStore(pReducer, applyMiddleware(thunk));
-export const persistor = persistStore(store);
+const store = createStore(persistedReducer, applyMiddleware(thunk));
+const persistor = persistStore(store);
+
+export { store, persistor };

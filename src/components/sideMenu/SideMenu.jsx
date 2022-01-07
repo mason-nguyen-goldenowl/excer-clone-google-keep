@@ -7,7 +7,7 @@ import EditLabels from "../editLabels/EditLabels";
 import Modal from "../modal/Modal";
 import "./SideMenu.scss";
 export default function SideMenu(props) {
-  const { isListActive } = useSelector((state) => state.MenuReducer);
+  const { isListActive } = useSelector((state) => state.menu);
 
   const [listClass, setListClass] = useState("");
   const [modalOpen, setModalOpen] = useState(false);

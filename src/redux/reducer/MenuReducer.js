@@ -1,9 +1,6 @@
 import { ADDACTIVECLASS, CHANGELISTCLASS } from "../type/MenuType";
 
 const stateDefaut = {
-  arrSideMenu: [],
-  menuTitle: "Keep",
-  idMenuItemActive: "item1",
   isListActive: true,
 };
 
