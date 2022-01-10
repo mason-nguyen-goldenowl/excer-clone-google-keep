@@ -14,7 +14,7 @@ const Notecardtrash = (props) => {
   const dispatch = useDispatch();
 
   const note = props.content;
-  console.log(note);
+
   const deleteForeverAction = () => {
     dispatch({
       type: DELETEFOREVER,
@@ -27,6 +27,16 @@ const Notecardtrash = (props) => {
       noteRestore: note,
     });
   };
+
+  const deleteAfter7Day = () => {
+    setTimeout(() => {
+      dispatch({
+        type: DELETEFOREVER,
+        noteDeleteForever: note,
+      });
+    }, 604800000);
+  };
+  deleteAfter7Day();
   return (
     <div className="noteCard">
       <div className="noteCard__select">

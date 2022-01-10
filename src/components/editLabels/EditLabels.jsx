@@ -12,9 +12,9 @@ export default function EditLabels(props) {
   const { arrLabel } = useSelector((state) => state.note);
   const [inputValue, setInputValue] = useState("");
   const [label, setLabel] = useState("");
-  console.log(props);
+
   let arrLabelUpdate = [];
-  console.log(arrLabel);
+
   const onLabelChange = (e) => {
     setLabel(e.target.value);
   };
@@ -84,7 +84,6 @@ export default function EditLabels(props) {
                 type: UPDATELABEL,
                 arrLabelUpdate,
               });
-              alert("Update Label susccessed");
             }}
           >
             Done

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import gridIcon from "../../asset/menuTopIcon/gridIcon.svg";
 import search from "../../asset/menuTopIcon/search.svg";
 import close from "../../asset/menuTopIcon/delete.svg";
@@ -8,13 +8,24 @@ import "./Menu.scss";
 
 import { useDispatch } from "react-redux";
 import { CHANGELISTCLASS } from "../../redux/type/MenuType";
+import { Link } from "react-router-dom";
+import { SEARCH } from "../../redux/type/NoteType";
 export default function Menu(props) {
   const dispatch = useDispatch();
+  const [searchInput, setSearchInput] = useState("");
+  const searchRef = useRef("");
   const logoURL =
     "https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png";
 
   const [isListActive, setIsListActive] = useState(false);
-
+  const handleChangeInput = () => {
+    setSearchInput(searchRef.current.value);
+    console.log(searchInput);
+    dispatch({
+      type: SEARCH,
+      searchInput,
+    });
+  };
   return (
     <div className="menu-wrapter">
       <div className="menu">
@@ -43,17 +54,21 @@ export default function Menu(props) {
             </div>
           </div>
           <div className="menu__search">
-            <div className="search__input">
+            <Link to="/search" className="search__input">
               <div className="search__wrap">
                 <div className="menu__btn">
                   <img src={search} alt="..." />
                 </div>
-                <input placeholder="Search" />
+                <input
+                  ref={searchRef}
+                  placeholder="Search"
+                  onChange={handleChangeInput}
+                />
                 <div className="menu__btn close">
                   <img src={close} alt="..." />
                 </div>
               </div>
-            </div>
+            </Link>
             <div className="settings">
               <div className="menu__btn">
                 <img src={refresh} alt=".." />

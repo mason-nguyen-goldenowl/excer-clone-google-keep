@@ -6,3 +6,4 @@ export const DELETENOTE = "DELETENOTE";
 export const EMPTYTRASH = "EMPTYTRASH";
 export const DELETEFOREVER = "DELETEFOREVER";
 export const RESTORE = "RESTORE";
+export const SEARCH = "SEARCH";

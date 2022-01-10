@@ -1,17 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
+import labelIcon from "../../asset/editorIcon/label.svg";
 import EditLabels from "../editLabels/EditLabels";
 
 import Modal from "../modal/Modal";
 import "./SideMenu.scss";
 export default function SideMenu(props) {
   const { isListActive } = useSelector((state) => state.menu);
+  const { arrLabel } = useSelector((state) => state.note);
 
   const [listClass, setListClass] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-
+  console.log(arrLabel);
+  const renderLabels = () => {
+    return arrLabel.map((label) => {
+      return (
+        <li className="listItem__item ">
+          <div className="item__content">
+            <img src={labelIcon} alt="..." />
+            <span>
+              <Link to="/">{label}</Link>
+            </span>
+          </div>
+        </li>
+      );
+    });
+  };
   useEffect(() => {
     if (isListActive) {
       setListClass("active");
@@ -56,6 +71,7 @@ export default function SideMenu(props) {
             </span>
           </div>
         </li>
+        {renderLabels()}
         <li
           className="listItem__item "
           id="item3"

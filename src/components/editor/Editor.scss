@@ -121,6 +121,11 @@
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.3s;
+  button {
+    border: none;
+    font-size: 16px;
+    background-color: transparent;
+  }
   &:hover {
     background-color: #5f63680a;
   }
