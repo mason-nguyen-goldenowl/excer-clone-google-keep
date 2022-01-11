@@ -18,16 +18,21 @@ import { ARCHIVENOTE, DELETENOTE } from "../../redux/type/NoteType";
 export default function NoteCard(props) {
   const dispatch = useDispatch();
   const [remindDate, setRemindDate] = useState(new Date());
-  const [isReminderActive, setReminderActive] = useState(false);
-  let reminderClass = "";
-  const note = props.content;
 
-  const setAlert = () => {
-    if (note.timeLeft > 0) {
-      setTimeout(alert(note.title), note.timeLeft);
-      note.timeLeft = -1;
-    }
-  };
+  let reminderClass = "";
+
+  const note = props.content;
+  let remindTime = new Date(note.remind).getTime();
+  let now = new Date().getTime();
+  let remainingTime = remindTime - now;
+
+  if (remainingTime > 0) {
+    setTimeout(() => {
+      alert(note.title);
+      remainingTime = -1;
+    }, remainingTime);
+  }
+
   const archiveAction = () => {
     dispatch({
       type: ARCHIVENOTE,
@@ -41,7 +46,7 @@ export default function NoteCard(props) {
       noteDelete: note,
     });
   };
-  setAlert();
+  // setAlert();
   return (
     <div className="noteCard">
       <div className="noteCard__select">
@@ -56,12 +61,7 @@ export default function NoteCard(props) {
       </div>
       <div className="noteCard__feature">
         <ul className="editorIcon__list">
-          <li
-            className="noteCardIcon "
-            onClick={() => {
-              setReminderActive(!isReminderActive);
-            }}
-          >
+          <li className="noteCardIcon ">
             <div className="reminder__btn" title="Reminder">
               <img src={reminder} alt=".." />
 
@@ -69,12 +69,7 @@ export default function NoteCard(props) {
                 <p>Reminder:</p>
 
                 <div className="reminder__items">
-                  <div
-                    className="reminder__item"
-                    onClick={() => {
-                      setReminderActive(true);
-                    }}
-                  >
+                  <div className="reminder__item">
                     <img src={time} alt="..." />
                     <span> Pick date & time </span>
                   </div>

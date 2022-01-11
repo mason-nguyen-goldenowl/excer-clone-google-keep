@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
+
 import Menu from "../../components/menu/Menu";
+
 import NoteCard from "../../components/noteCard/NoteCard";
 import NoteText from "../../components/noteText/NoteText";
 import SideMenu from "../../components/sideMenu/SideMenu";

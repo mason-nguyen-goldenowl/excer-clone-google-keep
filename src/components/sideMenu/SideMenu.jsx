@@ -12,7 +12,7 @@ export default function SideMenu(props) {
 
   const [listClass, setListClass] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-  console.log(arrLabel);
+
   const renderLabels = () => {
     return arrLabel.map((label) => {
       return (
@@ -76,7 +76,6 @@ export default function SideMenu(props) {
           className="listItem__item "
           id="item3"
           onClick={() => {
-            console.log(modalOpen);
             setModalOpen(true);
           }}
         >

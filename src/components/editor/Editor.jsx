@@ -14,47 +14,72 @@ import time from "../../asset/editorIcon/time.svg";
 import "./Editor.scss";
 import { useDispatch } from "react-redux";
 import { ADDNOTE } from "../../redux/type/NoteType";
+import useOnClickOutside from "../../hook/useClickOutside";
 
 export default function Editor(props) {
-  let noteItem = { title: "", text: "", setAlert: null, timeLeft: -1 };
   const dispatch = useDispatch();
   const [isReminderActive, setReminderActive] = useState(false);
+  const [title, setTitle] = useState("");
+  const [text, setText] = useState("");
   const [remindDate, setRemindDate] = useState(new Date());
-  const title = useRef("");
-  const text = useRef("");
+  const titleRef = useRef("");
+  const textRef = useRef("");
+  const editorRef = useRef("");
   let reminderClass = "";
-  let timeLeft = remindDate - new Date();
-  noteItem.timeLeft = timeLeft;
+  let noteItem = { title: "", text: "", setAlert: null, timeLeft: -1 };
+
   if (isReminderActive === true) {
     reminderClass = "active";
   }
-  noteItem.remind = moment(remindDate).format();
-  noteItem.timeLeft = timeLeft;
-  noteItem.setAlert = () => {
-    setTimeout(() => {
-      if (timeLeft > 0) {
-        alert(noteItem.title);
-        timeLeft = -1;
-      }
-    }, timeLeft);
-  };
-  const submitNote = () => {
-    alert("Add note success");
-    noteItem.title = title.current.value;
-    noteItem.text = text.current.value;
 
+  noteItem.remind = remindDate;
+  noteItem.title = title;
+  noteItem.text = text;
+
+  const handleTitle = (e) => {
+    setTitle(e.target.value);
+  };
+  const handleText = (e) => {
+    setText(e.target.value);
+  };
+
+  const submitNote = (e) => {
+    e.preventDefault();
     dispatch({
       type: ADDNOTE,
       noteItem,
     });
-    title.current.value = "";
-    text.current.value = "";
+    titleRef.current.value = "";
+    textRef.current.value = "";
+    alert("Add note success");
+    props.setOpenModal(false);
   };
+
+  useOnClickOutside(editorRef, () => {
+    props.setOpenModal(false);
+    dispatch({
+      type: ADDNOTE,
+      noteItem,
+    });
+  });
+
   return (
-    <div className="editor">
-      <form onSubmit={submitNote}>
+    <div className="editor" ref={editorRef}>
+      <form
+        onSubmit={
+          ((e) => {
+            e.preventDefault();
+          },
+          submitNote)
+        }
+      >
         <div className="editorTitle">
-          <input ref={title} placeholder="Title" name="title" />
+          <input
+            ref={titleRef}
+            placeholder="Title"
+            name="title"
+            onChange={handleTitle}
+          />
           <div className="editorTitle__icon">
             <span>
               <img src={pin} alt=".." />
@@ -62,7 +87,12 @@ export default function Editor(props) {
           </div>
         </div>
         <div className="editorText">
-          <input placeholder="Take a note..." name="text" ref={text} />
+          <input
+            placeholder="Take a note..."
+            name="text"
+            ref={textRef}
+            onChange={handleText}
+          />
         </div>
         <div className="editorFeature">
           <div className="editorFeature__icon">

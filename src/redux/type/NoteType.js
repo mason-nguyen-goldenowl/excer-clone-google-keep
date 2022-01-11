@@ -1,6 +1,7 @@
 export const ADDNOTE = "ADDNOTE";
 export const ADDLABEL = "ADDLABEL";
 export const UPDATELABEL = "UPDATELABEL";
+export const DELETELABEL = "DELETELABEL";
 export const ARCHIVENOTE = "ARCHIVENOTE";
 export const DELETENOTE = "DELETENOTE";
 export const EMPTYTRASH = "EMPTYTRASH";

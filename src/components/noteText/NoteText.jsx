@@ -1,21 +1,37 @@
 import React, { useState } from "react";
 import Editor from "../editor/Editor";
+import Modal from "../modal/Modal";
 import "./NoteText.scss";
 
 export default function NoteText() {
-  const [isActive, setActive] = useState(false);
-  let showClass = "";
-  if (isActive === true) {
-    showClass = "active";
-  }
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
     <div className="noteText">
       <div className="noteText__show">
-        {/* <input className={`show__input ${showClass}`} placeholder="Take a note..." /> */}
-        <div className={`editor-wrap ${showClass}`}>
-          <Editor />
+        <div
+          className="show__input "
+          onClick={() => {
+            setModalOpen(true);
+          }}
+        >
+          Take a note...
         </div>
       </div>
+      {modalOpen && (
+        <Modal
+          setOpenModal={setModalOpen}
+          children={
+            <Editor
+              setOpenModal={setModalOpen}
+              bgColor="none"
+              display="block"
+              height="auto"
+              width="auto"
+            />
+          }
+        />
+      )}
     </div>
   );
 }

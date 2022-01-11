@@ -8,6 +8,7 @@ import {
   DELETEFOREVER,
   RESTORE,
   SEARCH,
+  DELETELABEL,
 } from "../type/NoteType";
 import { REHYDRATE } from "redux-persist";
 const stateDefaut = {
@@ -47,10 +48,6 @@ export const NoteReducer = (state = stateDefaut, action) => {
     }
     case ADDLABEL: {
       state.arrLabel.push(action.label);
-      return { ...state };
-    }
-    case UPDATELABEL: {
-      state.arrLabel = [...action.arrLabelUpdate];
       return { ...state };
     }
 
@@ -126,6 +123,24 @@ export const NoteReducer = (state = stateDefaut, action) => {
       );
       state.arrSearch = [...searchInArchive, ...searchInNote];
 
+      return { ...state };
+    }
+    case UPDATELABEL: {
+      let idLabel = state.arrLabel.findIndex(
+        (label) => label === action.labelUpdate
+      );
+      state.arrLabel[idLabel] = action.item;
+      console.log(idLabel);
+      console.log("dias", state.arrLabel);
+
+      return { ...state };
+    }
+    case DELETELABEL: {
+      let idLabel = state.arrLabel.findIndex(
+        (label) => label === action.labelDelete
+      );
+      console.log("dele", idLabel);
+      state.arrLabel.splice(idLabel, 1);
       return { ...state };
     }
     default:
