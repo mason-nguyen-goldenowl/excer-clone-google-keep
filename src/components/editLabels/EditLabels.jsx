@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import check from "../../asset/editorIcon/check.svg";
@@ -27,7 +27,7 @@ export default function EditLabels(props) {
         item = e.target.value;
       };
       arrLabelUpdate[index] = item;
-      console.log(arrLabelUpdate[index]);
+
       return (
         <div className="label__item" key={index}>
           <div className="icon">

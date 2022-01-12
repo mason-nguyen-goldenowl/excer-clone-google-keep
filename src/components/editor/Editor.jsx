@@ -1,9 +1,10 @@
 import React, { useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
+
 import reminder from "../../asset/editorIcon/reminder.svg";
-import pin from "../../asset/editorIcon/pin.svg";
+import closeIcon from "../../asset/menuTopIcon/delete.svg";
+
 import colab from "../../asset/editorIcon/colab.svg";
 import background from "../../asset/editorIcon/background.svg";
 import image from "../../asset/editorIcon/image.svg";
@@ -35,7 +36,9 @@ export default function Editor(props) {
   noteItem.remind = remindDate;
   noteItem.title = title;
   noteItem.text = text;
-
+  if (props.label) {
+    noteItem.label = props.label;
+  }
   const handleTitle = (e) => {
     setTitle(e.target.value);
   };
@@ -48,6 +51,7 @@ export default function Editor(props) {
     dispatch({
       type: ADDNOTE,
       noteItem,
+      label: props.label,
     });
     titleRef.current.value = "";
     textRef.current.value = "";
@@ -60,7 +64,9 @@ export default function Editor(props) {
     dispatch({
       type: ADDNOTE,
       noteItem,
+      label: props.label,
     });
+    console.log(noteItem);
   });
 
   return (
@@ -80,9 +86,15 @@ export default function Editor(props) {
             name="title"
             onChange={handleTitle}
           />
-          <div className="editorTitle__icon">
+          <div
+            className="editorTitle__icon"
+            title="Close Editor"
+            onClick={() => {
+              props.setOpenModal(false);
+            }}
+          >
             <span>
-              <img src={pin} alt=".." />
+              <img src={closeIcon} alt=".." />
             </span>
           </div>
         </div>

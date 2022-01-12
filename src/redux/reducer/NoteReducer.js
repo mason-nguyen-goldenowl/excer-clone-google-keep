@@ -18,6 +18,7 @@ const stateDefaut = {
   arrArchive: [],
   arrTrash: [],
   arrSearch: [],
+  label: [],
 };
 
 export const NoteReducer = (state = stateDefaut, action) => {
@@ -43,6 +44,10 @@ export const NoteReducer = (state = stateDefaut, action) => {
 
       if (action.noteItem.timeLeft > 0) {
         state.arrRemind.push(action.noteItem);
+      }
+      if (action.noteItem.label) {
+        let labelArrName = "arr" + action.label;
+        state[labelArrName].push(action.noteItem);
       }
       return { ...state };
     }
@@ -130,8 +135,6 @@ export const NoteReducer = (state = stateDefaut, action) => {
         (label) => label === action.labelUpdate
       );
       state.arrLabel[idLabel] = action.item;
-      console.log(idLabel);
-      console.log("dias", state.arrLabel);
 
       return { ...state };
     }
