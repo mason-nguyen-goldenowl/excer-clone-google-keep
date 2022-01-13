@@ -66,7 +66,7 @@ export default function EditLabels(props) {
     });
   };
   useOnClickOutside(editLabelRef, () => props.setOpenModal(false));
-  console.log(editLabelRef);
+
   return (
     <div className="editLabels" ref={editLabelRef}>
       <div className="editLabels__title">
@@ -100,10 +100,7 @@ export default function EditLabels(props) {
         <div className="editLabels__footer">
           <button
             onClick={() => {
-              dispatch({
-                type: UPDATELABEL,
-                arrLabelUpdate,
-              });
+              props.setOpenModal(false);
             }}
           >
             Done

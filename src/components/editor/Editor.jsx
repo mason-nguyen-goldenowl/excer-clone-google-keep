@@ -23,11 +23,10 @@ export default function Editor(props) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [remindDate, setRemindDate] = useState(new Date());
-  const titleRef = useRef("");
-  const textRef = useRef("");
+
   const editorRef = useRef("");
   let reminderClass = "";
-  let noteItem = { title: "", text: "", setAlert: null, timeLeft: -1 };
+  let noteItem = {};
 
   if (isReminderActive === true) {
     reminderClass = "active";
@@ -53,20 +52,19 @@ export default function Editor(props) {
       noteItem,
       label: props.label,
     });
-    titleRef.current.value = "";
-    textRef.current.value = "";
+
     alert("Add note success");
     props.setOpenModal(false);
   };
 
   useOnClickOutside(editorRef, () => {
     props.setOpenModal(false);
+
     dispatch({
       type: ADDNOTE,
       noteItem,
       label: props.label,
     });
-    console.log(noteItem);
   });
 
   return (
@@ -80,12 +78,7 @@ export default function Editor(props) {
         }
       >
         <div className="editorTitle">
-          <input
-            ref={titleRef}
-            placeholder="Title"
-            name="title"
-            onChange={handleTitle}
-          />
+          <input placeholder="Title" name="title" onChange={handleTitle} />
           <div
             className="editorTitle__icon"
             title="Close Editor"
@@ -102,7 +95,6 @@ export default function Editor(props) {
           <input
             placeholder="Take a note..."
             name="text"
-            ref={textRef}
             onChange={handleText}
           />
         </div>

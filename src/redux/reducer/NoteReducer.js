@@ -11,6 +11,7 @@ import {
   DELETELABEL,
 } from "../type/NoteType";
 import { REHYDRATE } from "redux-persist";
+
 const stateDefaut = {
   arrNote: [],
   arrLabel: [],
@@ -41,14 +42,13 @@ export const NoteReducer = (state = stateDefaut, action) => {
 
     case ADDNOTE: {
       state.arrNote.push(action.noteItem);
-
-      if (action.noteItem.timeLeft > 0) {
+      let remindTime = new Date(action.noteItem.remind).getTime();
+      let now = new Date().getTime();
+      let remainingTime = remindTime - now;
+      if (remainingTime > 0) {
         state.arrRemind.push(action.noteItem);
       }
-      if (action.noteItem.label) {
-        let labelArrName = "arr" + action.label;
-        state[labelArrName].push(action.noteItem);
-      }
+
       return { ...state };
     }
     case ADDLABEL: {
@@ -60,7 +60,9 @@ export const NoteReducer = (state = stateDefaut, action) => {
       let idArchive = state.arrArchive.findIndex(
         (note) => note === action.noteArchive
       );
-
+      let remindTime = new Date(action.noteArchive.remind).getTime();
+      let now = new Date().getTime();
+      let remainingTime = remindTime - now;
       if (idArchive === -1) {
         state.arrArchive.push(action.noteArchive);
 
@@ -75,7 +77,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
       } else {
         state.arrArchive.splice(idArchive, 1);
         state.arrNote.push(action.noteArchive);
-        if (action.noteArchive.timeLeft > 0) {
+        if (remainingTime > 0) {
           state.arrRemind.push(action.noteArchive);
         }
       }
@@ -135,6 +137,17 @@ export const NoteReducer = (state = stateDefaut, action) => {
         (label) => label === action.labelUpdate
       );
       state.arrLabel[idLabel] = action.item;
+      let noteLabelUpdate = state.arrNote.filter(
+        (note) => note.label === action.labelUpdate
+      );
+      console.log(noteLabelUpdate);
+      for (let note of state.arrNote) {
+        noteLabelUpdate.map((noteUpdate) => {
+          if (note === noteUpdate) {
+            note.label = action.item;
+          }
+        });
+      }
 
       return { ...state };
     }

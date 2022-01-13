@@ -11,6 +11,7 @@ const Labels = () => {
 
   const { arrNote } = useSelector((state) => state.note);
   const arrLabel = arrNote.filter((item) => item.label === id);
+
   const renderNoteCard = () => {
     return arrLabel.map((note, index) => {
       return <NoteCard content={note} key={index} />;

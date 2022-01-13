@@ -1,4 +1,4 @@
-@use "../../scss/" as *;
+@use "../../scss" as *;
 
 .menu__btn {
   padding: 12px;
@@ -37,6 +37,9 @@
       padding-left: 4px;
       font-size: 22px;
       transition: all 0.3s;
+      @include mobile {
+        display: none;
+      }
     }
   }
   .menu__logo {
@@ -44,6 +47,10 @@
     align-items: center;
     justify-content: space-center;
     min-width: 232px;
+    @include mobile {
+      min-width: 120px;
+      width: fit-content;
+    }
   }
 }
 
@@ -54,13 +61,19 @@
   justify-content: space-between;
   align-items: center;
 
-  align-items: center;
+  @include mobile {
+    justify-content: end;
+  }
   .search__input {
     max-width: 720px;
     width: 100%;
     background-color: #f1f3f4;
     border-radius: 8px;
     overflow: hidden;
+    @include mobile {
+      background-color: transparent;
+      width: fit-content;
+    }
     .close {
       display: none;
     }
@@ -82,6 +95,9 @@
       height: 46px;
       font-size: 16px;
       outline: none;
+      @include mobile {
+        display: none;
+      }
     }
   }
   .search__wrap {
@@ -89,6 +105,9 @@
     width: 100%;
     display: flex;
     align-items: center;
+    @include mobile {
+      display: block;
+    }
   }
 }
 

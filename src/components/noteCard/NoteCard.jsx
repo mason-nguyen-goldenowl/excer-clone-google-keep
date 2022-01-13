@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import Moment from "react-moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import reminder from "../../asset/editorIcon/reminder.svg";
@@ -20,13 +21,18 @@ export default function NoteCard(props) {
   const [remindDate, setRemindDate] = useState(new Date());
 
   let reminderClass = "";
-
+  let statusActive = "";
+  let labelClass = "";
   const note = props.content;
   let remindTime = new Date(note.remind).getTime();
   let now = new Date().getTime();
   let remainingTime = remindTime - now;
 
+  if (note.label) {
+    labelClass = "labels";
+  }
   if (remainingTime > 0) {
+    statusActive = "active";
     setTimeout(() => {
       alert(note.title);
       remainingTime = -1;
@@ -41,12 +47,13 @@ export default function NoteCard(props) {
   };
 
   const deleteAction = () => {
+    note.deleteDay = new Date();
     dispatch({
       type: DELETENOTE,
       noteDelete: note,
     });
   };
-  // setAlert();
+
   return (
     <div className="noteCard">
       <div className="noteCard__select">
@@ -56,9 +63,17 @@ export default function NoteCard(props) {
         <img src={pin} alt="..." />
       </div>
       <div className="noteCard__text">
+        <span className={`reminderStatus ${statusActive}`}>
+          <img src={time} alt="" />
+          <Moment format="MMM DD, YYYY, hh:mm:A">{note.remind}</Moment>
+        </span>
+
         <h3>{note.title}</h3>
         <p>{note.text}</p>
       </div>
+
+      <span className={`${labelClass}`}>{note.label}</span>
+
       <div className="noteCard__feature">
         <ul className="editorIcon__list">
           <li className="noteCardIcon ">

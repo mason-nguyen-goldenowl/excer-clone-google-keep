@@ -27,14 +27,20 @@ const Notecardtrash = (props) => {
       noteRestore: note,
     });
   };
+  let after7Days = new Date(note.deleteDay).setDate(new Date().getDate() + 7);
+
+  let now = new Date().getTime();
+  let remainingTime = after7Days - now;
 
   const deleteAfter7Day = () => {
-    setTimeout(() => {
-      dispatch({
-        type: DELETEFOREVER,
-        noteDeleteForever: note,
-      });
-    }, 604800000);
+    if (remainingTime > 0) {
+      setTimeout(() => {
+        dispatch({
+          type: DELETEFOREVER,
+          noteDeleteForever: note,
+        });
+      }, remainingTime);
+    }
   };
   deleteAfter7Day();
   return (

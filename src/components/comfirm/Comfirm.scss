@@ -1,0 +1,27 @@
+@use "../../scss/" as *;
+.cofirm__choosing {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  margin-top: 20px;
+  button {
+    margin-left: 24px;
+    padding: 10px 16px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .comfirm__cancel {
+    &:hover {
+      background-color: rgba(95, 99, 104, 0.039);
+    }
+  }
+  .comfirm__empty {
+    color: #1a73e8;
+    &:hover {
+      background-color: rgba(66, 133, 244, 0.039);
+    }
+  }
+}

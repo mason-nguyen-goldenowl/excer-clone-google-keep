@@ -8,6 +8,7 @@
   border-radius: 8px;
   height: 100%;
   transition: all 0.3s;
+  padding-bottom: 40px;
   &__feature,
   &__select,
   &__pin {
@@ -29,13 +30,45 @@
     min-height: 90px;
     padding: 12px 10px;
     word-wrap: break-word;
+
     cursor: pointer;
     p {
       padding: 14px 10px;
       padding-right: 35px;
     }
+    .reminderStatus {
+      display: none;
+
+      align-items: center;
+      text-align: center;
+      padding: 8px 5px;
+      justify-content: center;
+      height: 24px;
+      width: 100%;
+      font-size: 12px;
+      margin-bottom: 8px;
+      background-color: rgba(0, 0, 0, 0.08);
+      opacity: 0.5;
+      border-radius: 10px;
+      img {
+        margin-right: 8px;
+      }
+      &.active {
+        display: flex;
+      }
+    }
+  }
+  .labels {
+    background-color: rgba(0, 0, 0, 0.08);
+    font-weight: 500;
+    padding: 3px 12px;
+    font-size: 13px;
+    border-radius: 12px;
+    margin-left: 12px;
+    margin-bottom: 12px;
   }
   &__feature {
+    position: absolute;
     bottom: 0;
     left: 0;
   }
