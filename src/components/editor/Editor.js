@@ -1,7 +1,10 @@
 import React, { useRef, useState } from "react";
+import moment from "moment";
+import { useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
+
+import { ADD_NOTE } from "../../redux/type/NoteType";
 import reminder from "../../asset/editorIcon/reminder.svg";
 import pin from "../../asset/editorIcon/pin.svg";
 import colab from "../../asset/editorIcon/colab.svg";
@@ -12,21 +15,22 @@ import more from "../../asset/editorIcon/more.svg";
 import undo from "../../asset/editorIcon/undo.svg";
 import time from "../../asset/editorIcon/time.svg";
 import "./Editor.scss";
-import { useDispatch } from "react-redux";
-import { ADDNOTE } from "../../redux/type/NoteType";
 
 export default function Editor() {
-  let noteItem = { title: "", text: "", setAlert: null };
   const dispatch = useDispatch();
   const [isReminderActive, setReminderActive] = useState(false);
   const [remindDate, setRemindDate] = useState(new Date());
   const title = useRef("");
   const text = useRef("");
+
+  let noteItem = { title: "", text: "", setAlert: null };
   let reminderClass = "";
   let timeLeft = remindDate - new Date();
+
   if (isReminderActive === true) {
     reminderClass = "active";
   }
+
   noteItem.remind = moment(remindDate).format();
   noteItem.setAlert = () => {
     setTimeout(() => {
@@ -60,9 +64,8 @@ export default function Editor() {
               }}
             >
               <div className="reminder__btn">
-                <a>
-                  <img src={reminder} alt=".." />
-                </a>
+                <img src={reminder} alt=".." />
+
                 <div className={`reminder ${reminderClass}`}>
                   <p>Reminder:</p>
 
@@ -89,39 +92,25 @@ export default function Editor() {
               </div>
             </li>
             <li className="editorIcon__item">
-              <a>
-                <img src={colab} alt=".." />
-              </a>
+              <img src={colab} alt=".." />
             </li>
             <li className="editorIcon__item">
-              <a>
-                <img src={background} alt=".." />
-              </a>
+              <img src={background} alt=".." />
             </li>
             <li className="editorIcon__item">
-              <a>
-                <img src={image} alt=".." />
-              </a>
+              <img src={image} alt=".." />
             </li>
             <li className="editorIcon__item">
-              <a>
-                <img src={archive} alt=".." />
-              </a>
+              <img src={archive} alt=".." />
             </li>
             <li className="editorIcon__item">
-              <a>
-                <img src={more} alt=".." />
-              </a>
+              <img src={more} alt=".." />
             </li>
             <li className="editorIcon__item">
-              <a>
-                <img src={undo} alt=".." />
-              </a>
+              <img src={undo} alt=".." />
             </li>
             <li className="editorIcon__item ">
-              <a>
-                <img src={undo} alt=".." className="redo" />
-              </a>
+              <img src={undo} alt=".." className="redo" />
             </li>
           </ul>
         </div>
@@ -132,7 +121,7 @@ export default function Editor() {
             noteItem.title = title.current.value;
             noteItem.text = text.current.value;
             dispatch({
-              type: ADDNOTE,
+              type: ADD_NOTE,
               noteItem,
             });
             title.current.value = "";

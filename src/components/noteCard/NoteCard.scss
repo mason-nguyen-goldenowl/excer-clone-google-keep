@@ -8,11 +8,13 @@
   border-radius: 8px;
   height: 100%;
   transition: all 0.3s;
+
   &__feature,
   &__select,
   &__pin {
     opacity: 0;
   }
+
   &:hover {
     box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
       0 1px 3px 1px rgb(60 64 67 / 15%);
@@ -29,15 +31,18 @@
     min-height: 90px;
     padding: 12px 10px;
     word-wrap: break-word;
+
     p {
       padding: 14px 10px;
       padding-right: 35px;
     }
   }
+
   &__feature {
     bottom: 0;
     left: 0;
   }
+
   &__select {
     position: absolute;
     left: 0;
@@ -45,6 +50,7 @@
     height: 20px;
     width: 20px;
   }
+
   &__pin {
     position: absolute;
     right: 0;

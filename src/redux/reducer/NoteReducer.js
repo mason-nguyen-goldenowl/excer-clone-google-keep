@@ -1,4 +1,4 @@
-import { ADDNOTE } from "../type/NoteType";
+import { ADD_NOTE } from "../type/NoteType";
 
 const stateDefaut = {
   arrNote: [],
@@ -6,7 +6,7 @@ const stateDefaut = {
 
 export const NoteReducer = (state = stateDefaut, action) => {
   switch (action.type) {
-    case ADDNOTE: {
+    case ADD_NOTE: {
       state.arrNote.push(action.noteItem);
       return { ...state };
     }
