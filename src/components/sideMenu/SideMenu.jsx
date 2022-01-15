@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import labelIcon from "../../asset/editorIcon/label.svg";
-import EditLabels from "../editLabels/EditLabels";
 
+import labelIcon from "../../asset/editorIcon/label.svg";
+
+import EditLabels from "../editLabels/EditLabels";
 import Modal from "../modal/Modal";
+
 import "./SideMenu.scss";
+
 export default function SideMenu(props) {
   const { isListActive } = useSelector((state) => state.menu);
   const { arrLabel } = useSelector((state) => state.note);
@@ -27,6 +30,7 @@ export default function SideMenu(props) {
       );
     });
   };
+
   useEffect(() => {
     if (isListActive) {
       setListClass("active");
@@ -38,6 +42,7 @@ export default function SideMenu(props) {
     }
     document.getElementById(`${props.active}`)?.classList.add("active");
   }, [isListActive, props.active]);
+
   return (
     <div className="sideMenu">
       <ul className={`listItem ${listClass}`}>

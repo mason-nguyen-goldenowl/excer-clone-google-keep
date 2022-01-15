@@ -19,17 +19,21 @@
     position: fixed;
     top: 64px;
     width: 280px;
+
     span {
       display: block;
     }
+
     .listItem__item {
       width: 100%;
       border-radius: 0 25px 25px 0;
     }
+
     .item__content {
       min-width: 48px;
     }
   }
+
   &.active {
     padding: 8px 0;
     position: relative;
@@ -48,13 +52,16 @@
         display: none;
       }
     }
+
     .listItem__item {
       width: 100%;
       border-radius: 0 25px 25px 0;
     }
+
     .item__content {
       min-width: 48px;
     }
+
     &:hover {
       box-shadow: none;
       top: 0px;
@@ -63,6 +70,7 @@
       }
     }
   }
+
   &__item {
     display: flex;
     align-items: center;
@@ -78,10 +86,12 @@
       display: flex;
       align-items: center;
     }
+
     &:hover {
       background-color: #f1f3f4;
       cursor: pointer;
     }
+
     &.active {
       background-color: #feefc3;
     }

@@ -1,21 +1,25 @@
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import useOnClickOutside from "../../hook/useClickOutside";
-import { EMPTYTRASH } from "../../redux/type/NoteType";
+import { EMPTY_TRASH } from "../../redux/type/NoteType";
 import "./Comfirm.scss";
 const Comfirm = (props) => {
   const comfirmRef = useRef();
   const dispatch = useDispatch();
+
   const emptyTrashAction = () => {
     dispatch({
-      type: EMPTYTRASH,
+      type: EMPTY_TRASH,
     });
   };
+
   const emptyOnClick = () => {
     emptyTrashAction();
     props.setOpenModal(false);
   };
+
   useOnClickOutside(comfirmRef, () => props.setOpenModal(false));
+
   return (
     <div ref={comfirmRef}>
       <div className="comfirm__ques">

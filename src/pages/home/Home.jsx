@@ -2,10 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 import Menu from "../../components/menu/Menu";
-
 import NoteCard from "../../components/noteCard/NoteCard";
 import NoteText from "../../components/noteText/NoteText";
 import SideMenu from "../../components/sideMenu/SideMenu";
+
 import "./Home.scss";
 
 export default function Home() {
@@ -16,6 +16,7 @@ export default function Home() {
       return <NoteCard content={note} key={index} />;
     });
   };
+
   return (
     <div>
       <Menu title="Keep" />

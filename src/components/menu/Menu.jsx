@@ -1,15 +1,18 @@
 import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 import gridIcon from "../../asset/menuTopIcon/gridIcon.svg";
 import search from "../../asset/menuTopIcon/search.svg";
 import close from "../../asset/menuTopIcon/delete.svg";
 import refresh from "../../asset/menuTopIcon/refresh.svg";
 import settings from "../../asset/menuTopIcon/settings.svg";
+
+import { CHANGE_LIST_CLASS } from "../../redux/type/MenuType";
+import { SEARCH } from "../../redux/type/NoteType";
+
 import "./Menu.scss";
 
-import { useDispatch } from "react-redux";
-import { CHANGELISTCLASS } from "../../redux/type/MenuType";
-import { Link } from "react-router-dom";
-import { SEARCH } from "../../redux/type/NoteType";
 export default function Menu(props) {
   const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState("");
@@ -18,6 +21,7 @@ export default function Menu(props) {
     "https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png";
 
   const [isListActive, setIsListActive] = useState(false);
+
   const handleChangeInput = () => {
     setSearchInput(searchRef.current.value);
     console.log(searchInput);
@@ -26,6 +30,7 @@ export default function Menu(props) {
       searchInput,
     });
   };
+
   return (
     <div className="menu-wrapter">
       <div className="menu">
@@ -37,7 +42,7 @@ export default function Menu(props) {
                 onClick={() => {
                   setIsListActive(!isListActive);
                   dispatch({
-                    type: CHANGELISTCLASS,
+                    type: CHANGE_LIST_CLASS,
                     isListActive,
                   });
                 }}

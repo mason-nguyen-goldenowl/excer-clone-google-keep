@@ -4,45 +4,47 @@ import { useDispatch } from "react-redux";
 import pin from "../../asset/editorIcon/pin.svg";
 import trash from "../../asset/editorIcon/trash.svg";
 import restore from "../../asset/editorIcon/restore.svg";
-
 import select from "../../asset/editorIcon/select.svg";
 
+import { DELETE_FOREVER, RESTORE } from "../../redux/type/NoteType";
 import "./NoteCard.scss";
-import { DELETEFOREVER, RESTORE } from "../../redux/type/NoteType";
 
 const Notecardtrash = (props) => {
   const dispatch = useDispatch();
 
   const note = props.content;
 
+  let after7Days = new Date(note.deleteDay).setDate(new Date().getDate() + 7);
+  let now = new Date().getTime();
+  let remainingTime = after7Days - now;
+
   const deleteForeverAction = () => {
     dispatch({
-      type: DELETEFOREVER,
+      type: DELETE_FOREVER,
       noteDeleteForever: note,
     });
   };
+
   const restoreAction = () => {
     dispatch({
       type: RESTORE,
       noteRestore: note,
     });
   };
-  let after7Days = new Date(note.deleteDay).setDate(new Date().getDate() + 7);
-
-  let now = new Date().getTime();
-  let remainingTime = after7Days - now;
 
   const deleteAfter7Day = () => {
     if (remainingTime > 0) {
       setTimeout(() => {
         dispatch({
-          type: DELETEFOREVER,
+          type: DELETE_FOREVER,
           noteDeleteForever: note,
         });
       }, remainingTime);
     }
   };
+
   deleteAfter7Day();
+
   return (
     <div className="noteCard">
       <div className="noteCard__select">

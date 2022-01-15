@@ -1,16 +1,15 @@
 import {
-  ADDLABEL,
-  ADDNOTE,
-  ARCHIVENOTE,
-  UPDATELABEL,
-  DELETENOTE,
-  EMPTYTRASH,
-  DELETEFOREVER,
+  ADD_LABEL,
+  ADD_NOTE,
+  ARCHIVE_NOTE,
+  UPDATE_LABEL,
+  DELETE_NOTE,
+  EMPTY_TRASH,
+  DELETE_FOREVER,
   RESTORE,
   SEARCH,
-  DELETELABEL,
+  DELETE_LABEL,
 } from "../type/NoteType";
-import { REHYDRATE } from "redux-persist";
 
 const stateDefaut = {
   arrNote: [],
@@ -24,23 +23,7 @@ const stateDefaut = {
 
 export const NoteReducer = (state = stateDefaut, action) => {
   switch (action.type) {
-    case REHYDRATE: {
-      const arrNoteLocal = action.payload.note?.arrNote;
-      const arrLabelLocal = action.payload.note?.arrLabel;
-      const arrRemindLocal = action.payload.note?.arrRemind;
-      const arrArchiveLocal = action.payload.note?.arrArchive;
-      const arrTrashLocal = action.payload.note?.arrTrash;
-
-      state.arrNote = arrNoteLocal;
-
-      state.arrLabel = arrLabelLocal;
-      state.arrRemind = arrRemindLocal;
-      state.arrArchive = arrArchiveLocal;
-      state.arrTrash = arrTrashLocal;
-      return { ...state };
-    }
-
-    case ADDNOTE: {
+    case ADD_NOTE: {
       state.arrNote.push(action.noteItem);
       let remindTime = new Date(action.noteItem.remind).getTime();
       let now = new Date().getTime();
@@ -51,12 +34,13 @@ export const NoteReducer = (state = stateDefaut, action) => {
 
       return { ...state };
     }
-    case ADDLABEL: {
+
+    case ADD_LABEL: {
       state.arrLabel.push(action.label);
       return { ...state };
     }
 
-    case ARCHIVENOTE: {
+    case ARCHIVE_NOTE: {
       let idArchive = state.arrArchive.findIndex(
         (note) => note === action.noteArchive
       );
@@ -84,7 +68,8 @@ export const NoteReducer = (state = stateDefaut, action) => {
 
       return { ...state };
     }
-    case DELETENOTE: {
+
+    case DELETE_NOTE: {
       state.arrTrash.push(action.noteDelete);
       let idArchive = state.arrArchive.findIndex(
         (note) => note === action.noteDelete
@@ -101,17 +86,20 @@ export const NoteReducer = (state = stateDefaut, action) => {
       state.arrRemind.splice(idRemind, 1);
       return { ...state };
     }
-    case EMPTYTRASH: {
+
+    case EMPTY_TRASH: {
       state.arrTrash = [];
       return { ...state };
     }
-    case DELETEFOREVER: {
+
+    case DELETE_FOREVER: {
       let idForever = state.arrTrash.findIndex(
         (note) => note === action.noteDeleteForever
       );
       state.arrTrash.splice(idForever, 1);
       return { ...state };
     }
+
     case RESTORE: {
       state.arrNote.push(action.noteRestore);
       let idRestore = state.arrTrash.findIndex(
@@ -132,7 +120,8 @@ export const NoteReducer = (state = stateDefaut, action) => {
 
       return { ...state };
     }
-    case UPDATELABEL: {
+
+    case UPDATE_LABEL: {
       let idLabel = state.arrLabel.findIndex(
         (label) => label === action.labelUpdate
       );
@@ -151,7 +140,8 @@ export const NoteReducer = (state = stateDefaut, action) => {
 
       return { ...state };
     }
-    case DELETELABEL: {
+
+    case DELETE_LABEL: {
       let idLabel = state.arrLabel.findIndex(
         (label) => label === action.labelDelete
       );

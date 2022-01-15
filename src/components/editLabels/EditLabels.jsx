@@ -1,13 +1,22 @@
 import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+
 import check from "../../asset/editorIcon/check.svg";
 import labelIcon from "../../asset/editorIcon/label.svg";
 import edit from "../../asset/editorIcon/edit.svg";
 import deleteIcon from "../../asset/menuTopIcon/delete.svg";
-import { ADDLABEL, DELETELABEL, UPDATELABEL } from "../../redux/type/NoteType";
-import "./EditLables.scss";
+
+import {
+  ADD_LABEL,
+  DELETE_LABEL,
+  UPDATE_LABEL,
+} from "../../redux/type/NoteType";
+
 import useOnClickOutside from "../../hook/useClickOutside";
+
+import "./EditLables.scss";
+
 export default function EditLabels(props) {
   const dispatch = useDispatch();
   const { arrLabel } = useSelector((state) => state.note);
@@ -38,7 +47,7 @@ export default function EditLabels(props) {
               alt=".."
               onClick={() => {
                 dispatch({
-                  type: DELETELABEL,
+                  type: DELETE_LABEL,
                   labelDelete: item,
                 });
               }}
@@ -54,7 +63,7 @@ export default function EditLabels(props) {
               alt=".."
               onClick={() => {
                 dispatch({
-                  type: UPDATELABEL,
+                  type: UPDATE_LABEL,
                   labelUpdate: changeLabel,
                   item,
                 });
@@ -86,7 +95,7 @@ export default function EditLabels(props) {
             className="cre__btn"
             onClick={() => {
               dispatch({
-                type: ADDLABEL,
+                type: ADD_LABEL,
                 label,
               });
               setLabel("");

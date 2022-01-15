@@ -2,15 +2,18 @@
 
 .editLabels {
   max-width: 320px;
+
   input {
     outline: none;
     border: none;
     height: 25px;
     font-size: 15px;
+
     &:focus {
       border-bottom: 1px solid;
     }
   }
+
   &__title {
     display: flex;
     justify-content: space-between;
@@ -20,30 +23,35 @@
       cursor: pointer;
     }
   }
+
   .label__item {
     margin: 8px 0;
     width: 320px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     &:focus-within {
       p {
         display: none;
       }
+
       input {
         display: block;
       }
     }
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
     .deleteIcon {
       transition: all 0.3s;
       display: none;
       cursor: pointer;
     }
+
     .checkIcon {
       transition: all 0.3s;
       display: none;
       cursor: pointer;
     }
+
     &:hover {
       .deleteIcon {
         display: block;
@@ -59,11 +67,13 @@
       }
     }
   }
+
   p {
     font-size: 18px;
     font-weight: 500;
     margin-bottom: 8px;
   }
+
   &__cre {
     display: flex;
     justify-content: space-between;
@@ -71,6 +81,7 @@
       cursor: pointer;
     }
   }
+
   &__body {
     margin: 16px 0;
 
@@ -80,6 +91,7 @@
       margin-left: 5px;
     }
   }
+
   &__footer {
     padding-top: 10px;
     button {
@@ -91,6 +103,7 @@
       border-radius: 4px;
       font-weight: 700;
       cursor: pointer;
+
       &:hover {
         background-color: rgba(95, 99, 104, 0.103);
       }

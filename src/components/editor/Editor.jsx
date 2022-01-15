@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useDispatch } from "react-redux";
 
 import reminder from "../../asset/editorIcon/reminder.svg";
 import closeIcon from "../../asset/menuTopIcon/delete.svg";
-
 import colab from "../../asset/editorIcon/colab.svg";
 import background from "../../asset/editorIcon/background.svg";
 import image from "../../asset/editorIcon/image.svg";
@@ -12,10 +12,11 @@ import archive from "../../asset/editorIcon/archive.svg";
 import more from "../../asset/editorIcon/more.svg";
 import undo from "../../asset/editorIcon/undo.svg";
 import time from "../../asset/editorIcon/time.svg";
-import "./Editor.scss";
-import { useDispatch } from "react-redux";
-import { ADDNOTE } from "../../redux/type/NoteType";
+
+import { ADD_NOTE } from "../../redux/type/NoteType";
 import useOnClickOutside from "../../hook/useClickOutside";
+
+import "./Editor.scss";
 
 export default function Editor(props) {
   const dispatch = useDispatch();
@@ -23,10 +24,30 @@ export default function Editor(props) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [remindDate, setRemindDate] = useState(new Date());
-
   const editorRef = useRef("");
+
   let reminderClass = "";
   let noteItem = {};
+
+  const handleTitle = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleText = (e) => {
+    setText(e.target.value);
+  };
+
+  const submitNote = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: ADD_NOTE,
+      noteItem,
+      label: props.label,
+    });
+
+    alert("Add note success");
+    props.setOpenModal(false);
+  };
 
   if (isReminderActive === true) {
     reminderClass = "active";
@@ -38,30 +59,12 @@ export default function Editor(props) {
   if (props.label) {
     noteItem.label = props.label;
   }
-  const handleTitle = (e) => {
-    setTitle(e.target.value);
-  };
-  const handleText = (e) => {
-    setText(e.target.value);
-  };
-
-  const submitNote = (e) => {
-    e.preventDefault();
-    dispatch({
-      type: ADDNOTE,
-      noteItem,
-      label: props.label,
-    });
-
-    alert("Add note success");
-    props.setOpenModal(false);
-  };
 
   useOnClickOutside(editorRef, () => {
     props.setOpenModal(false);
 
     dispatch({
-      type: ADDNOTE,
+      type: ADD_NOTE,
       noteItem,
       label: props.label,
     });

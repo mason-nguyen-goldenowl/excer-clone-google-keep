@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import Moment from "react-moment";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
 import reminder from "../../asset/editorIcon/reminder.svg";
 import pin from "../../asset/editorIcon/pin.svg";
 import trash from "../../asset/editorIcon/trash.svg";
@@ -11,37 +12,26 @@ import image from "../../asset/editorIcon/image.svg";
 import archive from "../../asset/editorIcon/archive.svg";
 import more from "../../asset/editorIcon/more.svg";
 import select from "../../asset/editorIcon/select.svg";
-
 import time from "../../asset/editorIcon/time.svg";
+
+import { ARCHIVE_NOTE, DELETE_NOTE } from "../../redux/type/NoteType";
 import "./NoteCard.scss";
-import { ARCHIVENOTE, DELETENOTE } from "../../redux/type/NoteType";
 
 export default function NoteCard(props) {
   const dispatch = useDispatch();
   const [remindDate, setRemindDate] = useState(new Date());
+  const note = props.content;
 
   let reminderClass = "";
   let statusActive = "";
   let labelClass = "";
-  const note = props.content;
   let remindTime = new Date(note.remind).getTime();
   let now = new Date().getTime();
   let remainingTime = remindTime - now;
 
-  if (note.label) {
-    labelClass = "labels";
-  }
-  if (remainingTime > 0) {
-    statusActive = "active";
-    setTimeout(() => {
-      alert(note.title);
-      remainingTime = -1;
-    }, remainingTime);
-  }
-
   const archiveAction = () => {
     dispatch({
-      type: ARCHIVENOTE,
+      type: ARCHIVE_NOTE,
       noteArchive: note,
     });
   };
@@ -49,10 +39,22 @@ export default function NoteCard(props) {
   const deleteAction = () => {
     note.deleteDay = new Date();
     dispatch({
-      type: DELETENOTE,
+      type: DELETE_NOTE,
       noteDelete: note,
     });
   };
+
+  if (note.label) {
+    labelClass = "labels";
+  }
+
+  if (remainingTime > 0) {
+    statusActive = "active";
+    setTimeout(() => {
+      alert(note.title);
+      remainingTime = -1;
+    }, remainingTime);
+  }
 
   return (
     <div className="noteCard">

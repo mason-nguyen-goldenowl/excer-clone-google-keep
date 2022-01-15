@@ -9,15 +9,16 @@
   height: 100%;
   transition: all 0.3s;
   padding-bottom: 40px;
+
   &__feature,
   &__select,
   &__pin {
     opacity: 0;
   }
+
   &:hover {
     box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
       0 1px 3px 1px rgb(60 64 67 / 15%);
-
     .noteCard__feature,
     .noteCard__select,
     .noteCard__pin {
@@ -36,6 +37,7 @@
       padding: 14px 10px;
       padding-right: 35px;
     }
+
     .reminderStatus {
       display: none;
 
@@ -50,14 +52,17 @@
       background-color: rgba(0, 0, 0, 0.08);
       opacity: 0.5;
       border-radius: 10px;
+
       img {
         margin-right: 8px;
       }
+
       &.active {
         display: flex;
       }
     }
   }
+
   .labels {
     background-color: rgba(0, 0, 0, 0.08);
     font-weight: 500;
@@ -67,11 +72,13 @@
     margin-left: 12px;
     margin-bottom: 12px;
   }
+
   &__feature {
     position: absolute;
     bottom: 0;
     left: 0;
   }
+
   &__select {
     position: absolute;
     left: 0;
@@ -79,11 +86,13 @@
     height: 20px;
     width: 20px;
   }
+
   &__pin {
     position: absolute;
     right: 0;
   }
 }
+
 .noteCardIcon {
   width: 40px;
   height: 40px;
@@ -110,27 +119,34 @@
     padding: 8px 12px;
     border-radius: 4px;
     width: auto;
+
     &__item {
       width: auto;
     }
+
     &.active {
       display: block;
     }
+
     &__item {
       display: flex;
       align-items: center;
       padding: 10px 13px;
       font-size: 13px;
+
       &:hover {
         background-color: #00000014;
       }
+
       span {
         margin-left: 8px;
       }
     }
+
     p {
       margin-bottom: 16px;
     }
+
     ul {
       list-style: none;
     }
@@ -141,6 +157,7 @@
     height: 20px;
     opacity: 0.54;
   }
+
   &:hover {
     background-color: #5f636828;
   }

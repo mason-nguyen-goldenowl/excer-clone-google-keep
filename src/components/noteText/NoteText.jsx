@@ -18,6 +18,7 @@ export default function NoteText(props) {
           Take a note...
         </div>
       </div>
+
       {modalOpen && (
         <Modal
           setOpenModal={setModalOpen}
