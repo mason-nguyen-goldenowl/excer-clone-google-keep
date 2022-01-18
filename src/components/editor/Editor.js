@@ -20,8 +20,8 @@ export default function Editor() {
   const dispatch = useDispatch();
   const [isReminderActive, setReminderActive] = useState(false);
   const [remindDate, setRemindDate] = useState(new Date());
-  const title = useRef("");
-  const text = useRef("");
+  const titleRef = useRef("");
+  const textRef = useRef("");
 
   let noteItem = { title: "", text: "", setAlert: null };
   let reminderClass = "";
@@ -44,7 +44,7 @@ export default function Editor() {
   return (
     <div className="editor">
       <div className="editorTitle">
-        <input ref={title} placeholder="Title" name="title" />
+        <input ref={titleRef} placeholder="Title" name="title" />
         <div className="editorTitle__icon">
           <span>
             <img src={pin} alt=".." />
@@ -52,7 +52,7 @@ export default function Editor() {
         </div>
       </div>
       <div className="editorText">
-        <input placeholder="Take a note..." name="text" ref={text} />
+        <input placeholder="Take a note..." name="text" ref={textRef} />
       </div>
       <div className="editorFeature">
         <div className="editorFeature__icon">
@@ -118,14 +118,14 @@ export default function Editor() {
           className="editorFeature__close"
           onClick={() => {
             alert("Add note success");
-            noteItem.title = title.current.value;
-            noteItem.text = text.current.value;
+            noteItem.title = titleRef.current.value;
+            noteItem.text = textRef.current.value;
             dispatch({
               type: ADD_NOTE,
               noteItem,
             });
-            title.current.value = "";
-            text.current.value = "";
+            titleRef.current.value = "";
+            textRef.current.value = "";
           }}
         >
           <span>Close</span>
