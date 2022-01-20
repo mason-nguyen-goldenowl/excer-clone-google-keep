@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { CHANGE_LIST_CLASS } from "../../redux/type/MenuType";
 import gridIcon from "../../asset/menuTopIcon/gridIcon.svg";
 import search from "../../asset/menuTopIcon/search.svg";
 import close from "../../asset/menuTopIcon/delete.svg";
 import refresh from "../../asset/menuTopIcon/refresh.svg";
 import settings from "../../asset/menuTopIcon/settings.svg";
 import "./Menu.scss";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import { CHANGELISTCLASS } from "../../redux/type/MenuType";
+
 export default function Menu() {
   const dispatch = useDispatch();
   const logoURL =
@@ -28,7 +29,7 @@ export default function Menu() {
                 onClick={() => {
                   setIsListActive(!isListActive);
                   dispatch({
-                    type: CHANGELISTCLASS,
+                    type: CHANGE_LIST_CLASS,
                     isListActive,
                   });
                 }}

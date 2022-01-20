@@ -1,22 +1,33 @@
 @use "../../scss/" as *;
+
 .bodyContent {
   display: flex;
   height: 100%;
 }
+
 .left {
   width: auto;
   max-width: 248px;
   min-width: 48px;
   margin-right: 90px;
 }
+
 .right {
   position: relative;
   width: 100%;
   min-width: 0px;
 }
+
 .editorWrap {
   width: 100%;
   display: flex;
   justify-content: center;
   padding-top: 50px;
+}
+
+.note__content {
+  display: flex;
+  flex: 1 auto;
+  flex-wrap: wrap;
+  margin-top: 20px;
 }

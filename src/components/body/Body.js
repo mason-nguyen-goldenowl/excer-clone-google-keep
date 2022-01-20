@@ -1,9 +1,19 @@
 import React from "react";
-import "./Body.scss";
+import { useSelector } from "react-redux";
+
 import SideMenu from "../sideMenu/SideMenu";
 import NoteText from "../noteText/NoteText";
+import NoteCard from "../noteCard/NoteCard";
+import "./Body.scss";
 
 export default function Body() {
+  const { arrNote } = useSelector((state) => state.NoteReducer);
+
+  const renderNoteCard = () => {
+    return arrNote.map((note) => {
+      return <NoteCard content={note} key={note.id} />;
+    });
+  };
   return (
     <div className="bodyContent">
       <div className="left">
@@ -13,7 +23,7 @@ export default function Body() {
         <div className="editorWrap">
           <NoteText />
         </div>
-        <div>asdgsd</div>
+        <div className="note__content">{renderNoteCard()}</div>
       </div>
     </div>
   );
