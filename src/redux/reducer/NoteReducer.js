@@ -17,6 +17,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
     }
     case UPDATE_LABEL: {
       state.arrLabel = [...action.arrLabelUpdate];
+      return { ...state };
     }
     default:
       return { ...state };

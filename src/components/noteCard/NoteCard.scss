@@ -1,6 +1,6 @@
 @use "../../scss/" as *;
 
-.noteCard {
+.note-card {
   max-width: 400px;
   width: 240px;
   border: 1px solid #e0e0e0;
@@ -20,9 +20,9 @@
     box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
       0 1px 3px 1px rgb(60 64 67 / 15%);
 
-    .noteCard__feature,
-    .noteCard__select,
-    .noteCard__pin {
+    .note-card__feature,
+    .note-card__select,
+    .note-card__pin {
       opacity: 100%;
     }
   }

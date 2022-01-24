@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { ADD_ACTIVE_CLASS } from "../../redux/type/MenuType";
-import EditLabels from "../editLabels/EditLabels";
-
 import Modal from "../modal/Modal";
+import EditLabels from "../editLabels/EditLabels";
+import { ADD_ACTIVE_CLASS } from "../../redux/type/MenuType";
+
 import "./SideMenu.scss";
 
 export default function SideMenu() {
@@ -44,9 +44,9 @@ export default function SideMenu() {
   }, [idMenuItemActive, isListActive]);
 
   return (
-    <div className="sideMenu">
-      <ul className={`listItem ${listClass}`}>
-        <li className="listItem__item" id="item1" onClick={addActiveClass}>
+    <div className="side-menu">
+      <ul className={`list-item ${listClass}`}>
+        <li className="list-item__item" id="item1" onClick={addActiveClass}>
           <a href="#">
             <div className="item__content">
               <svg
@@ -61,7 +61,7 @@ export default function SideMenu() {
             </div>
           </a>
         </li>
-        <li className="listItem__item " id="item2" onClick={addActiveClass}>
+        <li className="list-item__item " id="item2" onClick={addActiveClass}>
           <a href="#">
             <div className="item__content">
               <svg
@@ -77,7 +77,7 @@ export default function SideMenu() {
           </a>
         </li>
         <li
-          className="listItem__item "
+          className="list-item__item "
           id="item3"
           onClick={() => {
             setModalOpen(true);
@@ -97,7 +97,7 @@ export default function SideMenu() {
             </div>
           </a>
         </li>
-        <li className="listItem__item " id="item4" onClick={addActiveClass}>
+        <li className="list-item__item " id="item4" onClick={addActiveClass}>
           <a href="#">
             <div className="item__content">
               <svg
@@ -112,7 +112,7 @@ export default function SideMenu() {
             </div>
           </a>
         </li>
-        <li className="listItem__item " id="item5" onClick={addActiveClass}>
+        <li className="list-item__item " id="item5" onClick={addActiveClass}>
           <a href="#">
             <div className="item__content">
               <svg

@@ -32,9 +32,9 @@ export default function EditLabels(props) {
       return (
         <div className="label__item" key={index}>
           <div className="icon">
-            <img className="labelIcon" src={labelIcon} alt=".." />
+            <img className="label-icon" src={labelIcon} alt=".." />
             <img
-              className="deleteIcon"
+              className="delete-icon"
               src={deleteIcon}
               alt=".."
               onClick={() => {
@@ -44,9 +44,9 @@ export default function EditLabels(props) {
           </div>
           <p>{item}</p>
           <input value={inputValue} onChange={onInputChange} />
-          <div className="iconEdit">
-            <img className="editIcon" src={edit} alt=".." />
-            <img className="checkIcon" src={check} alt=".." />
+          <div className="icon-edit">
+            <img className="edit-icon" src={edit} alt=".." />
+            <img className="check-icon" src={check} alt=".." />
           </div>
         </div>
       );
@@ -54,8 +54,8 @@ export default function EditLabels(props) {
   };
 
   return (
-    <div className="editLabels">
-      <div className="editLabels__title">
+    <div className="edit-labels">
+      <div className="edit-labels__title">
         <p>Edit labels</p>
         <img
           src={deleteIcon}
@@ -65,8 +65,8 @@ export default function EditLabels(props) {
           }}
         />
       </div>
-      <div className="editLabels-wrap">
-        <div className="editLabels__cre">
+      <div className="edit-labels-wrap">
+        <div className="edit-labels__cre">
           <input placeholder="Create new label" onChange={onLabelChange} />
           <div
             className="cre__btn"
@@ -81,9 +81,9 @@ export default function EditLabels(props) {
             <img src={check} alt="..." />
           </div>
         </div>
-        <div className="editLabels__body">{renderLabel()}</div>
+        <div className="edit-labels__body">{renderLabel()}</div>
         <hr></hr>
-        <div className="editLabels__footer">
+        <div className="edit-labels__footer">
           <button
             onClick={() => {
               dispatch({

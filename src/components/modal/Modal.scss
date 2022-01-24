@@ -1,6 +1,6 @@
 @use "../../scss/" as *;
 
-.modalBackground {
+.modal-background {
   width: 100vw;
   height: 100vh;
   background-color: rgba(75, 72, 72, 0.432);
@@ -12,23 +12,11 @@
   z-index: 99;
 }
 
-.modalContainer {
+.modal-container {
   border-radius: 12px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   display: flex;
   flex-direction: column;
   padding: 25px;
-}
-
-.titleCloseBtn {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.titleCloseBtn button {
-  background-color: transparent;
-  border: none;
-  font-size: 25px;
-  cursor: pointer;
 }

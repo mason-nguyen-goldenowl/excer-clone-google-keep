@@ -1,5 +1,5 @@
 @use "../../scss/" as *;
-.bodyContent {
+.body-content {
   display: flex;
   height: 100%;
 }
@@ -17,14 +17,14 @@
   min-width: 0px;
 }
 
-.editorWrap {
+.editor-wrap {
   width: 100%;
   display: flex;
   justify-content: center;
   padding-top: 50px;
 }
 
-.note__content {
+.note-content {
   display: flex;
   flex: 1 auto;
   flex-wrap: wrap;

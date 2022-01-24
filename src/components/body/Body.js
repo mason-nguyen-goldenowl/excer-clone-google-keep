@@ -16,15 +16,15 @@ export default function Body() {
     });
   };
   return (
-    <div className="bodyContent">
+    <div className="body-content">
       <div className="left">
         <SideMenu />
       </div>
       <div className="right">
-        <div className="editorWrap">
+        <div className="editor-wrap">
           <NoteText />
         </div>
-        <div className="note__content">{renderNoteCard()}</div>
+        <div className="note-content">{renderNoteCard()}</div>
       </div>
     </div>
   );

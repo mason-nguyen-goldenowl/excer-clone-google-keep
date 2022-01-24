@@ -10,8 +10,8 @@ export default function NoteText() {
     showClass = "active";
   }
   return (
-    <div className="noteText">
-      <div className="noteText__show">
+    <div className="note-text">
+      <div className="note-text__show">
         <div className={`editor-wrap ${showClass}`}>
           <Editor />
         </div>
