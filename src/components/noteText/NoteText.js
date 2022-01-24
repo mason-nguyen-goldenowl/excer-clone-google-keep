@@ -5,10 +5,13 @@ import "./NoteText.scss";
 
 export default function NoteText() {
   const [isActive, setActive] = useState(false);
+
   let showClass = "";
+
   if (isActive === true) {
     showClass = "active";
   }
+
   return (
     <div className="note-text">
       <div className="note-text__show">

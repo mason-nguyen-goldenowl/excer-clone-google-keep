@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
 import reminder from "../../asset/editorIcon/reminder.svg";
 import pin from "../../asset/editorIcon/pin.svg";
 import colab from "../../asset/editorIcon/colab.svg";
@@ -17,9 +18,12 @@ export default function NoteCard(props) {
   const [remindDate, setRemindDate] = useState(new Date());
   const [isReminderActive, setReminderActive] = useState(false);
 
-  let reminderClass = "";
   const note = props.content;
+
+  let reminderClass = "";
+
   note.setAlert();
+
   return (
     <div className="note-card">
       <div className="note-card__select">
@@ -43,7 +47,9 @@ export default function NoteCard(props) {
               setReminderActive(!isReminderActive);
             }}
           >
+
             <div className="reminder__btn" title="Reminder">
+
               <img src={reminder} alt=".." />
 
               <div className={`reminder ${reminderClass}`}>

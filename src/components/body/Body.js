@@ -11,8 +11,8 @@ export default function Body() {
   const { arrNote } = useSelector((state) => state.NoteReducer);
 
   const renderNoteCard = () => {
-    return arrNote.map((note, index) => {
-      return <NoteCard content={note} key={index} />;
+    return arrNote.map((note) => {
+      return <NoteCard content={note} key={note.id} />;
     });
   };
   return (

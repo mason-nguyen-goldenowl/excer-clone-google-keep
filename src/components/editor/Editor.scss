@@ -52,11 +52,13 @@
   display: flex;
   justify-content: start;
 }
+
 .editor-icon__item .reminder__btn:focus-within {
   .reminder {
     display: block;
   }
 }
+
 .editor-icon__item {
   width: 32px;
   height: 32px;
@@ -84,43 +86,54 @@
     padding: 8px 12px;
     border-radius: 4px;
     width: auto;
+
     &__item {
       width: auto;
     }
+
     &.active {
       display: block;
     }
+
     &__item {
       display: flex;
       align-items: center;
       padding: 10px 13px;
       font-size: 13px;
+
       &:hover {
         background-color: #00000014;
       }
+
       span {
         margin-left: 8px;
       }
     }
+
     p {
       margin-bottom: 16px;
     }
+
     ul {
       list-style: none;
     }
   }
+
   .redo {
     transform: scaleX(-1);
   }
+
   img {
     width: 18px;
     height: 18px;
     opacity: 0.54;
   }
+
   &:hover {
     background-color: #5f636828;
   }
 }
+
 .editor-feature__close {
   cursor: pointer;
   border-radius: 4px;
@@ -129,6 +142,7 @@
     background-color: #5f63680a;
   }
 }
+
 .react-datepicker {
   display: flex;
 }
