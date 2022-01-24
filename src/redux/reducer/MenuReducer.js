@@ -1,4 +1,4 @@
-import { ADDACTIVECLASS, CHANGELISTCLASS } from "../type/MenuType";
+import { ADD_ACTIVE_CLASS, CHANGE_LIST_CLASS } from "../type/MenuType";
 
 const stateDefaut = {
   arrSideMenu: [],
@@ -9,13 +9,13 @@ const stateDefaut = {
 
 export const MenuReducer = (state = stateDefaut, action) => {
   switch (action.type) {
-    case ADDACTIVECLASS: {
+    case ADD_ACTIVE_CLASS: {
       state.idMenuItemActive = action.idActive;
       state.menuTitle = action.title;
       state.logoURL = action.logoURL;
       return { ...state };
     }
-    case CHANGELISTCLASS: {
+    case CHANGE_LIST_CLASS: {
       state.isListActive = action.isListActive;
       return { ...state };
     }

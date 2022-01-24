@@ -1,29 +1,34 @@
 import React, { useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
 import check from "../../asset/editorIcon/check.svg";
 import labelIcon from "../../asset/editorIcon/label.svg";
 import edit from "../../asset/editorIcon/edit.svg";
 import deleteIcon from "../../asset/menuTopIcon/delete.svg";
-import { ADDLABEL, UPDATELABEL } from "../../redux/type/NoteType";
+
+import { ADD_LABEL, UPDATE_LABEL } from "../../redux/type/NoteType";
+
 import "./EditLables.scss";
+
 export default function EditLabels(props) {
   const dispatch = useDispatch();
   const { arrLabel } = useSelector((state) => state.NoteReducer);
   const [inputValue, setInputValue] = useState("");
   const [label, setLabel] = useState("");
-  console.log(props);
+
   let arrLabelUpdate = [];
-  console.log(arrLabel);
+
   const onLabelChange = (e) => {
     setLabel(e.target.value);
   };
+
   const renderLabel = () => {
     return arrLabel.map((item, index) => {
       const onInputChange = (e) => {
         setInputValue(e.target.value);
       };
       arrLabelUpdate.push(item);
+
       return (
         <div className="label__item" key={index}>
           <div className="icon">
@@ -47,6 +52,7 @@ export default function EditLabels(props) {
       );
     });
   };
+
   return (
     <div className="editLabels">
       <div className="editLabels__title">
@@ -66,7 +72,7 @@ export default function EditLabels(props) {
             className="cre__btn"
             onClick={() => {
               dispatch({
-                type: ADDLABEL,
+                type: ADD_LABEL,
                 label,
               });
               setLabel("");
@@ -81,7 +87,7 @@ export default function EditLabels(props) {
           <button
             onClick={() => {
               dispatch({
-                type: UPDATELABEL,
+                type: UPDATE_LABEL,
                 arrLabelUpdate,
               });
               alert("Update Label susccessed");

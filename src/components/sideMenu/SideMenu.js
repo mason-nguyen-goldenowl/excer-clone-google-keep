@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ADDACTIVECLASS } from "../../redux/type/MenuType";
+
+import { ADD_ACTIVE_CLASS } from "../../redux/type/MenuType";
 import EditLabels from "../editLabels/EditLabels";
 
 import Modal from "../modal/Modal";
 import "./SideMenu.scss";
+
 export default function SideMenu() {
   const dispatch = useDispatch();
   const { idMenuItemActive, isListActive } = useSelector(
@@ -13,7 +15,7 @@ export default function SideMenu() {
 
   const [listClass, setListClass] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-  console.log(modalOpen);
+
   const addActiveClass = (e) => {
     e.preventDefault();
     let idActive = e.target.id;
@@ -23,7 +25,7 @@ export default function SideMenu() {
       title = "Keep";
     }
     dispatch({
-      type: ADDACTIVECLASS,
+      type: ADD_ACTIVE_CLASS,
       idActive,
       title,
     });
@@ -40,6 +42,7 @@ export default function SideMenu() {
       setListClass("");
     }
   }, [idMenuItemActive, isListActive]);
+
   return (
     <div className="sideMenu">
       <ul className={`listItem ${listClass}`}>
@@ -76,9 +79,7 @@ export default function SideMenu() {
         <li
           className="listItem__item "
           id="item3"
-          onClick={addActiveClass}
           onClick={() => {
-            console.log(modalOpen);
             setModalOpen(true);
           }}
         >

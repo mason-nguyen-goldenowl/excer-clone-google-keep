@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Editor from "../editor/Editor";
+
 import "./NoteText.scss";
 
 export default function NoteText() {
@@ -11,7 +12,6 @@ export default function NoteText() {
   return (
     <div className="noteText">
       <div className="noteText__show">
-        {/* <input className={`show__input ${showClass}`} placeholder="Take a note..." /> */}
         <div className={`editor-wrap ${showClass}`}>
           <Editor />
         </div>

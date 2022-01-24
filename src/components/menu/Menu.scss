@@ -24,21 +24,25 @@
   justify-content: space-between;
   align-items: center;
   color: $btn-color;
+
   .menu-title {
     display: flex;
     justify-content: center;
     align-items: center;
+
     img {
       width: 40px;
       height: 40px;
       padding-right: 4px;
     }
+
     span {
       padding-left: 4px;
       font-size: 22px;
       transition: all 0.3s;
     }
   }
+
   .menu__logo {
     display: flex;
     align-items: center;
@@ -54,16 +58,18 @@
   justify-content: space-between;
   align-items: center;
 
-  align-items: center;
   .search__input {
     max-width: 720px;
     width: 100%;
     background-color: #f1f3f4;
     border-radius: 8px;
     overflow: hidden;
+    transition: all 0.3s;
+
     .close {
       display: none;
     }
+
     &:focus-within {
       background-color: rgba(255, 255, 255, 1) !important;
       box-shadow: 0 1px 1px 0 rgb(65 69 73 / 30%),
@@ -72,7 +78,7 @@
         display: block;
       }
     }
-    transition: all 0.3s;
+
     input {
       max-width: 615px;
       padding: 11px;
@@ -84,6 +90,7 @@
       outline: none;
     }
   }
+
   .search__wrap {
     max-width: 720px;
     width: 100%;

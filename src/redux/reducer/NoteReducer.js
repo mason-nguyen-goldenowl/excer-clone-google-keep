@@ -1,4 +1,4 @@
-import { ADDLABEL, ADDNOTE, UPDATELABEL } from "../type/NoteType";
+import { ADD_LABEL, ADD_NOTE, UPDATE_LABEL } from "../type/NoteType";
 
 const stateDefaut = {
   arrNote: [],
@@ -7,15 +7,15 @@ const stateDefaut = {
 
 export const NoteReducer = (state = stateDefaut, action) => {
   switch (action.type) {
-    case ADDNOTE: {
+    case ADD_NOTE: {
       state.arrNote.push(action.noteItem);
       return { ...state };
     }
-    case ADDLABEL: {
+    case ADD_LABEL: {
       state.arrLabel.push(action.label);
       return { ...state };
     }
-    case UPDATELABEL: {
+    case UPDATE_LABEL: {
       state.arrLabel = [...action.arrLabelUpdate];
     }
     default:
