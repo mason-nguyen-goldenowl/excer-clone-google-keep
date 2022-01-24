@@ -1,8 +1,12 @@
 import React, { useRef, useState } from "react";
+
 import { useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+
+
+import { ADD_NOTE } from "../../redux/type/NoteType";
 
 import reminder from "../../asset/editorIcon/reminder.svg";
 import pin from "../../asset/editorIcon/pin.svg";
@@ -20,18 +24,22 @@ import "./Editor.scss";
 
 export default function Editor(props) {
   let noteItem = { title: "", text: "", setAlert: null };
+
   const dispatch = useDispatch();
 
   const [isReminderActive, setReminderActive] = useState(false);
   const [remindDate, setRemindDate] = useState(new Date());
-  const title = useRef("");
-  const text = useRef("");
+  const titleRef = useRef("");
+  const textRef = useRef("");
+
+  let noteItem = { title: "", text: "", setAlert: null };
   let reminderClass = "";
   let timeLeft = remindDate - new Date();
 
   if (isReminderActive === true) {
     reminderClass = "active";
   }
+
   noteItem.remind = moment(remindDate).format();
   noteItem.setAlert = () => {
     setTimeout(() => {
@@ -45,7 +53,7 @@ export default function Editor(props) {
   return (
     <div className="editor">
       <div className="editorTitle">
-        <input ref={title} placeholder="Title" name="title" />
+        <input ref={titleRef} placeholder="Title" name="title" />
         <div className="editorTitle__icon">
           <span>
             <img src={pin} alt=".." />
@@ -53,7 +61,7 @@ export default function Editor(props) {
         </div>
       </div>
       <div className="editorText">
-        <input placeholder="Take a note..." name="text" ref={text} />
+        <input placeholder="Take a note..." name="text" ref={textRef} />
       </div>
       <div className="editorFeature">
         <div className="editorFeature__icon">
@@ -64,7 +72,9 @@ export default function Editor(props) {
                 setReminderActive(!isReminderActive);
               }}
             >
+
               <div className="reminder__btn" title="Reminder">
+
                 <img src={reminder} alt=".." />
 
                 <div className={`reminder ${reminderClass}`}>
@@ -119,14 +129,14 @@ export default function Editor(props) {
           className="editorFeature__close"
           onClick={() => {
             alert("Add note success");
-            noteItem.title = title.current.value;
-            noteItem.text = text.current.value;
+            noteItem.title = titleRef.current.value;
+            noteItem.text = textRef.current.value;
             dispatch({
               type: ADD_NOTE,
               noteItem,
             });
-            title.current.value = "";
-            text.current.value = "";
+            titleRef.current.value = "";
+            textRef.current.value = "";
           }}
         >
           <span>Close</span>
