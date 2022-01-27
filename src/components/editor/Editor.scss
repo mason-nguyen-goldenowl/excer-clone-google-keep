@@ -15,7 +15,8 @@
     border: none;
     outline: none;
   }
-  &Title {
+
+  &-title {
     display: flex;
     padding: 10px 15px;
 
@@ -24,7 +25,8 @@
       font-size: 16px;
     }
   }
-  &Text {
+
+  &-text {
     padding: 12px 16px;
 
     input {
@@ -32,7 +34,8 @@
       font-size: 14px;
     }
   }
-  &Feature {
+
+  &-feature {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -43,19 +46,22 @@
     }
   }
 }
-.editorIcon__list {
+
+.editor-icon__list {
   list-style: none;
   display: flex;
   justify-content: start;
 }
-.editorIcon__item .reminder__btn:focus-within {
+
+.editor-icon__item .reminder__btn:focus-within {
   .reminder {
     display: block;
   }
 }
-.editorIcon__item {
-  width: 40px;
-  height: 40px;
+
+.editor-icon__item {
+  width: 32px;
+  height: 32px;
   margin: 0 8px;
   cursor: pointer;
   display: flex;
@@ -80,44 +86,55 @@
     padding: 8px 12px;
     border-radius: 4px;
     width: auto;
+
     &__item {
       width: auto;
     }
+
     &.active {
       display: block;
     }
+
     &__item {
       display: flex;
       align-items: center;
       padding: 10px 13px;
       font-size: 13px;
+
       &:hover {
         background-color: #00000014;
       }
+
       span {
         margin-left: 8px;
       }
     }
+
     p {
       margin-bottom: 16px;
     }
+
     ul {
       list-style: none;
     }
   }
+
   .redo {
     transform: scaleX(-1);
   }
+
   img {
     width: 18px;
     height: 18px;
     opacity: 0.54;
   }
+
   &:hover {
     background-color: #5f636828;
   }
 }
-.editorFeature__close {
+
+.editor-feature__close {
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.3s;
@@ -125,6 +142,7 @@
     background-color: #5f63680a;
   }
 }
+
 .react-datepicker {
   display: flex;
 }

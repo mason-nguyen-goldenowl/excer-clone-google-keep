@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import "./App.scss";
 import Archive from "./pages/archive/Archive";
 import Home from "./pages/home/Home";

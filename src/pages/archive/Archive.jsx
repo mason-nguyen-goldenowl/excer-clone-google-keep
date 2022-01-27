@@ -1,7 +1,10 @@
 import React from "react";
+
 import Menu from "../../components/menu/Menu";
 import SideMenu from "../../components/sideMenu/SideMenu";
+
 import "./Archive.scss";
+
 export default function Archive() {
   return (
     <div>
