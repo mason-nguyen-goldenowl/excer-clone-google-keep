@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Editor from "../editor/Editor";
+
 import "./NoteText.scss";
 
 export default function NoteText() {
@@ -12,8 +13,8 @@ export default function NoteText() {
   }
 
   return (
-    <div className="noteText">
-      <div className="noteText__show">
+    <div className="note-text">
+      <div className="note-text__show">
         <div className={`editor-wrap ${showClass}`}>
           <Editor />
         </div>

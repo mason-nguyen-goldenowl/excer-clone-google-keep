@@ -1,10 +1,11 @@
 import React, { useRef, useState } from "react";
-import moment from "moment";
 import { useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from "moment";
 
 import { ADD_NOTE } from "../../redux/type/NoteType";
+
 import reminder from "../../asset/editorIcon/reminder.svg";
 import pin from "../../asset/editorIcon/pin.svg";
 import colab from "../../asset/editorIcon/colab.svg";
@@ -14,16 +15,19 @@ import archive from "../../asset/editorIcon/archive.svg";
 import more from "../../asset/editorIcon/more.svg";
 import undo from "../../asset/editorIcon/undo.svg";
 import time from "../../asset/editorIcon/time.svg";
+
 import "./Editor.scss";
 
-export default function Editor() {
+export default function Editor(props) {
+  let noteItem = { title: "", text: "", setAlert: null };
+
   const dispatch = useDispatch();
+
   const [isReminderActive, setReminderActive] = useState(false);
   const [remindDate, setRemindDate] = useState(new Date());
   const titleRef = useRef("");
   const textRef = useRef("");
 
-  let noteItem = { title: "", text: "", setAlert: null };
   let reminderClass = "";
   let timeLeft = remindDate - new Date();
 
@@ -43,27 +47,28 @@ export default function Editor() {
 
   return (
     <div className="editor">
-      <div className="editorTitle">
+      <div className="editor-title">
         <input ref={titleRef} placeholder="Title" name="title" />
-        <div className="editorTitle__icon">
+        <div className="editor-title__icon">
           <span>
             <img src={pin} alt=".." />
           </span>
         </div>
       </div>
-      <div className="editorText">
+
+      <div className="editor-text">
         <input placeholder="Take a note..." name="text" ref={textRef} />
       </div>
-      <div className="editorFeature">
-        <div className="editorFeature__icon">
-          <ul className="editorIcon__list">
+      <div className="editor-feature">
+        <div className="editor-feature__icon">
+          <ul className="editor-icon__list">
             <li
-              className="editorIcon__item "
+              className="editor-icon__item "
               onClick={() => {
                 setReminderActive(!isReminderActive);
               }}
             >
-              <div className="reminder__btn">
+              <div className="reminder__btn" title="Reminder">
                 <img src={reminder} alt=".." />
 
                 <div className={`reminder ${reminderClass}`}>
@@ -91,31 +96,31 @@ export default function Editor() {
                 </div>
               </div>
             </li>
-            <li className="editorIcon__item">
+            <li className="editor-icon__item">
               <img src={colab} alt=".." />
             </li>
-            <li className="editorIcon__item">
+            <li className="editor-icon__item">
               <img src={background} alt=".." />
             </li>
-            <li className="editorIcon__item">
+            <li className="editor-icon__item">
               <img src={image} alt=".." />
             </li>
-            <li className="editorIcon__item">
+            <li className="editor-icon__item">
               <img src={archive} alt=".." />
             </li>
-            <li className="editorIcon__item">
+            <li className="editor-icon__item">
               <img src={more} alt=".." />
             </li>
-            <li className="editorIcon__item">
+            <li className="editor-icon__item">
               <img src={undo} alt=".." />
             </li>
-            <li className="editorIcon__item ">
+            <li className="editor-icon__item ">
               <img src={undo} alt=".." className="redo" />
             </li>
           </ul>
         </div>
         <div
-          className="editorFeature__close"
+          className="editor-feature__close"
           onClick={() => {
             alert("Add note success");
             noteItem.title = titleRef.current.value;

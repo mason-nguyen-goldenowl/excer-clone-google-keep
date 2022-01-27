@@ -11,11 +11,13 @@ import archive from "../../asset/editorIcon/archive.svg";
 import more from "../../asset/editorIcon/more.svg";
 import select from "../../asset/editorIcon/select.svg";
 import time from "../../asset/editorIcon/time.svg";
+
 import "./NoteCard.scss";
 
 export default function NoteCard(props) {
   const [remindDate, setRemindDate] = useState(new Date());
   const [isReminderActive, setReminderActive] = useState(false);
+
   const note = props.content;
 
   let reminderClass = "";
@@ -23,26 +25,31 @@ export default function NoteCard(props) {
   note.setAlert();
 
   return (
-    <div className="noteCard">
-      <div className="noteCard__select">
+    <div className="note-card">
+      <div className="note-card__select">
         <img src={select} alt=".." />
       </div>
-      <div className="noteCard__pin">
+
+      <div className="note-card__pin">
         <img src={pin} alt="..." />
       </div>
-      <div className="noteCard__text">
+
+      <div className="note-card__text">
         <h3>{note.title}</h3>
         <p>{note.text}</p>
       </div>
-      <div className="noteCard__feature">
-        <ul className="editorIcon__list">
+
+      <div className="note-card__feature">
+        <ul className="editor-icon__list">
           <li
-            className="editorIcon__item "
+            className="editor-icon__item "
             onClick={() => {
               setReminderActive(!isReminderActive);
             }}
           >
-            <div className="reminder__btn">
+
+            <div className="reminder__btn" title="Reminder">
+
               <img src={reminder} alt=".." />
 
               <div className={`reminder ${reminderClass}`}>
@@ -58,6 +65,7 @@ export default function NoteCard(props) {
                     <img src={time} alt="..." />
                     <span> Pick date & time </span>
                   </div>
+
                   <div className="reminder__item">
                     <DatePicker
                       selected={remindDate}
@@ -70,19 +78,19 @@ export default function NoteCard(props) {
               </div>
             </div>
           </li>
-          <li className="editorIcon__item">
+          <li className="editor-icon__item">
             <img src={colab} alt=".." />
           </li>
-          <li className="editorIcon__item">
+          <li className="editor-icon__item">
             <img src={background} alt=".." />
           </li>
-          <li className="editorIcon__item">
+          <li className="editor-icon__item">
             <img src={image} alt=".." />
           </li>
-          <li className="editorIcon__item">
+          <li className="editor-icon__item">
             <img src={archive} alt=".." />
           </li>
-          <li className="editorIcon__item">
+          <li className="editor-icon__item">
             <img src={more} alt=".." />
           </li>
         </ul>
