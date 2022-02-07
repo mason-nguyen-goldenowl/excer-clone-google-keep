@@ -47,9 +47,7 @@ export default function NoteCard(props) {
               setReminderActive(!isReminderActive);
             }}
           >
-
             <div className="reminder__btn" title="Reminder">
-
               <img src={reminder} alt=".." />
 
               <div className={`reminder ${reminderClass}`}>
@@ -78,6 +76,7 @@ export default function NoteCard(props) {
               </div>
             </div>
           </li>
+
           <li className="editor-icon__item">
             <img src={colab} alt=".." />
           </li>

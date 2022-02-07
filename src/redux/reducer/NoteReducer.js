@@ -1,16 +1,14 @@
-
 import { ADD_LABEL, ADD_NOTE, UPDATE_LABEL } from "../type/NoteType";
-
 
 const stateDefaut = {
   arrNote: [],
   arrLabel: [],
+  arrRemind: [],
 };
 
 export const NoteReducer = (state = stateDefaut, action) => {
   switch (action.type) {
     case ADD_NOTE: {
-
       let isAcept = true;
       let j = 0;
       let preTitle = action.noteItem.title;
@@ -24,7 +22,11 @@ export const NoteReducer = (state = stateDefaut, action) => {
       action.noteItem.id = action.noteItem.title;
 
       state.arrNote.push(action.noteItem);
-  
+
+      if (action.timeLeft > 0) {
+        state.arrRemind.push(action.noteItem);
+      }
+
       return { ...state };
     }
     case ADD_LABEL: {

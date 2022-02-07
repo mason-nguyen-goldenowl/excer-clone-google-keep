@@ -11,13 +11,12 @@ import settings from "../../asset/menuTopIcon/settings.svg";
 
 import "./Menu.scss";
 
-export default function Menu() {
+export default function Menu(props) {
   const dispatch = useDispatch();
   const logoURL =
     "https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png";
-  const { menuTitle } = useSelector((state) => state.MenuReducer);
+
   const [isListActive, setIsListActive] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
 
   return (
     <div className="menu-wrapter">
@@ -26,7 +25,6 @@ export default function Menu() {
           <div className="menu__logo">
             <div>
               <div
-                href="#"
                 className="menu__btn"
                 onClick={() => {
                   setIsListActive(!isListActive);
@@ -41,46 +39,47 @@ export default function Menu() {
                 </svg>
               </div>
             </div>
+
             <div className="menu-title">
               <img src={logoURL} alt="..." />
-              <span>{menuTitle}</span>
+              <span>{props.title}</span>
             </div>
           </div>
           <div className="menu__search">
             <div className="search__input">
               <div className="search__wrap">
-                <a className="menu__btn" href="#">
+                <div className="menu__btn">
                   <img src={search} alt="..." />
-                </a>
+                </div>
                 <input placeholder="Search" />
-                <a className="menu__btn close" href="#">
+                <div className="menu__btn close">
                   <img src={close} alt="..." />
-                </a>
+                </div>
               </div>
             </div>
             <div className="settings">
-              <a className="menu__btn" href="#">
+              <div className="menu__btn">
                 <img src={refresh} alt=".." />
-              </a>
-              <a className="menu__btn" href="#">
+              </div>
+              <div className="menu__btn">
                 <img src={gridIcon} alt="..." />
-              </a>
-              <a className="menu__btn" href="#">
+              </div>
+              <div className="menu__btn">
                 <img src={settings} alt="..." />
-              </a>
+              </div>
             </div>
           </div>
           <div className="menu__acount">
             <div>
-              <a className="menu__btn" href="#">
+              <div className="menu__btn">
                 <svg class="gb_Pe" focusable="false" viewBox="0 0 24 24">
                   <path d="M6,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM16,6c0,1.1 0.9,2 2,2s2,-0.9 2,-2 -0.9,-2 -2,-2 -2,0.9 -2,2zM12,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z"></path>
                 </svg>
-              </a>
+              </div>
             </div>
 
             <div className="avt-wrap">
-              <a href="#">M</a>
+              <div>M</div>
             </div>
           </div>
         </div>

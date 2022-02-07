@@ -9,12 +9,6 @@ const stateDefaut = {
 
 export const MenuReducer = (state = stateDefaut, action) => {
   switch (action.type) {
-    case ADD_ACTIVE_CLASS: {
-      state.idMenuItemActive = action.idActive;
-      state.menuTitle = action.title;
-      state.logoURL = action.logoURL;
-      return { ...state };
-    }
     case CHANGE_LIST_CLASS: {
       state.isListActive = action.isListActive;
       return { ...state };

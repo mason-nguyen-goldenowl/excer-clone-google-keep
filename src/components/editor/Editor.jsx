@@ -123,11 +123,14 @@ export default function Editor(props) {
           className="editor-feature__close"
           onClick={() => {
             alert("Add note success");
+
             noteItem.title = titleRef.current.value;
             noteItem.text = textRef.current.value;
+
             dispatch({
               type: ADD_NOTE,
               noteItem,
+              timeLeft,
             });
             titleRef.current.value = "";
             textRef.current.value = "";
