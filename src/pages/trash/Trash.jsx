@@ -1,11 +1,14 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch,useSelector  } from "react-redux";
+
 import Menu from "../../components/menu/Menu";
 import NoteCardTrash from "../../components/noteCard/NoteCardTrash";
 import SideMenu from "../../components/sideMenu/SideMenu";
-import { EMPTYTRASH } from "../../redux/type/NoteType";
+
+import { EMPTY_TRASH } from "../../redux/type/NoteType";
+
 import "./Trash.scss";
+
 export default function Trash() {
   const disptach = useDispatch();
   const { arrTrash } = useSelector((state) => state.note);
@@ -17,7 +20,7 @@ export default function Trash() {
   };
   const emptyTrashAction = () => {
     disptach({
-      type: EMPTYTRASH,
+      type: EMPTY_TRASH,
     });
   };
   return (

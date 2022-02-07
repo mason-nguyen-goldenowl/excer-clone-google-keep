@@ -1,12 +1,14 @@
 @use "../../scss/" as *;
 
-.noteText {
+.note-text {
   min-width: 390px;
+
   max-height: auto;
   height: auto;
   width: auto;
   min-width: 500px;
   max-width: 600px;
+
   &__show {
     .show__input {
       height: 46px;
