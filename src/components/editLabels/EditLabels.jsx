@@ -1,12 +1,15 @@
 import React, { useRef, useState } from "react";
 
+
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 
 import check from "../../asset/editorIcon/check.svg";
 import labelIcon from "../../asset/editorIcon/label.svg";
 import edit from "../../asset/editorIcon/edit.svg";
 import deleteIcon from "../../asset/menuTopIcon/delete.svg";
+
 
 import {
   ADD_LABEL,
@@ -16,9 +19,11 @@ import {
 
 import useOnClickOutside from "../../hook/useClickOutside";
 
+
 import "./EditLables.scss";
 
 export default function EditLabels(props) {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { arrLabel } = useSelector((state) => state.note);
@@ -27,18 +32,21 @@ export default function EditLabels(props) {
 
   let arrLabelUpdate = [...arrLabel];
 
+
   const onLabelChange = (e) => {
     setLabel(e.target.value);
   };
 
   const renderLabel = () => {
     return arrLabel.map((item, index) => {
+
       let changeLabel = item;
       const onInputChange = (e) => {
         item = e.target.value;
       };
 
       arrLabelUpdate[index] = item;
+
 
       return (
         <div className="label__item" key={index}>
@@ -49,14 +57,17 @@ export default function EditLabels(props) {
               src={deleteIcon}
               alt=".."
               onClick={() => {
+
                 dispatch({
                   type: DELETE_LABEL,
                   labelDelete: item,
                 });
+
               }}
             />
           </div>
           <p>{item}</p>
+
 
           <input onChange={onInputChange} />
           <div className="icon-edit">
@@ -74,16 +85,20 @@ export default function EditLabels(props) {
                 navigate(`/labels/${item}`);
               }}
             />
+
           </div>
         </div>
       );
     });
   };
 
+
   useOnClickOutside(editLabelRef, () => props.setOpenModal(false));
 
   return (
     <div className="edit-labels" ref={editLabelRef}>
+
+
       <div className="edit-labels__title">
         <p>Edit labels</p>
         <img
@@ -115,7 +130,9 @@ export default function EditLabels(props) {
         <div className="edit-labels__footer">
           <button
             onClick={() => {
+
               props.setOpenModal(false);
+
             }}
           >
             Done

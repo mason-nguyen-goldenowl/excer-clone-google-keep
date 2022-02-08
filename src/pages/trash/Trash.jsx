@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -5,11 +6,13 @@ import Comfirm from "../../components/comfirm/Comfirm";
 import Menu from "../../components/menu/Menu";
 import Modal from "../../components/modal/Modal";
 import NoteCardTrash from "../../components/noteCard/NoteCardTrash";
+
 import SideMenu from "../../components/sideMenu/SideMenu";
 
 import "./Trash.scss";
 
 export default function Trash() {
+
   const { arrTrash } = useSelector((state) => state.note);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -46,6 +49,7 @@ export default function Trash() {
           children={<Comfirm setOpenModal={setModalOpen} />}
         />
       )}
+
     </div>
   );
 }

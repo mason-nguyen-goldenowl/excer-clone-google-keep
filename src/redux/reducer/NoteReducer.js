@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+
 import {
   ADD_LABEL,
   ADD_NOTE,
@@ -12,14 +12,17 @@ import {
   DELETE_LABEL,
 } from "../type/NoteType";
 
+
 const stateDefaut = {
   arrNote: [],
   arrLabel: [],
   arrRemind: [],
+
   arrArchive: [],
   arrTrash: [],
   arrSearch: [],
   label: [],
+
 };
 
 export const NoteReducer = (state = stateDefaut, action) => {
@@ -43,6 +46,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
         state.arrRemind.push(action.noteItem);
       }
       state.arrNote.push(action.noteItem);
+
 
       return { ...state };
     }

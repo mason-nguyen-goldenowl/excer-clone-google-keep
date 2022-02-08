@@ -1,12 +1,15 @@
+
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+
 
 import gridIcon from "../../asset/menuTopIcon/gridIcon.svg";
 import search from "../../asset/menuTopIcon/search.svg";
 import close from "../../asset/menuTopIcon/delete.svg";
 import refresh from "../../asset/menuTopIcon/refresh.svg";
 import settings from "../../asset/menuTopIcon/settings.svg";
+
 
 import { CHANGE_LIST_CLASS } from "../../redux/type/MenuType";
 import { SEARCH } from "../../redux/type/NoteType";
@@ -15,8 +18,10 @@ import "./Menu.scss";
 
 export default function Menu(props) {
   const dispatch = useDispatch();
+
   const [searchInput, setSearchInput] = useState("");
   const searchRef = useRef("");
+
   const logoURL =
     "https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png";
 
@@ -59,21 +64,27 @@ export default function Menu(props) {
             </div>
           </div>
           <div className="menu__search">
+
             <Link to="/search" className="search__input">
+
               <div className="search__wrap">
                 <div className="menu__btn">
                   <img src={search} alt="..." />
                 </div>
+
                 <input
                   ref={searchRef}
                   placeholder="Search"
                   onChange={handleChangeInput}
                 />
+
                 <div className="menu__btn close">
                   <img src={close} alt="..." />
                 </div>
               </div>
+
             </Link>
+
             <div className="settings">
               <div className="menu__btn">
                 <img src={refresh} alt=".." />

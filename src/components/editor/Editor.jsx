@@ -1,10 +1,12 @@
 import React, { useRef, useState } from "react";
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch } from "react-redux";
 
 import reminder from "../../asset/editorIcon/reminder.svg";
 import closeIcon from "../../asset/menuTopIcon/delete.svg";
+
 import colab from "../../asset/editorIcon/colab.svg";
 import background from "../../asset/editorIcon/background.svg";
 import image from "../../asset/editorIcon/image.svg";
@@ -12,6 +14,7 @@ import archive from "../../asset/editorIcon/archive.svg";
 import more from "../../asset/editorIcon/more.svg";
 import undo from "../../asset/editorIcon/undo.svg";
 import time from "../../asset/editorIcon/time.svg";
+
 
 import { ADD_NOTE } from "../../redux/type/NoteType";
 import useOnClickOutside from "../../hook/useClickOutside";
@@ -48,6 +51,7 @@ export default function Editor(props) {
     alert("Add note success");
     props.setOpenModal(false);
   };
+
 
   if (isReminderActive === true) {
     reminderClass = "active";
@@ -166,6 +170,7 @@ export default function Editor(props) {
           </div>
         </div>
       </form>
+
     </div>
   );
 }

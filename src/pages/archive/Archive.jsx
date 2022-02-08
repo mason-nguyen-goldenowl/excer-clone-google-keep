@@ -3,11 +3,14 @@ import { useSelector } from "react-redux";
 
 import Menu from "../../components/menu/Menu";
 import NoteCard from "../../components/noteCard/NoteCard";
+
+
 import SideMenu from "../../components/sideMenu/SideMenu";
 
 import "./Archive.scss";
 
 export default function Archive() {
+
   const { arrArchive } = useSelector((state) => state.note);
 
   const renderNoteCard = () => {
@@ -26,6 +29,7 @@ export default function Archive() {
         <div className="right">
           <div className="note__content">{renderNoteCard()}</div>
         </div>
+
       </div>
     </div>
   );
