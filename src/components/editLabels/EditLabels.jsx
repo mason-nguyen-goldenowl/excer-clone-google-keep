@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import check from "../../asset/editorIcon/check.svg";
 import labelIcon from "../../asset/editorIcon/label.svg";
@@ -18,6 +19,7 @@ import useOnClickOutside from "../../hook/useClickOutside";
 import "./EditLables.scss";
 
 export default function EditLabels(props) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { arrLabel } = useSelector((state) => state.note);
   const editLabelRef = useRef();
@@ -69,6 +71,7 @@ export default function EditLabels(props) {
                   labelUpdate: changeLabel,
                   item,
                 });
+                navigate(`/labels/${item}`);
               }}
             />
           </div>

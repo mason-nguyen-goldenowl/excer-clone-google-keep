@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   ADD_LABEL,
   ADD_NOTE,
@@ -140,7 +141,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
       let noteLabelUpdate = state.arrNote.filter(
         (note) => note.label === action.labelUpdate
       );
-      console.log(noteLabelUpdate);
+
       for (let note of state.arrNote) {
         noteLabelUpdate.map((noteUpdate) => {
           if (note === noteUpdate) {
@@ -156,7 +157,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
       let idLabel = state.arrLabel.findIndex(
         (label) => label === action.labelDelete
       );
-      console.log("dele", idLabel);
+
       state.arrLabel.splice(idLabel, 1);
       return { ...state };
     }
