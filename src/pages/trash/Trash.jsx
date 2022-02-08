@@ -14,15 +14,15 @@ export default function Trash() {
   const [modalOpen, setModalOpen] = useState(false);
 
   const renderNoteCard = () => {
-    return arrTrash?.map((note, index) => {
-      return <NoteCardTrash content={note} key={index} />;
+    return arrTrash?.map((note) => {
+      return <NoteCardTrash content={note} key={note.id} />;
     });
   };
 
   return (
     <div>
       <Menu title="Trash" />
-      <div className="bodyContent">
+      <div className="body-content">
         <div className="left">
           <SideMenu active="trash" />
         </div>

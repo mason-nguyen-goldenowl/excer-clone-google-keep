@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+
+import { useSelector, useDispatch } from "react-redux";
 
 import check from "../../asset/editorIcon/check.svg";
 import labelIcon from "../../asset/editorIcon/label.svg";
@@ -35,14 +35,15 @@ export default function EditLabels(props) {
       const onInputChange = (e) => {
         item = e.target.value;
       };
+
       arrLabelUpdate[index] = item;
 
       return (
         <div className="label__item" key={index}>
           <div className="icon">
-            <img className="labelIcon" src={labelIcon} alt=".." />
+            <img className="label-icon" src={labelIcon} alt=".." />
             <img
-              className="deleteIcon"
+              className="delete-icon"
               src={deleteIcon}
               alt=".."
               onClick={() => {
@@ -54,11 +55,12 @@ export default function EditLabels(props) {
             />
           </div>
           <p>{item}</p>
+
           <input onChange={onInputChange} />
-          <div className="iconEdit">
-            <img className="editIcon" src={edit} alt=".." />
+          <div className="icon-edit">
+            <img className="edit-icon" src={edit} alt=".." />
             <img
-              className="checkIcon"
+              className="check-icon"
               src={check}
               alt=".."
               onClick={() => {
@@ -74,11 +76,12 @@ export default function EditLabels(props) {
       );
     });
   };
+
   useOnClickOutside(editLabelRef, () => props.setOpenModal(false));
 
   return (
-    <div className="editLabels" ref={editLabelRef}>
-      <div className="editLabels__title">
+    <div className="edit-labels" ref={editLabelRef}>
+      <div className="edit-labels__title">
         <p>Edit labels</p>
         <img
           src={deleteIcon}
@@ -88,8 +91,8 @@ export default function EditLabels(props) {
           }}
         />
       </div>
-      <div className="editLabels-wrap">
-        <div className="editLabels__cre">
+      <div className="edit-labels-wrap">
+        <div className="edit-labels__cre">
           <input placeholder="Create new label" onChange={onLabelChange} />
           <div
             className="cre__btn"
@@ -104,9 +107,9 @@ export default function EditLabels(props) {
             <img src={check} alt="..." />
           </div>
         </div>
-        <div className="editLabels__body">{renderLabel()}</div>
+        <div className="edit-labels__body">{renderLabel()}</div>
         <hr></hr>
-        <div className="editLabels__footer">
+        <div className="edit-labels__footer">
           <button
             onClick={() => {
               props.setOpenModal(false);

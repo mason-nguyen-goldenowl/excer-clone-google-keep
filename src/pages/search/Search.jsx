@@ -9,8 +9,8 @@ const Search = () => {
   const { arrSearch } = useSelector((state) => state.note);
 
   const renderNoteCard = () => {
-    return arrSearch.map((note, index) => {
-      return <NoteCard content={note} key={index} />;
+    return arrSearch.map((note) => {
+      return <NoteCard content={note} key={note.id} />;
     });
   };
   useEffect(() => {}, [arrSearch]);
@@ -18,7 +18,7 @@ const Search = () => {
   return (
     <div>
       <Menu title="Search" />
-      <div className="bodyContent">
+      <div className="body-content">
         <div className="left">
           <SideMenu active="" />
         </div>

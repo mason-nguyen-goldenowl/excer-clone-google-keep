@@ -24,13 +24,24 @@ const stateDefaut = {
 export const NoteReducer = (state = stateDefaut, action) => {
   switch (action.type) {
     case ADD_NOTE: {
-      state.arrNote.push(action.noteItem);
+      let isAcept = true;
+      let j = 0;
+      let preTitle = action.noteItem.title;
+
+      state.arrNote.forEach((item, i) => {
+        if (item.title === action.noteItem.title) {
+          j++;
+          action.noteItem.title = preTitle + "(" + j + ")";
+        }
+      });
+      action.noteItem.id = action.noteItem.title;
       let remindTime = new Date(action.noteItem.remind).getTime();
       let now = new Date().getTime();
       let remainingTime = remindTime - now;
       if (remainingTime > 0) {
         state.arrRemind.push(action.noteItem);
       }
+      state.arrNote.push(action.noteItem);
 
       return { ...state };
     }

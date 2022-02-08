@@ -80,10 +80,10 @@ export default function Editor(props) {
           submitNote)
         }
       >
-        <div className="editorTitle">
+        <div className="editor-title">
           <input placeholder="Title" name="title" onChange={handleTitle} />
           <div
-            className="editorTitle__icon"
+            className="editor-title__icon"
             title="Close Editor"
             onClick={() => {
               props.setOpenModal(false);
@@ -94,18 +94,18 @@ export default function Editor(props) {
             </span>
           </div>
         </div>
-        <div className="editorText">
+        <div className="editor-text">
           <input
             placeholder="Take a note..."
             name="text"
             onChange={handleText}
           />
         </div>
-        <div className="editorFeature">
-          <div className="editorFeature__icon">
-            <ul className="editorIcon__list">
+        <div className="editor-feature">
+          <div className="editor-feature__icon">
+            <ul className="editor-icon__list">
               <li
-                className="editorIcon__item "
+                className="editor-icon__item "
                 onClick={() => {
                   setReminderActive(!isReminderActive);
                 }}
@@ -138,30 +138,30 @@ export default function Editor(props) {
                   </div>
                 </div>
               </li>
-              <li className="editorIcon__item">
+              <li className="editor-icon__item">
                 <img src={colab} alt=".." />
               </li>
-              <li className="editorIcon__item">
+              <li className="editor-icon__item">
                 <img src={background} alt=".." />
               </li>
-              <li className="editorIcon__item">
+              <li className="editor-icon__item">
                 <img src={image} alt=".." />
               </li>
-              <li className="editorIcon__item">
+              <li className="editor-icon__item">
                 <img src={archive} alt=".." />
               </li>
-              <li className="editorIcon__item">
+              <li className="editor-icon__item">
                 <img src={more} alt=".." />
               </li>
-              <li className="editorIcon__item">
+              <li className="editor-icon__item">
                 <img src={undo} alt=".." />
               </li>
-              <li className="editorIcon__item ">
+              <li className="editor-icon__item ">
                 <img src={undo} alt=".." className="redo" />
               </li>
             </ul>
           </div>
-          <div className="editorFeature__close">
+          <div className="editor-feature__close">
             <button type="submit">Submit</button>
           </div>
         </div>

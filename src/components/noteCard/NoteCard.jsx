@@ -15,11 +15,13 @@ import select from "../../asset/editorIcon/select.svg";
 import time from "../../asset/editorIcon/time.svg";
 
 import { ARCHIVE_NOTE, DELETE_NOTE } from "../../redux/type/NoteType";
+
 import "./NoteCard.scss";
 
 export default function NoteCard(props) {
   const dispatch = useDispatch();
   const [remindDate, setRemindDate] = useState(new Date());
+
   const note = props.content;
 
   let reminderClass = "";
@@ -57,14 +59,16 @@ export default function NoteCard(props) {
   }
 
   return (
-    <div className="noteCard">
-      <div className="noteCard__select">
+    <div className="note-card">
+      <div className="note-card__select">
         <img src={select} alt=".." />
       </div>
-      <div className="noteCard__pin">
+
+      <div className="note-card__pin">
         <img src={pin} alt="..." />
       </div>
-      <div className="noteCard__text">
+
+      <div className="note-card__text">
         <span className={`reminderStatus ${statusActive}`}>
           <img src={time} alt="" />
           <Moment format="MMM DD, YYYY, hh:mm:A">{note.remind}</Moment>
@@ -76,9 +80,9 @@ export default function NoteCard(props) {
 
       <span className={`${labelClass}`}>{note.label}</span>
 
-      <div className="noteCard__feature">
-        <ul className="editorIcon__list">
-          <li className="noteCardIcon ">
+      <div className="note-card__feature">
+        <ul className="editor-icon__list">
+          <li className="editor-icon__item  ">
             <div className="reminder__btn" title="Reminder">
               <img src={reminder} alt=".." />
 
@@ -90,6 +94,7 @@ export default function NoteCard(props) {
                     <img src={time} alt="..." />
                     <span> Pick date & time </span>
                   </div>
+
                   <div className="reminder__item">
                     <DatePicker
                       selected={remindDate}
@@ -102,19 +107,24 @@ export default function NoteCard(props) {
               </div>
             </div>
           </li>
-          <li className="noteCardIcon" title="Delete" onClick={deleteAction}>
+
+          <li
+            className="editor-icon__item"
+            title="Delete"
+            onClick={deleteAction}
+          >
             <img src={trash} alt=".." />
           </li>
-          <li className="noteCardIcon">
+          <li className="editor-icon__item">
             <img src={background} alt=".." />
           </li>
-          <li className="noteCardIcon">
+          <li className="editor-icon__item">
             <img src={image} alt=".." />
           </li>
-          <li className="noteCardIcon" onClick={archiveAction}>
+          <li className="editor-icon__item" onClick={archiveAction}>
             <img src={archive} alt=".." />
           </li>
-          <li className="noteCardIcon">
+          <li className="editor-icon__item">
             <img src={more} alt=".." />
           </li>
         </ul>

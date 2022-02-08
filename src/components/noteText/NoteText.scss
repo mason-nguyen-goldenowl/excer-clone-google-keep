@@ -1,6 +1,7 @@
 @use "../../scss/" as *;
 
-.noteText {
+.note-text {
+  min-width: 390px;
   max-height: auto;
   height: auto;
   width: auto;

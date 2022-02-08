@@ -3,8 +3,8 @@ import "./Modal.scss";
 
 export default function Modal(props) {
   return (
-    <div className="modalBackground">
-      <div className="modalContainer">{props.children}</div>
+    <div className="modal-background">
+      <div className="modal-container">{props.children}</div>
     </div>
   );
 }

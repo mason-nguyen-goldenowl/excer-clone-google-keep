@@ -1,6 +1,6 @@
 @use "../../scss/" as *;
 
-.editLabels {
+.edit-labels {
   max-width: 320px;
 
   input {
@@ -19,6 +19,7 @@
     justify-content: space-between;
     margin-bottom: 10px;
     align-items: center;
+
     img {
       cursor: pointer;
     }
@@ -30,6 +31,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     &:focus-within {
       p {
         display: none;
@@ -40,29 +42,32 @@
       }
     }
 
-    .deleteIcon {
+    .delete-icon {
       transition: all 0.3s;
       display: none;
       cursor: pointer;
     }
 
-    .checkIcon {
+    .check-icon {
       transition: all 0.3s;
       display: none;
       cursor: pointer;
     }
 
     &:hover {
-      .deleteIcon {
+      .delete-icon {
         display: block;
       }
-      .labelIcon {
+
+      .label-icon {
         display: none;
       }
-      .checkIcon {
+
+      .check-icon {
         display: block;
       }
-      .editIcon {
+
+      .edit-icon {
         display: none;
       }
     }
@@ -77,6 +82,7 @@
   &__cre {
     display: flex;
     justify-content: space-between;
+
     .cre__btn {
       cursor: pointer;
     }
@@ -94,6 +100,7 @@
 
   &__footer {
     padding-top: 10px;
+
     button {
       padding: 5px 8px;
       background-color: transparent;

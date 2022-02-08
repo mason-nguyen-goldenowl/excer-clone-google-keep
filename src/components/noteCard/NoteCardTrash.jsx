@@ -46,27 +46,31 @@ const Notecardtrash = (props) => {
   deleteAfter7Day();
 
   return (
-    <div className="noteCard">
-      <div className="noteCard__select">
+    <div className="note-card">
+      <div className="note-card__select">
         <img src={select} alt=".." />
       </div>
-      <div className="noteCard__pin">
+      <div className="note-card__pin">
         <img src={pin} alt="..." />
       </div>
-      <div className="noteCard__text">
+      <div className="note-card__text">
         <h3>{note.title}</h3>
         <p>{note.text}</p>
       </div>
-      <div className="noteCard__feature">
-        <ul className="editorIcon__list">
+      <div className="note-card__feature">
+        <ul className="editor-icon__list">
           <li
-            className="noteCardIcon"
+            className="editor-icon__item"
             title="Delete Forever"
             onClick={deleteForeverAction}
           >
             <img src={trash} alt=".." />
           </li>
-          <li className="noteCardIcon" title="Restore" onClick={restoreAction}>
+          <li
+            className="editor-icon__item"
+            title="Restore"
+            onClick={restoreAction}
+          >
             <img src={restore} alt=".." />
           </li>
         </ul>

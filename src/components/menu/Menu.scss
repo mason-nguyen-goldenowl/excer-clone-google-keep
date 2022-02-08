@@ -76,6 +76,7 @@
     background-color: #f1f3f4;
     border-radius: 8px;
     overflow: hidden;
+
     @include mobile {
       background-color: transparent;
       width: fit-content;
