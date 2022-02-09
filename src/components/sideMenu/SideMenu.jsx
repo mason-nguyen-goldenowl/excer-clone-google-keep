@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import labelIcon from "../../asset/editorIcon/label.svg";
+
 import EditLabels from "../editLabels/EditLabels";
 
 import { ReactComponent as NoteIcon } from "../../asset/sideMenuIcon/Note.svg";
@@ -10,14 +12,17 @@ import { ReactComponent as ArchiveIcon } from "../../asset/sideMenuIcon/Archive.
 import { ReactComponent as EditIcon } from "../../asset/sideMenuIcon/Edit.svg";
 import { ReactComponent as TrashIcon } from "../../asset/sideMenuIcon/Trash.svg";
 
+
 import Modal from "../modal/Modal";
 import "./SideMenu.scss";
 export default function SideMenu(props) {
   const { isListActive } = useSelector((state) => state.menu);
   const { arrLabel } = useSelector((state) => state.note);
 
+
   const [listClass, setListClass] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+
 
   const renderLabels = () => {
     return arrLabel.map((label) => {
@@ -33,6 +38,7 @@ export default function SideMenu(props) {
       );
     });
   };
+
   useEffect(() => {
     if (isListActive) {
       setListClass("active");
@@ -43,6 +49,7 @@ export default function SideMenu(props) {
       item.classList.remove("active");
     }
     document.getElementById(`${props.active}`)?.classList.add("active");
+
   }, []);
 
   return (
@@ -65,11 +72,14 @@ export default function SideMenu(props) {
           </div>
         </li>
         {renderLabels()}
+
         <li
           className="list-item__item "
           id="item3"
           onClick={() => {
-            console.log(modalOpen);
+
+ 
+
             setModalOpen(true);
           }}
         >

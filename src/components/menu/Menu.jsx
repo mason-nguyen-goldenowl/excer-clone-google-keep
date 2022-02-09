@@ -1,6 +1,8 @@
+
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+
 
 import gridIcon from "../../asset/menuTopIcon/gridIcon.svg";
 import search from "../../asset/menuTopIcon/search.svg";
@@ -17,10 +19,12 @@ export default function Menu(props) {
   const dispatch = useDispatch();
   const [searchInput, setSearchInput] = useState("");
   const searchRef = useRef("");
+
   const logoURL =
     "https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png";
 
   const [isListActive, setIsListActive] = useState(false);
+
   const handleChangeInput = () => {
     setSearchInput(searchRef.current.value);
     console.log(searchInput);
@@ -29,6 +33,7 @@ export default function Menu(props) {
       searchInput,
     });
   };
+
 
   return (
     <div className="menu-wrapter">
@@ -58,21 +63,27 @@ export default function Menu(props) {
             </div>
           </div>
           <div className="menu__search">
+
             <Link to="/search" className="search__input">
+
               <div className="search__wrap">
                 <div className="menu__btn">
                   <img src={search} alt="..." />
                 </div>
+
                 <input
                   ref={searchRef}
                   placeholder="Search"
                   onChange={handleChangeInput}
                 />
+
                 <div className="menu__btn close">
                   <img src={close} alt="..." />
                 </div>
               </div>
+
             </Link>
+
             <div className="settings">
               <div className="menu__btn">
                 <img src={refresh} alt=".." />

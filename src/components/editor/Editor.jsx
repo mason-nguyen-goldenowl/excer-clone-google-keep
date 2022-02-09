@@ -15,11 +15,13 @@ import more from "../../asset/editorIcon/more.svg";
 import undo from "../../asset/editorIcon/undo.svg";
 import time from "../../asset/editorIcon/time.svg";
 
+
 import { ADD_NOTE } from "../../redux/type/NoteType";
 import "./Editor.scss";
 
 export default function Editor(props) {
   let noteItem = { title: "", text: "", setAlert: null, timeLeft: -1 };
+
 
   const dispatch = useDispatch();
 
@@ -27,15 +29,19 @@ export default function Editor(props) {
   const [remindDate, setRemindDate] = useState(new Date());
   const titleRef = useRef("");
   const textRef = useRef("");
+
   let reminderClass = "";
   let timeLeft = remindDate - new Date();
   noteItem.timeLeft = timeLeft;
 
+
   if (isReminderActive === true) {
     reminderClass = "active";
   }
+
   noteItem.remind = moment(remindDate).format();
   noteItem.timeLeft = timeLeft;
+
   noteItem.setAlert = () => {
     setTimeout(() => {
       if (timeLeft > 0) {
@@ -137,6 +143,7 @@ export default function Editor(props) {
           </div>
         </div>
       </form>
+
     </div>
   );
 }

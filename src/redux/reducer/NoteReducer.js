@@ -1,3 +1,4 @@
+
 import {
   ADD_LABEL,
   ADD_NOTE,
@@ -10,18 +11,23 @@ import {
   SEARCH,
 } from "../type/NoteType";
 
+
 const stateDefaut = {
   arrNote: [],
   arrLabel: [],
   arrRemind: [],
+
   arrArchive: [],
   arrTrash: [],
   arrSearch: [],
+
 };
 
 export const NoteReducer = (state = stateDefaut, action) => {
   switch (action.type) {
     case ADD_NOTE: {
+
+
       let j = 0;
       let preTitle = action.noteItem.title;
 
@@ -36,6 +42,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
         state.arrRemind.push(action.noteItem);
       }
       state.arrNote.push(action.noteItem);
+
 
       return { ...state };
     }

@@ -1,11 +1,15 @@
 import React, { useState } from "react";
+
 import { useDispatch } from "react-redux";
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import reminder from "../../asset/editorIcon/reminder.svg";
 import pin from "../../asset/editorIcon/pin.svg";
+
 import trash from "../../asset/editorIcon/trash.svg";
+
 import background from "../../asset/editorIcon/background.svg";
 import image from "../../asset/editorIcon/image.svg";
 import archive from "../../asset/editorIcon/archive.svg";
@@ -45,6 +49,7 @@ export default function NoteCard(props) {
     });
   };
   setAlert();
+
 
   return (
     <div className="note-card">
@@ -101,6 +106,7 @@ export default function NoteCard(props) {
 
           <li className="editor-icon__item" onClick={deleteAction}>
             <img src={trash} alt=".." />
+
           </li>
           <li className="editor-icon__item">
             <img src={background} alt=".." />
@@ -108,7 +114,9 @@ export default function NoteCard(props) {
           <li className="editor-icon__item">
             <img src={image} alt=".." />
           </li>
+
           <li className="editor-icon__item" onClick={archiveAction}>
+
             <img src={archive} alt=".." />
           </li>
           <li className="editor-icon__item">
