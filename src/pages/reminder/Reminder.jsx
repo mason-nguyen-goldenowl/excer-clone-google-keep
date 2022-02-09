@@ -10,8 +10,8 @@ export default function Reminder() {
   const { arrRemind } = useSelector((state) => state.note);
 
   const renderNoteCard = () => {
-    return arrRemind?.map((note, index) => {
-      return <NoteCard content={note} key={index} />;
+    return arrRemind?.map((note) => {
+      return <NoteCard content={note} key={note.id} />;
     });
   };
 

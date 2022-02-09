@@ -30,6 +30,7 @@ export default function Editor(props) {
   let reminderClass = "";
   let timeLeft = remindDate - new Date();
   noteItem.timeLeft = timeLeft;
+
   if (isReminderActive === true) {
     reminderClass = "active";
   }
@@ -43,7 +44,9 @@ export default function Editor(props) {
       }
     }, timeLeft);
   };
-  const submitNote = () => {
+
+  const submitNote = (e) => {
+    e.preventDefault();
     alert("Add note success");
     noteItem.title = titleRef.current.value;
     noteItem.text = textRef.current.value;

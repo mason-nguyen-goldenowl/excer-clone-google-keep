@@ -32,7 +32,9 @@ export const NoteReducer = (state = stateDefaut, action) => {
         }
       });
       action.noteItem.id = action.noteItem.title;
-
+      if (action.noteItem.timeLeft > 0) {
+        state.arrRemind.push(action.noteItem);
+      }
       state.arrNote.push(action.noteItem);
 
       return { ...state };
@@ -73,7 +75,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
       return { ...state };
     }
     case DELETE_NOTE: {
-      state.arrTr_ash.push(action.noteDelete);
+      state.arrTrash.push(action.noteDelete);
       let idArchive = state.arrArchive.findIndex(
         (note) => note === action.noteDelete
       );
