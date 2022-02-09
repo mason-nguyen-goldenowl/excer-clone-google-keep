@@ -1,9 +1,9 @@
-export const ADDNOTE = "ADDNOTE";
-export const ADDLABEL = "ADDLABEL";
-export const UPDATELABEL = "UPDATELABEL";
-export const ARCHIVENOTE = "ARCHIVENOTE";
-export const DELETENOTE = "DELETENOTE";
-export const EMPTYTRASH = "EMPTYTRASH";
-export const DELETEFOREVER = "DELETEFOREVER";
+export const ADD_NOTE = "ADD_NOTE";
+export const ADD_LABEL = "ADD_LABEL";
+export const UPDATE_LABEL = "UPDATE_LABEL";
+export const ARCHIVE_NOTE = "ARCHIVE_NOTE";
+export const DELETE_NOTE = "DELETE_NOTE";
+export const EMPTY_TRASH = "EMPTY_TRASH";
+export const DELETE_FOREVER = "DELETE_FOREVER";
 export const RESTORE = "RESTORE";
 export const SEARCH = "SEARCH";

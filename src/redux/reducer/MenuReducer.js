@@ -1,4 +1,4 @@
-import { ADDACTIVECLASS, CHANGELISTCLASS } from "../type/MenuType";
+import { ADD_ACTIVE_CLASS, CHANGE_LIST_CLASS } from "../type/MenuType";
 
 const stateDefaut = {
   isListActive: true,
@@ -6,7 +6,7 @@ const stateDefaut = {
 
 export const MenuReducer = (state = stateDefaut, action) => {
   switch (action.type) {
-    case CHANGELISTCLASS: {
+    case CHANGE_LIST_CLASS: {
       state.isListActive = action.isListActive;
       return { ...state };
     }

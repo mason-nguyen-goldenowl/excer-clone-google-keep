@@ -1,6 +1,6 @@
 @use "../../scss/" as *;
 @use "../../scss/" as *;
-.bodyContent {
+.body-content {
   display: flex;
   height: 100%;
 }
@@ -15,7 +15,7 @@
   width: 100%;
   min-width: 0px;
 }
-.editorWrap {
+.editor-wrap {
   width: 100%;
   display: flex;
   justify-content: center;

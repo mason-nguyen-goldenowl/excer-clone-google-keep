@@ -18,12 +18,12 @@ export default function Reminder() {
   return (
     <div>
       <Menu title="Reminders" />
-      <div className="bodyContent">
+      <div className="body-content">
         <div className="left">
           <SideMenu active="reminders" />
         </div>
         <div className="right">
-          <div className="editorWrap">
+          <div className="editor-wrap">
             <NoteText />
           </div>
           <div className="note__content">{renderNoteCard()}</div>
