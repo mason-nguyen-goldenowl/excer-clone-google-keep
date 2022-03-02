@@ -9,7 +9,7 @@ import SideMenu from "../../components/sideMenu/SideMenu";
 import "./Reminder.scss";
 
 export default function Reminder() {
-  const { arrRemind } = useSelector((state) => state.NoteReducer);
+  const { arrRemind } = useSelector((state) => state.note);
 
   const renderNoteCard = () => {
     return arrRemind?.map((note) => {

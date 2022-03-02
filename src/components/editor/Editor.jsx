@@ -19,7 +19,8 @@ import time from "../../asset/editorIcon/time.svg";
 import "./Editor.scss";
 
 export default function Editor(props) {
-  let noteItem = { title: "", text: "", setAlert: null };
+
+  let noteItem = { title: "", text: "", setAlert: null, timeLeft: -1 };
 
   const dispatch = useDispatch();
 
@@ -36,6 +37,7 @@ export default function Editor(props) {
   }
 
   noteItem.remind = moment(remindDate).format();
+  noteItem.timeLeft = timeLeft;
   noteItem.setAlert = () => {
     setTimeout(() => {
       if (timeLeft > 0) {
@@ -124,13 +126,14 @@ export default function Editor(props) {
           onClick={() => {
             alert("Add note success");
 
+
             noteItem.title = titleRef.current.value;
             noteItem.text = textRef.current.value;
+
 
             dispatch({
               type: ADD_NOTE,
               noteItem,
-              timeLeft,
             });
             titleRef.current.value = "";
             textRef.current.value = "";
