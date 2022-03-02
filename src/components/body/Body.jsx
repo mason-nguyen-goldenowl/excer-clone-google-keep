@@ -8,7 +8,7 @@ import NoteCard from "../noteCard/NoteCard";
 import "./Body.scss";
 
 export default function Body() {
-  const { arrNote } = useSelector((state) => state.NoteReducer);
+  const { arrNote } = useSelector((state) => state.note);
 
   const renderNoteCard = () => {
     return arrNote.map((note) => {

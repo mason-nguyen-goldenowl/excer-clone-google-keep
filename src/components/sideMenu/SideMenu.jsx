@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Modal from "../modal/Modal";
 import EditLabels from "../editLabels/EditLabels";
 
+import labelIcon from "../../asset/editorIcon/label.svg";
 import { ReactComponent as NoteIcon } from "../../asset/sideMenuIcon/Note.svg";
 import { ReactComponent as RemindIcon } from "../../asset/sideMenuIcon/Remind.svg";
 import { ReactComponent as ArchiveIcon } from "../../asset/sideMenuIcon/Archive.svg";
@@ -12,12 +14,26 @@ import { ReactComponent as EditIcon } from "../../asset/sideMenuIcon/Edit.svg";
 import { ReactComponent as TrashIcon } from "../../asset/sideMenuIcon/Trash.svg";
 
 import "./SideMenu.scss";
-
 export default function SideMenu(props) {
   const { isListActive } = useSelector((state) => state.menu);
-
+  const { arrLabel } = useSelector((state) => state.note);
   const [listClass, setListClass] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
+
+  const renderLabels = () => {
+    return arrLabel.map((label) => {
+      return (
+        <li className="list-item__item ">
+          <div className="item__content">
+            <img src={labelIcon} alt="..." />
+            <span>
+              <Link to="/">{label}</Link>
+            </span>
+          </div>
+        </li>
+      );
+    });
+  };
 
   useEffect(() => {
     if (isListActive) {
@@ -29,26 +45,29 @@ export default function SideMenu(props) {
       item.classList.remove("active");
     }
     document.getElementById(`${props.active}`)?.classList.add("active");
-  }, [isListActive, props.active]);
+  }, []);
+
   return (
-    <div className="side-menu">
+    <div className="sideMenu">
       <ul className={`list-item ${listClass}`}>
         <li className="list-item__item" id="notes">
-          <Link to="/">
-            <div className="item__content">
-              <NoteIcon />
-              <span>Notes</span>
-            </div>
-          </Link>
+          <div className="item__content">
+            <NoteIcon />
+            <span>
+              <Link to="/">Notes</Link>
+            </span>
+          </div>
         </li>
         <li className="list-item__item " id="reminders">
-          <Link to="/reminder">
-            <div className="item__content">
-              <RemindIcon />
-              <span>Reminders</span>
-            </div>
-          </Link>
+          <div className="item__content">
+            <RemindIcon />
+            <span>
+              <Link to="/reminder">Reminders</Link>
+            </span>
+          </div>
         </li>
+        {renderLabels()}
+
         <li
           className="list-item__item "
           id="item3"

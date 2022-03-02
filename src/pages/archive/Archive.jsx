@@ -18,7 +18,7 @@ export default function Archive() {
   return (
     <div>
       <Menu title="Archive" />
-      <div className="bodyContent">
+      <div className="body-content">
         <div className="left">
           <SideMenu active="archive" />
         </div>

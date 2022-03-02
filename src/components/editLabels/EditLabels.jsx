@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 
 import check from "../../asset/editorIcon/check.svg";
@@ -12,7 +13,9 @@ import "./EditLables.scss";
 
 export default function EditLabels(props) {
   const dispatch = useDispatch();
+
   const { arrLabel } = useSelector((state) => state.note);
+
   const [inputValue, setInputValue] = useState("");
   const [label, setLabel] = useState("");
 
@@ -90,7 +93,6 @@ export default function EditLabels(props) {
                 type: UPDATE_LABEL,
                 arrLabelUpdate,
               });
-              alert("Update Label susccessed");
             }}
           >
             Done

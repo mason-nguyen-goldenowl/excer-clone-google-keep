@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -13,16 +14,17 @@ import more from "../../asset/editorIcon/more.svg";
 import select from "../../asset/editorIcon/select.svg";
 import time from "../../asset/editorIcon/time.svg";
 
-import "./NoteCard.scss";
 import { ARCHIVE_NOTE, DELETE_NOTE } from "../../redux/type/NoteType";
+
+import "./NoteCard.scss";
 
 export default function NoteCard(props) {
   const dispatch = useDispatch();
   const [remindDate, setRemindDate] = useState(new Date());
   const [isReminderActive, setReminderActive] = useState(false);
 
-  const note = props.content;
   let reminderClass = "";
+  const note = props.content;
 
   const setAlert = () => {
     if (note.timeLeft > 0) {

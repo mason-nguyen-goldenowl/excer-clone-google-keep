@@ -1,4 +1,4 @@
-import { ADD_ACTIVE_CLASS, CHANGE_LIST_CLASS } from "../type/MenuType";
+import { CHANGE_LIST_CLASS } from "../type/MenuType";
 
 const stateDefaut = {
   isListActive: true,

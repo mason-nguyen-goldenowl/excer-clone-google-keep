@@ -7,4 +7,5 @@ export const DELETE_NOTE = "DELETE_NOTE";
 export const EMPTY_TRASH = "EMPTY_TRASH";
 export const DELETE_FOREVER = "DELETE_FOREVER";
 export const RESTORE = "RESTORE";
+export const SEARCH = "SEARCH";
 

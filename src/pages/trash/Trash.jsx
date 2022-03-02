@@ -26,13 +26,14 @@ export default function Trash() {
   return (
     <div>
       <Menu title="Trash" />
-      <div className="bodyContent">
+      <div className="body-content">
         <div className="left">
           <SideMenu active="trash" />
         </div>
         <div className="right">
           <div className="trash__dr">
             <p>Notes in Trash are deleted after 7 days</p>
+
             <span onClick={emptyTrashAction}>Empty Trash</span>
           </div>
           <div className="note__content">{renderNoteCard()}</div>
