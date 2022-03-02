@@ -1,5 +1,6 @@
 @use "../../scss/" as *;
-.noteCard {
+
+.note-card {
   max-width: 400px;
   width: 240px;
   border: 1px solid #e0e0e0;
@@ -8,18 +9,20 @@
   border-radius: 8px;
   height: 100%;
   transition: all 0.3s;
+
   &__feature,
   &__select,
   &__pin {
     opacity: 0;
   }
+
   &:hover {
     box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
       0 1px 3px 1px rgb(60 64 67 / 15%);
 
-    .noteCard__feature,
-    .noteCard__select,
-    .noteCard__pin {
+    .note-card__feature,
+    .note-card__select,
+    .note-card__pin {
       opacity: 100%;
     }
   }
@@ -29,16 +32,20 @@
     min-height: 90px;
     padding: 12px 10px;
     word-wrap: break-word;
+
     cursor: pointer;
+
     p {
       padding: 14px 10px;
       padding-right: 35px;
     }
   }
+
   &__feature {
     bottom: 0;
     left: 0;
   }
+
   &__select {
     position: absolute;
     left: 0;
@@ -46,12 +53,15 @@
     height: 20px;
     width: 20px;
   }
+
   &__pin {
     position: absolute;
     right: 0;
   }
 }
-.noteCardIcon {
+
+.note-cardIcon {
+
   width: 40px;
   height: 40px;
   cursor: pointer;
