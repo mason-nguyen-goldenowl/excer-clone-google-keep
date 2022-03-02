@@ -11,7 +11,6 @@ import { NoteReducer } from "./reducer/NoteReducer";
 const persistConfig = {
   key: "root",
   storage: storage,
-
   stateReconciler: hardSet,
 };
 const rootReducer = combineReducers({

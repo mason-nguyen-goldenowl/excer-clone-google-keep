@@ -9,9 +9,7 @@ import SideMenu from "../../components/sideMenu/SideMenu";
 import "./Home.scss";
 
 export default function Home() {
-
   const { arrNote } = useSelector((state) => state.note);
-
 
   const renderNoteCard = () => {
     return arrNote.map((note) => {

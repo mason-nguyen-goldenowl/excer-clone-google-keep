@@ -8,15 +8,14 @@ import {
   EMPTY_TRASH,
   DELETE_FOREVER,
   RESTORE,
-  SEARCH,
 } from "../type/NoteType";
+
 
 
 const stateDefaut = {
   arrNote: [],
   arrLabel: [],
   arrRemind: [],
-
   arrArchive: [],
   arrTrash: [],
   arrSearch: [],
@@ -25,6 +24,8 @@ const stateDefaut = {
 
 export const NoteReducer = (state = stateDefaut, action) => {
   switch (action.type) {
+   
+
     case ADD_NOTE: {
 
 
@@ -38,6 +39,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
         }
       });
       action.noteItem.id = action.noteItem.title;
+
       if (action.noteItem.timeLeft > 0) {
         state.arrRemind.push(action.noteItem);
       }
@@ -56,23 +58,24 @@ export const NoteReducer = (state = stateDefaut, action) => {
     }
 
     case ARCHIVE_NOTE: {
-      let idArchive = state.arrArchive.findIndex(
+      let idArchiveIndex = state.arrArchive.findIndex(
         (note) => note === action.noteArchive
       );
 
-      if (idArchive === -1) {
+      if (idArchiveIndex === -1) {
         state.arrArchive.push(action.noteArchive);
 
-        let idArchiveFromNote = state.arrNote.findIndex(
+        let idArchiveFromNoteIndex = state.arrNote.findIndex(
           (note) => note === action.noteArchive
         );
-        state.arrNote.splice(idArchiveFromNote, 1);
-        let idArchiveFromReminder = state.arrRemind.findIndex(
+        state.arrNote.splice(idArchiveFromNoteIndex, 1);
+        let idArchiveFromReminderIndex = state.arrRemind.findIndex(
           (note) => note === action.noteArchive
         );
-        state.arrRemind.splice(idArchiveFromReminder, 1);
+        state.arrRemind.splice(idArchiveFromReminderIndex, 1);
       } else {
-        state.arrArchive.splice(idArchive, 1);
+        state.arrArchive.splice(idArchiveIndex, 1);
+
         state.arrNote.push(action.noteArchive);
         if (action.noteArchive.timeLeft > 0) {
           state.arrRemind.push(action.noteArchive);
@@ -81,23 +84,25 @@ export const NoteReducer = (state = stateDefaut, action) => {
 
       return { ...state };
     }
+
     case DELETE_NOTE: {
       state.arrTrash.push(action.noteDelete);
-      let idArchive = state.arrArchive.findIndex(
+      let idArchiveIndex = state.arrArchive.findIndex(
         (note) => note === action.noteDelete
       );
-      state.arrArchive.splice(idArchive, 1);
-      let idNote = state.arrNote.findIndex(
+      state.arrArchive.splice(idArchiveIndex, 1);
+      let idNoteIndex = state.arrNote.findIndex(
         (note) => note === action.noteDelete
       );
-      state.arrNote.splice(idNote, 1);
+      state.arrNote.splice(idNoteIndex, 1);
 
-      let idRemind = state.arrRemind.findIndex(
+      let idRemindIndex = state.arrRemind.findIndex(
         (note) => note === action.noteDelete
       );
-      state.arrRemind.splice(idRemind, 1);
+      state.arrRemind.splice(idRemindIndex, 1);
       return { ...state };
     }
+
     case EMPTY_TRASH: {
       state.arrTrash = [];
       return { ...state };
@@ -129,6 +134,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
 
       return { ...state };
     }
+
     default:
       return { ...state };
   }

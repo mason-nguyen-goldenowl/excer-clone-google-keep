@@ -20,8 +20,8 @@ import { ADD_NOTE } from "../../redux/type/NoteType";
 import "./Editor.scss";
 
 export default function Editor(props) {
-  let noteItem = { title: "", text: "", setAlert: null, timeLeft: -1 };
 
+  let noteItem = { title: "", text: "", setAlert: null, timeLeft: -1 };
 
   const dispatch = useDispatch();
 
@@ -142,6 +142,7 @@ export default function Editor(props) {
             <button type="submit">Submit</button>
           </div>
         </div>
+
       </form>
 
     </div>

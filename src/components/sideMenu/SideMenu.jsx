@@ -18,8 +18,6 @@ import "./SideMenu.scss";
 export default function SideMenu(props) {
   const { isListActive } = useSelector((state) => state.menu);
   const { arrLabel } = useSelector((state) => state.note);
-
-
   const [listClass, setListClass] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 

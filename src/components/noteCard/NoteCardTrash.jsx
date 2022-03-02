@@ -53,12 +53,15 @@ const Notecardtrash = (props) => {
         <ul className="editorIcon__list">
           <li
             className="note-cardIcon"
+
             title="Delete Forever"
             onClick={deleteForeverAction}
           >
             <img src={trash} alt=".." />
           </li>
+
           <li className="note-cardIcon" title="Restore" onClick={restoreAction}>
+
             <img src={restore} alt=".." />
           </li>
         </ul>

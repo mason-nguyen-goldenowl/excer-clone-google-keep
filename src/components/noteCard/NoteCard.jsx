@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { useDispatch } from "react-redux";
 
 import DatePicker from "react-datepicker";
@@ -7,9 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import reminder from "../../asset/editorIcon/reminder.svg";
 import pin from "../../asset/editorIcon/pin.svg";
-
 import trash from "../../asset/editorIcon/trash.svg";
-
 import background from "../../asset/editorIcon/background.svg";
 import image from "../../asset/editorIcon/image.svg";
 import archive from "../../asset/editorIcon/archive.svg";
@@ -18,6 +15,7 @@ import select from "../../asset/editorIcon/select.svg";
 import time from "../../asset/editorIcon/time.svg";
 
 import "./NoteCard.scss";
+import { ARCHIVE_NOTE, DELETE_NOTE } from "../../redux/type/NoteType";
 
 import { ARCHIVE_NOTE, DELETE_NOTE } from "../../redux/type/NoteType";
 
@@ -49,6 +47,7 @@ export default function NoteCard(props) {
     });
   };
   setAlert();
+
 
 
   return (
@@ -104,9 +103,12 @@ export default function NoteCard(props) {
             </div>
           </li>
 
-          <li className="editor-icon__item" onClick={deleteAction}>
+          <li
+            className="editor-icon__item"
+            title="Delete"
+            onClick={deleteAction}
+          >
             <img src={trash} alt=".." />
-
           </li>
           <li className="editor-icon__item">
             <img src={background} alt=".." />
@@ -116,7 +118,6 @@ export default function NoteCard(props) {
           </li>
 
           <li className="editor-icon__item" onClick={archiveAction}>
-
             <img src={archive} alt=".." />
           </li>
           <li className="editor-icon__item">
