@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch,useSelector  } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Menu from "../../components/menu/Menu";
 import NoteCardTrash from "../../components/noteCard/NoteCardTrash";
@@ -32,7 +32,7 @@ export default function Trash() {
         </div>
         <div className="right">
           <div className="trash__dr">
-            <p>Notes in Trash are deledted after 7 days</p>
+            <p>Notes in Trash are deleted after 7 days</p>
             <span onClick={emptyTrashAction}>Empty Trash</span>
           </div>
           <div className="note__content">{renderNoteCard()}</div>

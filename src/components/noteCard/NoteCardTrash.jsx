@@ -8,16 +8,16 @@ import restore from "../../asset/editorIcon/restore.svg";
 import select from "../../asset/editorIcon/select.svg";
 
 import "./NoteCard.scss";
-import { DELETEFOREVER, RESTORE } from "../../redux/type/NoteType";
+import { DELETE_FOREVER, RESTORE } from "../../redux/type/NoteType";
 
 const Notecardtrash = (props) => {
   const dispatch = useDispatch();
 
   const note = props.content;
-  console.log(note);
+
   const deleteForeverAction = () => {
     dispatch({
-      type: DELETEFOREVER,
+      type: DELETE_FOREVER,
       noteDeleteForever: note,
     });
   };

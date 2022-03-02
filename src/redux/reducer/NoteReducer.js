@@ -1,4 +1,3 @@
-
 import {
   ADD_LABEL,
   ADD_NOTE,
@@ -21,7 +20,6 @@ const stateDefaut = {
 
 export const NoteReducer = (state = stateDefaut, action) => {
   switch (action.type) {
-
     case REHYDRATE: {
       const arrNoteLocal = action.payload.note.arrNote;
       const arrLabelLocal = action.payload.note.arrLabel;
@@ -69,10 +67,10 @@ export const NoteReducer = (state = stateDefaut, action) => {
     }
     case DELETE_NOTE: {
       state.arrTrash.push(action.noteDelete);
-      let idArchive = state.arrArchive.findIndex(
+      let idArchiveIndex = state.arrArchive.findIndex(
         (note) => note === action.noteDelete
       );
-      state.arrArchive.splice(idArchive, 1);
+      state.arrArchive.splice(idArchiveIndex, 1);
       let idNote = state.arrNote.findIndex(
         (note) => note === action.noteDelete
       );
@@ -85,23 +83,23 @@ export const NoteReducer = (state = stateDefaut, action) => {
       return { ...state };
     }
     case ARCHIVE_NOTE: {
-      let idArchive = state.arrArchive.findIndex(
+      let idArchiveIndex = state.arrArchive.findIndex(
         (note) => note === action.noteArchive
       );
       console.log(action.noteArchive.timeLeft > 0);
-      if (idArchive === -1) {
+      if (idArchiveIndex === -1) {
         state.arrArchive.push(action.noteArchive);
 
-        let idArchiveFromNote = state.arrNote.findIndex(
+        let idArchiveFromNoteIndex = state.arrNote.findIndex(
           (note) => note === action.noteArchive
         );
-        state.arrNote.splice(idArchiveFromNote, 1);
-        let idArchiveFromReminder = state.arrRemind.findIndex(
+        state.arrNote.splice(idArchiveFromNoteIndex, 1);
+        let idArchiveFromReminderIndex = state.arrRemind.findIndex(
           (note) => note === action.noteArchive
         );
-        state.arrRemind.splice(idArchiveFromReminder, 1);
+        state.arrRemind.splice(idArchiveFromReminderIndex, 1);
       } else {
-        state.arrArchive.splice(idArchive, 1);
+        state.arrArchive.splice(idArchiveIndex, 1);
         state.arrNote.push(action.noteArchive);
         if (action.noteArchive.timeLeft > 0) {
           state.arrRemind.push(action.noteArchive);

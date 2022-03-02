@@ -22,6 +22,7 @@ export default function NoteCard(props) {
   const [isReminderActive, setReminderActive] = useState(false);
 
   const note = props.content;
+  let reminderClass = "";
 
   const setAlert = () => {
     if (note.timeLeft > 0) {
@@ -97,10 +98,13 @@ export default function NoteCard(props) {
             </div>
           </li>
 
-
-          <li className="editor-icon__item" title="Delete" onClick={deleteAction}>
+          <li
+            className="editor-icon__item"
+            title="Delete"
+            onClick={deleteAction}
+          >
             <img src={trash} alt=".." />
-       </li>
+          </li>
           <li className="editor-icon__item">
             <img src={background} alt=".." />
           </li>
@@ -108,9 +112,7 @@ export default function NoteCard(props) {
             <img src={image} alt=".." />
           </li>
 
-
-          <li className="editor-icon__item"onClick={archiveAction}>
-
+          <li className="editor-icon__item" onClick={archiveAction}>
             <img src={archive} alt=".." />
           </li>
           <li className="editor-icon__item">
