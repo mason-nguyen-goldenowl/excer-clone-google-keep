@@ -9,12 +9,10 @@ import SideMenu from "../../components/sideMenu/SideMenu";
 import "./Archive.scss";
 
 export default function Archive() {
-
   const { arrArchive } = useSelector((state) => state.note);
   const renderNoteCard = () => {
     return arrArchive?.map((note) => {
       return <NoteCard content={note} key={note.id} />;
-
     });
   };
   return (

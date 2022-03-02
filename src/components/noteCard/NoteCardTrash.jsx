@@ -4,11 +4,11 @@ import { useDispatch } from "react-redux";
 import pin from "../../asset/editorIcon/pin.svg";
 import trash from "../../asset/editorIcon/trash.svg";
 import restore from "../../asset/editorIcon/restore.svg";
-
 import select from "../../asset/editorIcon/select.svg";
 
-import "./NoteCard.scss";
 import { DELETE_FOREVER, RESTORE } from "../../redux/type/NoteType";
+
+import "./NoteCard.scss";
 
 const Notecardtrash = (props) => {
   const dispatch = useDispatch();
@@ -53,7 +53,6 @@ const Notecardtrash = (props) => {
         <ul className="editorIcon__list">
           <li
             className="note-cardIcon"
-
             title="Delete Forever"
             onClick={deleteForeverAction}
           >
@@ -61,7 +60,6 @@ const Notecardtrash = (props) => {
           </li>
 
           <li className="note-cardIcon" title="Restore" onClick={restoreAction}>
-
             <img src={restore} alt=".." />
           </li>
         </ul>

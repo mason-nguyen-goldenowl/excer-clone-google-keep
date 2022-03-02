@@ -1,8 +1,6 @@
-
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-
 
 import gridIcon from "../../asset/menuTopIcon/gridIcon.svg";
 import search from "../../asset/menuTopIcon/search.svg";
@@ -34,7 +32,6 @@ export default function Menu(props) {
     });
   };
 
-
   return (
     <div className="menu-wrapter">
       <div className="menu">
@@ -63,9 +60,7 @@ export default function Menu(props) {
             </div>
           </div>
           <div className="menu__search">
-
             <Link to="/search" className="search__input">
-
               <div className="search__wrap">
                 <div className="menu__btn">
                   <img src={search} alt="..." />
@@ -81,7 +76,6 @@ export default function Menu(props) {
                   <img src={close} alt="..." />
                 </div>
               </div>
-
             </Link>
 
             <div className="settings">

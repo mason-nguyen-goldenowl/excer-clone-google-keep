@@ -1,4 +1,3 @@
-
 import {
   ADD_LABEL,
   ADD_NOTE,
@@ -8,9 +7,8 @@ import {
   EMPTY_TRASH,
   DELETE_FOREVER,
   RESTORE,
+  SEARCH,
 } from "../type/NoteType";
-
-
 
 const stateDefaut = {
   arrNote: [],
@@ -19,16 +17,11 @@ const stateDefaut = {
   arrArchive: [],
   arrTrash: [],
   arrSearch: [],
-
 };
 
 export const NoteReducer = (state = stateDefaut, action) => {
   switch (action.type) {
-   
-
     case ADD_NOTE: {
-
-
       let j = 0;
       let preTitle = action.noteItem.title;
 
@@ -44,7 +37,6 @@ export const NoteReducer = (state = stateDefaut, action) => {
         state.arrRemind.push(action.noteItem);
       }
       state.arrNote.push(action.noteItem);
-
 
       return { ...state };
     }
@@ -108,18 +100,18 @@ export const NoteReducer = (state = stateDefaut, action) => {
       return { ...state };
     }
     case DELETE_FOREVER: {
-      let idForever = state.arrTrash.findIndex(
+      let idForeverIndex = state.arrTrash.findIndex(
         (note) => note === action.noteDeleteForever
       );
-      state.arrTrash.splice(idForever, 1);
+      state.arrTrash.splice(idForeverIndex, 1);
       return { ...state };
     }
     case RESTORE: {
       state.arrNote.push(action.noteRestore);
-      let idRestore = state.arrTrash.findIndex(
+      let idRestoreIndex = state.arrTrash.findIndex(
         (note) => note === action.noteRestore
       );
-      state.arrTrash.splice(idRestore, 1);
+      state.arrTrash.splice(idRestoreIndex, 1);
       return { ...state };
     }
 

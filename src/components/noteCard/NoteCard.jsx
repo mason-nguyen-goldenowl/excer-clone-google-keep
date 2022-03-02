@@ -14,10 +14,9 @@ import more from "../../asset/editorIcon/more.svg";
 import select from "../../asset/editorIcon/select.svg";
 import time from "../../asset/editorIcon/time.svg";
 
-import "./NoteCard.scss";
 import { ARCHIVE_NOTE, DELETE_NOTE } from "../../redux/type/NoteType";
 
-import { ARCHIVE_NOTE, DELETE_NOTE } from "../../redux/type/NoteType";
+import "./NoteCard.scss";
 
 export default function NoteCard(props) {
   const dispatch = useDispatch();
@@ -47,8 +46,6 @@ export default function NoteCard(props) {
     });
   };
   setAlert();
-
-
 
   return (
     <div className="note-card">
