@@ -1,28 +1,16 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
-import thunk from "redux-thunk";
-
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
-import hardSet from "redux-persist/es/stateReconciler/hardSet";
+import thunkMidleWare from "redux-thunk";
 
 import { MenuReducer } from "./reducer/MenuReducer";
 import { NoteReducer } from "./reducer/NoteReducer";
-
-const persistConfig = {
-  key: "root",
-  storage,
-  stateReconciler: hardSet,
-};
+import { UserReducer } from "./reducer/UserReducer";
 
 const rootReducer = combineReducers({
   menu: MenuReducer,
   note: NoteReducer,
+  user: UserReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const store = createStore(rootReducer, applyMiddleware(thunkMidleWare));
 
-const store = createStore(persistedReducer, applyMiddleware(thunk));
-
-const persistor = persistStore(store);
-
-export { store, persistor };
+export { store };

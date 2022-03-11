@@ -32,3 +32,50 @@ a {
   text-decoration: none;
   color: unset;
 }
+.btn-nonbg {
+  color: #1a73e8;
+  font-size: 16px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  background: none;
+  padding: 10px 15px;
+  transition: all 0.3s;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #99beee36;
+    color: #0d71f3;
+  }
+
+  @include tablet {
+    font-size: 12px;
+  }
+}
+
+.btn-bg {
+  background-color: #1a73e8 !important;
+  color: white;
+  font-size: 16px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+  transition: all 0.3s;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #99beee36 !important;
+    color: #0d71f3;
+  }
+
+  @include tablet {
+    font-size: 12px;
+  }
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-left: 10px;
+}

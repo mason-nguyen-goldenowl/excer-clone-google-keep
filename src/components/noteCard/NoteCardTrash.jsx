@@ -5,8 +5,8 @@ import pin from "../../asset/editorIcon/pin.svg";
 import trash from "../../asset/editorIcon/trash.svg";
 import restore from "../../asset/editorIcon/restore.svg";
 import select from "../../asset/editorIcon/select.svg";
+import { removeNote, restoreNote } from "../../redux/action/NoteAction";
 
-import { DELETE_FOREVER, RESTORE } from "../../redux/type/NoteType";
 import "./NoteCard.scss";
 
 const Notecardtrash = (props) => {
@@ -14,36 +14,16 @@ const Notecardtrash = (props) => {
 
   const note = props.content;
 
-  let after7Days = new Date(note.deleteDay).setDate(new Date().getDate() + 7);
-  let now = new Date().getTime();
-  let remainingTime = after7Days - now;
-
   const deleteForeverAction = () => {
-    dispatch({
-      type: DELETE_FOREVER,
-      noteDeleteForever: note,
-    });
+    const action = removeNote;
+    dispatch(action({ note_id: note._id }));
+    console.log(note._id);
   };
 
   const restoreAction = () => {
-    dispatch({
-      type: RESTORE,
-      noteRestore: note,
-    });
+    const action = restoreNote;
+    dispatch(action({ note_id: note._id }));
   };
-
-  const deleteAfter7Day = () => {
-    if (remainingTime > 0) {
-      setTimeout(() => {
-        dispatch({
-          type: DELETE_FOREVER,
-          noteDeleteForever: note,
-        });
-      }, remainingTime);
-    }
-  };
-
-  deleteAfter7Day();
 
   return (
     <div className="note-card">
@@ -55,7 +35,7 @@ const Notecardtrash = (props) => {
       </div>
       <div className="note-card__text">
         <h3>{note.title}</h3>
-        <p>{note.text}</p>
+        <p>{note.content}</p>
       </div>
       <div className="note-card__feature">
         <ul className="editor-icon__list">

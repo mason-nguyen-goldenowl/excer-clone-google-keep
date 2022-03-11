@@ -1,0 +1,61 @@
+@use "../../scss/" as *;
+.signup-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.signup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 750px;
+  border-radius: 8px;
+  border: 1px solid #dadce0;
+  padding: 38px;
+}
+
+.signup__body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &-form {
+    margin-left: 20px;
+    .password {
+      display: flex;
+    }
+    .form-group {
+      .form-input {
+        height: 40px;
+        border-radius: 4px;
+        margin: 10px 0;
+        margin-right: 10px;
+        padding: 6px 8px;
+        border: 1px solid #dadce0;
+      }
+      &__submit {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
+  &-asset {
+    margin-left: 20px;
+
+    @include tablet {
+      display: none;
+    }
+
+    p {
+      font-size: 14px;
+    }
+
+    &-img {
+      width: 244px;
+      height: 244px;
+    }
+  }
+}

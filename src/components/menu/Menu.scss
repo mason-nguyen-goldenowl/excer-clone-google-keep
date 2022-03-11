@@ -135,7 +135,12 @@
   width: 100%;
   max-width: 124px;
   padding: 0 4px;
-
+  position: relative;
+  &:hover {
+    .profile-menu {
+      display: block;
+    }
+  }
   .avt-wrap {
     background-size: 32px 32px;
     border-radius: 50%;
@@ -147,5 +152,29 @@
     align-items: center;
     font-weight: 700;
     color: white;
+  }
+  .profile-menu {
+    position: absolute;
+    right: 0;
+    display: none;
+    transform: translateY(70px);
+    ul {
+      list-style: none;
+    }
+    li {
+      padding: 5px 0;
+      z-index: 99;
+      padding-right: 80px;
+      padding-left: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #dadce0;
+      background-color: #e5e9ec8e;
+      width: 100%;
+      cursor: pointer;
+      border-radius: 8px;
+      &:hover {
+        box-shadow: 1px 1px 1px #a4a4a5;
+      }
+    }
   }
 }

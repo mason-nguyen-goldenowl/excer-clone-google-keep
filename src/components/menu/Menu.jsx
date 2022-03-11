@@ -1,30 +1,32 @@
-
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
+import Cookies from "js-cookie";
 
-import gridIcon from "../../asset/menuTopIcon/gridIcon.svg";
-import search from "../../asset/menuTopIcon/search.svg";
 import close from "../../asset/menuTopIcon/delete.svg";
+import search from "../../asset/menuTopIcon/search.svg";
 import refresh from "../../asset/menuTopIcon/refresh.svg";
+import logo from "../../asset/menuTopIcon/pngwing.com.png";
+import gridIcon from "../../asset/menuTopIcon/gridIcon.svg";
 import settings from "../../asset/menuTopIcon/settings.svg";
 
-
-import { CHANGE_LIST_CLASS } from "../../redux/type/MenuType";
 import { SEARCH } from "../../redux/type/NoteType";
+import { CHANGE_LIST_CLASS } from "../../redux/type/MenuType";
 
 import "./Menu.scss";
+import { LOG_OUT } from "../../redux/type/UserType";
 
 export default function Menu(props) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  let alphabet;
+  const fName = useSelector((state) => state.user.user.full_name);
   const [searchInput, setSearchInput] = useState("");
   const searchRef = useRef("");
-
-  const logoURL =
-    "https://www.gstatic.com/images/branding/product/1x/keep_2020q4_48dp.png";
-
+  if (fName) {
+    alphabet = fName[0].toUpperCase();
+  }
   const [isListActive, setIsListActive] = useState(false);
 
   const handleChangeInput = () => {
@@ -34,6 +36,20 @@ export default function Menu(props) {
       type: SEARCH,
       searchInput,
     });
+  };
+  const logOut = async () => {
+    try {
+      await Cookies.remove("refresh_token");
+      await Cookies.remove("access_token");
+      await Cookies.remove("isLogged");
+      localStorage.removeItem("access_token");
+      navigate("/login");
+      await dispatch({
+        type: LOG_OUT,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -59,14 +75,12 @@ export default function Menu(props) {
             </div>
 
             <div className="menu-title">
-              <img src={logoURL} alt="..." />
+              <img src={logo} alt="..." />
               <span>{props.title}</span>
             </div>
           </div>
           <div className="menu__search">
-
             <Link to="/search" className="search__input">
-
               <div className="search__wrap">
                 <div className="menu__btn">
                   <img src={search} alt="..." />
@@ -82,7 +96,6 @@ export default function Menu(props) {
                   <img src={close} alt="..." />
                 </div>
               </div>
-
             </Link>
 
             <div className="settings">
@@ -107,7 +120,13 @@ export default function Menu(props) {
             </div>
 
             <div className="avt-wrap">
-              <div>M</div>
+              <div>{alphabet}</div>
+            </div>
+            <div className="profile-menu">
+              <ul>
+                <li>Profile</li>
+                <li onClick={logOut}>Logout</li>
+              </ul>
             </div>
           </div>
         </div>
