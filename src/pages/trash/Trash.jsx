@@ -1,29 +1,33 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
 import Cookies from "js-cookie";
-
+import React, { useEffect, useState } from "react";
+import Masonry from "react-masonry-component";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Comfirm from "../../components/comfirm/Comfirm";
 import Menu from "../../components/menu/Menu";
 import Modal from "../../components/modal/Modal";
 import NoteCardTrash from "../../components/noteCard/NoteCardTrash";
-
 import SideMenu from "../../components/sideMenu/SideMenu";
-
+import { getNoteAction } from "../../redux/action/NoteAction";
 import "./Trash.scss";
 
 export default function Trash() {
   const navigate = useNavigate();
   const isLogged = Cookies.get("isLogged");
   const refreshToken = Cookies.get("refresh_token");
+  const dispatch = useDispatch();
   const arrNote = useSelector((state) => state.note.arrNote);
+  const trashArr = arrNote.filter((note) => note.deleted === true);
   const [modalOpen, setModalOpen] = useState(false);
 
   const renderNoteCard = () => {
     return arrNote.map((note) => {
       if (note.deleted) {
-        return <NoteCardTrash content={note} key={note._id} />;
+        return (
+          <div key={note._id}>
+            <NoteCardTrash content={note} />
+          </div>
+        );
       }
     });
   };
@@ -31,7 +35,9 @@ export default function Trash() {
     if (!isLogged || !refreshToken) {
       navigate("/login");
     }
-  }, [isLogged, navigate, refreshToken]);
+    const action = getNoteAction;
+    dispatch(action());
+  }, [dispatch, isLogged, navigate, refreshToken]);
 
   return (
     <div>
@@ -44,6 +50,7 @@ export default function Trash() {
           <div className="trash__dr">
             <p>Notes in Trash are deledted after 7 days</p>
             <span
+              className="btn-nonbg"
               onClick={() => {
                 setModalOpen(true);
               }}
@@ -51,13 +58,15 @@ export default function Trash() {
               Empty Trash
             </span>
           </div>
-          <div className="note__content">{renderNoteCard()}</div>
+          <div className="note__content">
+            <Masonry className={"my-gallery-class"}>{renderNoteCard()}</Masonry>
+          </div>
         </div>
       </div>
       {modalOpen && (
         <Modal
           setOpenModal={setModalOpen}
-          children={<Comfirm setOpenModal={setModalOpen} />}
+          children={<Comfirm setOpenModal={setModalOpen} trashArr={trashArr} />}
         />
       )}
     </div>

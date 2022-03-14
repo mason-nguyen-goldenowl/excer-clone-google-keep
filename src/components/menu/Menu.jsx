@@ -1,8 +1,7 @@
-import React, { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
 import Cookies from "js-cookie";
+import React, { useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 import close from "../../asset/menuTopIcon/delete.svg";
 import search from "../../asset/menuTopIcon/search.svg";
@@ -11,17 +10,17 @@ import logo from "../../asset/menuTopIcon/pngwing.com.png";
 import gridIcon from "../../asset/menuTopIcon/gridIcon.svg";
 import settings from "../../asset/menuTopIcon/settings.svg";
 
+import { LOG_OUT } from "../../redux/type/UserType";
 import { SEARCH } from "../../redux/type/NoteType";
 import { CHANGE_LIST_CLASS } from "../../redux/type/MenuType";
-
 import "./Menu.scss";
-import { LOG_OUT } from "../../redux/type/UserType";
 
 export default function Menu(props) {
+  let alphabet;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  let alphabet;
   const fName = useSelector((state) => state.user.user.full_name);
+  const [isActive, setIsActive] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const searchRef = useRef("");
   if (fName) {
@@ -97,36 +96,12 @@ export default function Menu(props) {
                 </div>
               </div>
             </Link>
-
-            <div className="settings">
-              <div className="menu__btn">
-                <img src={refresh} alt=".." />
-              </div>
-              <div className="menu__btn">
-                <img src={gridIcon} alt="..." />
-              </div>
-              <div className="menu__btn">
-                <img src={settings} alt="..." />
-              </div>
-            </div>
           </div>
           <div className="menu__acount">
-            <div>
-              <div className="menu__btn">
-                <svg class="gb_Pe" focusable="false" viewBox="0 0 24 24">
-                  <path d="M6,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM16,6c0,1.1 0.9,2 2,2s2,-0.9 2,-2 -0.9,-2 -2,-2 -2,0.9 -2,2zM12,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z"></path>
-                </svg>
-              </div>
-            </div>
-
-            <div className="avt-wrap">
-              <div>{alphabet}</div>
-            </div>
             <div className="profile-menu">
-              <ul>
-                <li>Profile</li>
-                <li onClick={logOut}>Logout</li>
-              </ul>
+              <span className="btn-nonbg" onClick={logOut}>
+                Logout
+              </span>
             </div>
           </div>
         </div>

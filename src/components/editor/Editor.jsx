@@ -1,22 +1,22 @@
-import React, { useRef, useState } from "react";
+import autosize from "autosize";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Moment from "react-moment";
 
 import more from "../../asset/editorIcon/more.svg";
-import undo from "../../asset/editorIcon/undo.svg";
 import time from "../../asset/editorIcon/time.svg";
+import undo from "../../asset/editorIcon/undo.svg";
 import colab from "../../asset/editorIcon/colab.svg";
 import image from "../../asset/editorIcon/image.svg";
 import archive from "../../asset/editorIcon/archive.svg";
-import closeIcon from "../../asset/menuTopIcon/delete.svg";
 import reminder from "../../asset/editorIcon/reminder.svg";
+import closeIcon from "../../asset/menuTopIcon/delete.svg";
 import background from "../../asset/editorIcon/background.svg";
 
-import { createNote } from "../../redux/action/NoteAction";
 import useOnClickOutside from "../../hook/useClickOutside";
-
+import { createNote } from "../../redux/action/NoteAction";
 import "./Editor.scss";
 
 export default function Editor(props) {
@@ -31,6 +31,8 @@ export default function Editor(props) {
   let noteItem = {};
   let reminderClass = "";
 
+  const now = new Date();
+
   const handleTitle = (e) => {
     setTitle(e.target.value);
   };
@@ -41,15 +43,16 @@ export default function Editor(props) {
 
   const submitNote = async (e) => {
     e.preventDefault();
-
     props.setOpenModal(false);
-    noteItem = {
-      title: title,
-      content: text,
-      remind: remindDate,
-      label_name: props.label,
-    };
-    dispatch(action(noteItem));
+    if (title.length > 0 || text.length > 0 || remindDate) {
+      noteItem = {
+        title: title,
+        content: text,
+        remind: remindDate,
+        label_name: props.label,
+      };
+      dispatch(action(noteItem));
+    }
   };
 
   if (isReminderActive === true) {
@@ -62,17 +65,19 @@ export default function Editor(props) {
 
   useOnClickOutside(editorRef, async () => {
     props.setOpenModal(false);
-
-    noteItem = {
-      title: title,
-      content: text,
-      remind: remindDate,
-      label_name: props.label,
-    };
-
-    dispatch(action(noteItem));
+    if (title.length > 0 || text.length > 0 || remindDate) {
+      noteItem = {
+        title: title,
+        content: text,
+        remind: remindDate,
+        label_name: props.label,
+      };
+      dispatch(action(noteItem));
+    }
   });
-
+  useEffect(() => {
+    autosize(document.querySelector(".editor-text_area"));
+  }, []);
   return (
     <div className="editor" ref={editorRef}>
       <form
@@ -86,23 +91,34 @@ export default function Editor(props) {
         <div className="editor-title">
           <input placeholder="Title" name="title" onChange={handleTitle} />
           <div
-            className="editor-title__icon"
-            title="Close Editor"
+            className="editor-title__icon tooltip"
             onClick={() => {
               props.setOpenModal(false);
             }}
           >
+            <span className="tooltiptext">Close Editor</span>
             <span>
               <img src={closeIcon} alt=".." />
             </span>
           </div>
         </div>
         <div className="editor-text">
-          <input
+          <textarea
+            className="editor-text_area "
+            onChange={handleText}
             placeholder="Take a note..."
             name="text"
-            onChange={handleText}
+            value={text}
           />
+        </div>
+        <div className="remind-wrap">
+          {remindDate - now ? (
+            <span className="remind-label">
+              <Moment format="MMMM ddd yyyy, HH:mm">{remindDate}</Moment>
+            </span>
+          ) : (
+            <div></div>
+          )}
         </div>
         <div className="editor-feature">
           <div className="editor-feature__icon">
@@ -141,31 +157,12 @@ export default function Editor(props) {
                   </div>
                 </div>
               </li>
-              <li className="editor-icon__item">
-                <img src={colab} alt=".." />
-              </li>
-              <li className="editor-icon__item">
-                <img src={background} alt=".." />
-              </li>
-              <li className="editor-icon__item">
-                <img src={image} alt=".." />
-              </li>
-              <li className="editor-icon__item">
-                <img src={archive} alt=".." />
-              </li>
-              <li className="editor-icon__item">
-                <img src={more} alt=".." />
-              </li>
-              <li className="editor-icon__item">
-                <img src={undo} alt=".." />
-              </li>
-              <li className="editor-icon__item ">
-                <img src={undo} alt=".." className="redo" />
-              </li>
             </ul>
           </div>
           <div className="editor-feature__close">
-            <button type="submit">Submit</button>
+            <button type="submit" className="btn-bg">
+              Submit
+            </button>
           </div>
         </div>
       </form>

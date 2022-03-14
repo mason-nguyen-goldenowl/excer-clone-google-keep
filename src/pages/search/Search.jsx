@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import Cookies from "js-cookie";
+import Masonry from "react-masonry-component";
+
 import Menu from "../../components/menu/Menu";
 import NoteCard from "../../components/noteCard/NoteCard";
 import SideMenu from "../../components/sideMenu/SideMenu";
@@ -14,7 +17,11 @@ const Search = () => {
 
   const renderNoteCard = () => {
     return arrSearch.map((note) => {
-      return <NoteCard content={note} key={note._id} />;
+      return (
+        <div key={note._id}>
+          <NoteCard content={note} />
+        </div>
+      );
     });
   };
   useEffect(() => {
@@ -32,7 +39,13 @@ const Search = () => {
         </div>
         <div className="right">
           <div className="note__content">
-            {arrSearch.length === 0 ? <p>No result</p> : renderNoteCard()}
+            {arrSearch.length === 0 ? (
+              <p>No result</p>
+            ) : (
+              <Masonry className={"my-gallery-class"}>
+                {renderNoteCard()}
+              </Masonry>
+            )}
           </div>
         </div>
       </div>

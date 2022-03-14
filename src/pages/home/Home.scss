@@ -1,17 +1,15 @@
 @use "../../scss/" as *;
 
-@use "../../scss/" as *;
-
 .body-content {
   display: flex;
   height: 100%;
 }
 
 .left {
-  width: auto;
+  width: 100%;
   max-width: 248px;
-  min-width: 48px;
-  margin-right: 90px;
+  min-width: 30px;
+  margin-right: 40px;
 }
 
 .right {
@@ -27,10 +25,8 @@
 }
 
 .note__content {
-  // display: flex;
-  // flex: 1 auto;
-  // flex-wrap: wrap;
-  // align-content: space-around;
-  // justify-content: flex-start;
   margin-top: 20px;
+  margin-bottom: 50px;
+  max-width: 1700px;
+  width: 100%;
 }

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import Modal from "../modal/Modal";
-import EditLabels from "../editLabels/EditLabels";
+
 import { getLabels } from "../../redux/action/LabelAction";
 
 import labelIcon from "../../asset/editorIcon/label.svg";
@@ -14,6 +14,7 @@ import { ReactComponent as EditIcon } from "../../asset/sideMenuIcon/Edit.svg";
 import { ReactComponent as TrashIcon } from "../../asset/sideMenuIcon/Trash.svg";
 
 import "./SideMenu.scss";
+import CreateLabels from "../createLabels/CreateLabels";
 
 export default function SideMenu(props) {
   const dispatch = useDispatch();
@@ -25,12 +26,8 @@ export default function SideMenu(props) {
   const renderLabels = () => {
     return arrLabel?.map((label) => {
       return (
-        <Link to={`/labels/${label.label_name}`}>
-          <li
-            className="list-item__item "
-            id={label.label_name}
-            key={label._id}
-          >
+        <Link to={`/labels/${label.label_name}`} key={label._id}>
+          <li className="list-item__item " id={label.label_name}>
             <div className="item__content">
               <img src={labelIcon} alt="..." />
               <span>{label.label_name}</span>
@@ -51,11 +48,11 @@ export default function SideMenu(props) {
       setListClass("");
     }
 
-    for (let item of document.querySelectorAll(".listItem__item")) {
+    for (let item of document.querySelectorAll(".list-item__item")) {
       item.classList.remove("active");
     }
     document.getElementById(`${props.active}`)?.classList.add("active");
-  }, [isListActive, props.active]);
+  }, [dispatch, isListActive, props.active]);
 
   return (
     <div className="side-menu">
@@ -88,7 +85,7 @@ export default function SideMenu(props) {
         >
           <div className="item__content">
             <EditIcon />
-            <span>Edit labels</span>
+            <span>Create Label</span>
           </div>
         </li>
 
@@ -112,7 +109,7 @@ export default function SideMenu(props) {
       {modalOpen && (
         <Modal
           setOpenModal={setModalOpen}
-          children={<EditLabels setOpenModal={setModalOpen} />}
+          children={<CreateLabels setOpenModal={setModalOpen} />}
         />
       )}
     </div>

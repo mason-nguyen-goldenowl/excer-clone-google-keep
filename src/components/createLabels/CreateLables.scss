@@ -1,17 +1,22 @@
 @use "../../scss/" as *;
 
-.edit-labels {
+.create-labels {
   max-width: 320px;
+  background-color: #fff;
+  padding: 25px 40px;
+  border-radius: 12px;
+  overflow: hidden;
 
   input {
     outline: none;
     border: none;
     height: 25px;
     font-size: 15px;
-
     &:focus {
       border-bottom: 1px solid;
     }
+    margin-left: 10px;
+    width: 52%;
   }
 
   &__title {
@@ -29,7 +34,6 @@
     margin: 8px 0;
     width: 320px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
 
     &:focus-within {
@@ -77,6 +81,7 @@
     font-size: 18px;
     font-weight: 500;
     margin-bottom: 8px;
+    width: fit-content;
   }
 
   &__cre {

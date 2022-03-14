@@ -29,12 +29,20 @@ const googleKeepApi = {
     return axiosClient.post("/note/create", note);
   },
 
+  editNote: (note) => {
+    return axiosClient.post("/note/edit", note);
+  },
+
   archiveNote: (note) => {
     return axiosClient.put("/note/archive", note);
   },
 
   deleteNote: (note) => {
     return axiosClient.delete("/note/delete", { data: note });
+  },
+
+  cleaerRemind: (note) => {
+    return axiosClient.delete("/note/clear-remind", { data: note });
   },
 
   restoreNote: (note) => {

@@ -1,47 +1,45 @@
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import useOnClickOutside from "../../hook/useClickOutside";
+import { deleteLabel } from "../../redux/action/LabelAction";
 import { emptyTrash } from "../../redux/action/NoteAction";
 
 import "./Comfirm.scss";
 
-const Comfirm = (props) => {
+const Comfirmlabel = (props) => {
   const comfirmRef = useRef();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const emptyTrashAction = () => {
-    const action = emptyTrash;
-    dispatch(action());
-  };
+  const deleteLabelAction = () => {
+    const action = deleteLabel;
+    dispatch(action({ label_name: props.label_name }));
 
-  const emptyOnClick = () => {
-    emptyTrashAction();
-    props.setOpenModal(false);
+    navigate(`/`);
   };
-
   useOnClickOutside(comfirmRef, () => props.setOpenModal(false));
 
   return (
     <div ref={comfirmRef} className="comfirm">
       <div className="comfirm__ques">
-        <p>Empty trash? All notes in Trash will be permanently deleted.</p>
+        <p>Delete this label?</p>
       </div>
       <div className="cofirm__choosing">
         <button
           className="comfirm__cancel"
           onClick={() => {
-            props.setIsEmpty(false);
             props.setOpenModal(false);
           }}
         >
           Cancel
         </button>
-        <button className="comfirm__empty" onClick={emptyOnClick}>
-          Empty Trash
+        <button className="comfirm__empty" onClick={deleteLabelAction}>
+          Comfirm
         </button>
       </div>
     </div>
   );
 };
 
-export default Comfirm;
+export default Comfirmlabel;

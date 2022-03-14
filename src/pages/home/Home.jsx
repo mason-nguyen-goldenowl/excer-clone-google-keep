@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
-import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
+import Masonry from "react-masonry-component";
+
+import { Skeleton } from "@chakra-ui/react";
 
 import { getNoteAction } from "../../redux/action/NoteAction";
 
@@ -21,11 +23,16 @@ export default function Home() {
   const refreshToken = Cookies.get("refresh_token");
   const arrNote = useSelector((state) => state.note.arrNote);
   const [isLoaded, setIsLoaded] = useState(false);
+
   let noteSket = { title: "abc", content: "content" };
   const renderNoteCard = () => {
     return arrNote.map((note) => {
       if (!note?.archive && !note?.deleted) {
-        return <NoteCard content={note} key={note._id} />;
+        return (
+          <div key={note._id}>
+            <NoteCard content={note} />
+          </div>
+        );
       }
     });
   };
@@ -34,6 +41,7 @@ export default function Home() {
     if (!isLogged || !refreshToken) {
       navigate("/login");
     }
+
     setTimeout(() => {
       setIsLoaded(true);
     }, 1500);
@@ -51,19 +59,21 @@ export default function Home() {
           <div className="editor-wrap">
             <NoteText />
           </div>
-          <div className="note__content">
-            {isLoaded ? (
-              renderNoteCard()
-            ) : (
-              <div style={{ display: "flex" }}>
-                <Skeleton margin={"5"}>
-                  <NoteCard content={noteSket} />
-                </Skeleton>
-                <Skeleton margin={"5"}>
-                  <NoteCard content={noteSket} />
-                </Skeleton>
-              </div>
-            )}
+          <div className="note__content grid">
+            <Masonry className={"my-gallery-class"}>
+              {isLoaded ? (
+                renderNoteCard()
+              ) : (
+                <div style={{ display: "flex" }}>
+                  <Skeleton margin={"5"}>
+                    <NoteCard content={noteSket} />
+                  </Skeleton>
+                  <Skeleton margin={"5"}>
+                    <NoteCard content={noteSket} />
+                  </Skeleton>
+                </div>
+              )}
+            </Masonry>
           </div>
         </div>
       </div>
