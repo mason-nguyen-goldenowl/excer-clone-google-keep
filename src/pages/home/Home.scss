@@ -10,6 +10,10 @@
   max-width: 248px;
   min-width: 30px;
   margin-right: 40px;
+  transition: all 0.3s;
+  @media only screen and (max-width: 950px) {
+    width: 20%;
+  }
 }
 
 .right {
@@ -29,4 +33,9 @@
   margin-bottom: 50px;
   max-width: 1700px;
   width: 100%;
+  transition: all 0.3s;
+  @media only screen and (max-width: 600px) {
+    display: flex;
+    align-items: center;
+  }
 }

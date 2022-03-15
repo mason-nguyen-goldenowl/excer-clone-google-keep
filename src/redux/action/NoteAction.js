@@ -83,7 +83,12 @@ export const createNote = (note) => {
         newArrNote: result.newArrNote,
       });
     } catch (error) {
-      console.log(error.response);
+      Swal.fire({
+        icon: "error",
+        title: error.response.data,
+        showConfirmButton: false,
+        timer: 2000,
+      });
     }
   };
 };
@@ -111,12 +116,6 @@ export const editNote = (note) => {
 export const clearRemindAction = (note) => {
   return async (dispatch) => {
     try {
-      Swal.fire({
-        icon: "success",
-        title: "Remind of Note have been deleted",
-        showConfirmButton: false,
-        timer: 2000,
-      });
       const result = await googleKeepApi.cleaerRemind(note);
       dispatch({
         type: CLEAR_REMIND,
@@ -179,7 +178,7 @@ export const removeNote = (note) => {
         timer: 2000,
       });
       const result = await googleKeepApi.removeNote(note);
-      console.log(result);
+
       dispatch({
         type: REMOVE_NOTE,
         newArrNote: result.newArrNote,
@@ -190,7 +189,7 @@ export const removeNote = (note) => {
   };
 };
 
-export const emptyTrash = () => {
+export const emptyTrash = (arrNoteId) => {
   return async (dispatch) => {
     try {
       Swal.fire({
@@ -199,7 +198,7 @@ export const emptyTrash = () => {
         showConfirmButton: false,
         timer: 3000,
       });
-      const result = await googleKeepApi.emptyTrash();
+      const result = await googleKeepApi.emptyTrash(arrNoteId);
       dispatch({
         type: EMPTY_TRASH,
         newArrNote: result.newArrNote,

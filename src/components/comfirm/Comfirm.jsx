@@ -8,14 +8,15 @@ import "./Comfirm.scss";
 const Comfirm = (props) => {
   const comfirmRef = useRef();
   const dispatch = useDispatch();
+  let noteTrashId = [];
 
-  const emptyTrashAction = () => {
-    const action = emptyTrash;
-    dispatch(action());
-  };
+  props.trashArr.map((note) => {
+    noteTrashId.push(note._id);
+  });
 
   const emptyOnClick = () => {
-    emptyTrashAction();
+    const action = emptyTrash;
+    dispatch(action(noteTrashId));
     props.setOpenModal(false);
   };
 
@@ -30,7 +31,6 @@ const Comfirm = (props) => {
         <button
           className="comfirm__cancel"
           onClick={() => {
-            props.setIsEmpty(false);
             props.setOpenModal(false);
           }}
         >

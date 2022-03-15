@@ -4,6 +4,7 @@ import {
   ADD_LABEL,
   DELETE_LABEL,
   GET_LABELS,
+  GET_LABEL_NAME,
   UPDATE_LABEL,
 } from "../type/NoteType";
 
@@ -33,14 +34,28 @@ export const getLabels = () => {
   };
 };
 
+export const getLabelName = (label_id) => {
+  return async (dispatch) => {
+    try {
+      const result = await googleKeepApi.getLabelName({ label_id });
+      dispatch({
+        type: GET_LABEL_NAME,
+        labelName: result.labelName,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
 export const createLabels = (label) => {
   return async (dispatch) => {
     try {
+      const result = await googleKeepApi.createLabel(label);
       Toast.fire({
         icon: "success",
-        title: "Your label have been created",
+        title: result.message,
       });
-      const result = await googleKeepApi.createLabel(label);
       dispatch({
         type: ADD_LABEL,
         newArrLabel: result.newArrLabel,

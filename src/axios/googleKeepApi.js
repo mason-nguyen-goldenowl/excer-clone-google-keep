@@ -57,6 +57,10 @@ const googleKeepApi = {
     return axiosClient.get("/label");
   },
 
+  getLabelName: (label) => {
+    return axiosClient.post("/label/get-name", label);
+  },
+
   createLabel: (label) => {
     return axiosClient.post("/label/create", label);
   },
@@ -67,8 +71,8 @@ const googleKeepApi = {
   deleteLabel: (label) => {
     return axiosClient.delete("/label/delete", { data: label });
   },
-  emptyTrash: () => {
-    return axiosClient.delete("/note/empty");
+  emptyTrash: (arrNote) => {
+    return axiosClient.delete("/note/empty", { data: arrNote });
   },
 };
 

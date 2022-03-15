@@ -1,14 +1,11 @@
 import Cookies from "js-cookie";
-import React, { useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import close from "../../asset/menuTopIcon/delete.svg";
 import search from "../../asset/menuTopIcon/search.svg";
-import refresh from "../../asset/menuTopIcon/refresh.svg";
+
 import logo from "../../asset/menuTopIcon/pngwing.com.png";
-import gridIcon from "../../asset/menuTopIcon/gridIcon.svg";
-import settings from "../../asset/menuTopIcon/settings.svg";
 
 import { LOG_OUT } from "../../redux/type/UserType";
 import { SEARCH } from "../../redux/type/NoteType";
@@ -16,21 +13,18 @@ import { CHANGE_LIST_CLASS } from "../../redux/type/MenuType";
 import "./Menu.scss";
 
 export default function Menu(props) {
-  let alphabet;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const fName = useSelector((state) => state.user.user.full_name);
-  const [isActive, setIsActive] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
-  const searchRef = useRef("");
-  if (fName) {
-    alphabet = fName[0].toUpperCase();
-  }
-  const [isListActive, setIsListActive] = useState(false);
 
-  const handleChangeInput = () => {
-    setSearchInput(searchRef.current.value);
-    console.log(searchInput);
+  const searchRef = useRef("");
+
+  const [isListActive, setIsListActive] = useState(false);
+  let searchInput;
+  const handleChangeInput = (e) => {
+    if (e.target.value.length === 0) {
+      searchInput = "";
+    }
+    searchInput = e.target.value;
     dispatch({
       type: SEARCH,
       searchInput,
@@ -50,7 +44,11 @@ export default function Menu(props) {
       console.log(error);
     }
   };
-
+  useEffect(() => {
+    if (props.title === "Search") {
+      searchRef.current.focus();
+    }
+  });
   return (
     <div className="menu-wrapter">
       <div className="menu">
@@ -90,10 +88,6 @@ export default function Menu(props) {
                   placeholder="Search"
                   onChange={handleChangeInput}
                 />
-
-                <div className="menu__btn close">
-                  <img src={close} alt="..." />
-                </div>
               </div>
             </Link>
           </div>

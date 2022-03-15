@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import useOnClickOutside from "../../hook/useClickOutside";
 import { deleteLabel } from "../../redux/action/LabelAction";
-import { emptyTrash } from "../../redux/action/NoteAction";
 
 import "./Comfirm.scss";
 
@@ -14,7 +13,7 @@ const Comfirmlabel = (props) => {
 
   const deleteLabelAction = () => {
     const action = deleteLabel;
-    dispatch(action({ label_name: props.label_name }));
+    dispatch(action({ label_id: props.label_id }));
 
     navigate(`/`);
   };

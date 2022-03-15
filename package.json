@@ -13,6 +13,8 @@
     "@testing-library/user-event": "^13.5.0",
     "autosize": "^5.0.1",
     "axios": "^0.26.0",
+    "draft-js": "^0.11.7",
+    "draft-js-export-html": "^1.4.1",
     "env-cmd": "^10.1.0",
     "framer-motion": "^6",
     "js-cookie": "^3.0.1",

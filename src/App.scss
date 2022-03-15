@@ -11,12 +11,6 @@
 
 html {
   font-size: 100%;
-  @include tablet {
-    font-size: 80%;
-  }
-  @include mobile {
-    font-size: 70%;
-  }
 }
 
 body {

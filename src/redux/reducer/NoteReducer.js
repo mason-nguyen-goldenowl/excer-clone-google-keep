@@ -13,6 +13,7 @@ import {
   REMOVE_NOTE,
   EDIT_NOTE,
   CLEAR_REMIND,
+  GET_LABEL_NAME,
 } from "../type/NoteType";
 import { LOG_OUT } from "../type/UserType";
 
@@ -20,6 +21,7 @@ const stateDefaut = {
   arrNote: [],
   arrSearch: [],
   label: [],
+  labelName: "",
 };
 
 export const NoteReducer = (state = stateDefaut, action) => {
@@ -69,17 +71,33 @@ export const NoteReducer = (state = stateDefaut, action) => {
     }
 
     case SEARCH: {
-      let searchInNote = state.arrNote.filter((note) =>
-        note.title.toLowerCase().includes(action.searchInput.toLowerCase())
-      );
+      console.log(action.searchInput.length);
+      if (action.searchInput.length > 0) {
+        let searchInNote = state.arrNote.filter(
+          (note) =>
+            note.title
+              .toLowerCase()
+              .includes(action.searchInput.toLowerCase()) ||
+            note.content
+              .toLowerCase()
+              .includes(action.searchInput.toLowerCase())
+        );
 
-      state.arrSearch = [...searchInNote];
+        state.arrSearch = [...searchInNote];
+      } else {
+        state.arrSearch = [];
+      }
 
       return { ...state };
     }
 
     case GET_LABELS: {
       state.arrLabel = action.arrLabels;
+      return { ...state };
+    }
+
+    case GET_LABEL_NAME: {
+      state.labelName = action.labelName;
       return { ...state };
     }
 

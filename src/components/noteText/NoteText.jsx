@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Editor from "../editor/Editor";
+import EditorComponent from "../editor/Editor";
 
 import Modal from "../modal/Modal";
 import "./NoteText.scss";
@@ -7,11 +7,9 @@ import "./NoteText.scss";
 export default function NoteText(props) {
   const [modalOpen, setModalOpen] = useState(false);
 
-
   return (
     <div className="note-text">
       <div className="note-text__show">
-
         <div
           className="show__input "
           onClick={() => {
@@ -25,10 +23,11 @@ export default function NoteText(props) {
       {modalOpen && (
         <Modal
           setOpenModal={setModalOpen}
-          children={<Editor setOpenModal={setModalOpen} label={props.label} />}
+          children={
+            <EditorComponent setOpenModal={setModalOpen} label={props.label} />
+          }
         />
       )}
-
     </div>
   );
 }

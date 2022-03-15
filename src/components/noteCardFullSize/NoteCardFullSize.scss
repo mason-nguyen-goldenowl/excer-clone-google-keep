@@ -54,15 +54,23 @@
   & > div {
     margin-left: 10px;
   }
+  position: absolute;
+  right: 20px;
 }
 
 .editor-text_area {
   width: 100%;
   outline: none;
   resize: none;
-  min-height: 100px;
+  height: auto;
+  min-height: 16px;
   max-height: 300px;
   box-sizing: "border-box";
+  font-weight: 700;
+  margin-right: 50px;
+  &:disabled {
+    background-color: transparent;
+  }
 }
 .editor-icon__list {
   list-style: none;
@@ -156,17 +164,6 @@
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.3s;
-
-  button {
-    border: none;
-    font-size: 16px;
-    background-color: transparent;
-    cursor: pointer;
-  }
-
-  &:hover {
-    background-color: #5f63680a;
-  }
 }
 
 .react-datepicker {

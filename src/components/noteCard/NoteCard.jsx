@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import Moment from "react-moment";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-
 import archive from "../../asset/editorIcon/archive.svg";
-import reminder from "../../asset/editorIcon/reminder.svg";
 import time from "../../asset/editorIcon/time.svg";
 import trash from "../../asset/editorIcon/trash.svg";
+
 import {
   archiveNote,
+  clearRemindAction,
   deleteNote,
   unArchiveNote,
 } from "../../redux/action/NoteAction";
@@ -22,10 +20,13 @@ import "./NoteCard.scss";
 export default function NoteCard(props) {
   const note = props.content;
   const dispatch = useDispatch();
-  const [remindDate, setRemindDate] = useState(new Date());
+  const arrLabel = useSelector((state) => state.note.arrLabel);
   const [modalOpen, setModalOpen] = useState(false);
 
-  let reminderClass = "";
+  const label = arrLabel?.find((label) => label._id === note.label_id);
+  if (label) {
+    note.label_name = label.label_name;
+  }
   let statusActive = "";
   let labelClass = "";
 
@@ -44,6 +45,15 @@ export default function NoteCard(props) {
   const deleteAction = () => {
     const action = deleteNote;
     dispatch(action({ note_id: note._id }));
+    clearTimeout(alert);
+  };
+  const clearRemind = () => {
+    if (note.remind) {
+      const action = clearRemindAction;
+
+      dispatch(action(note));
+      note.remind = undefined;
+    }
   };
 
   if (note.label_name) {
@@ -52,14 +62,15 @@ export default function NoteCard(props) {
 
   if (remainingTime > 0) {
     statusActive = "active";
-    setTimeout(() => {
+    var alert = setTimeout(() => {
       remainingTime = -1;
       Swal.fire({
         icon: "warning",
         title: note.title,
-        text: note.content,
+        html: note.content,
         showConfirmButton: false,
       });
+      clearRemind();
     }, remainingTime);
   }
 
@@ -75,18 +86,23 @@ export default function NoteCard(props) {
           <img src={time} alt="" />
           <Moment format="MMM DD, YYYY, hh:mm:A">{note.remind}</Moment>
         </span>
-        <div>
-          <h3>
-            {note.title.length > 20
-              ? note.title.substring(0, 20) + "..."
-              : note.title}
-          </h3>
-          <p>
-            {note.content.length > 150
-              ? note.content.substring(0, 150) + "..."
-              : note.content}
-          </p>
-        </div>
+        {note.title.length === 0 && note.content.length === 0 ? (
+          <div>
+            <h2>Empty Note</h2>
+          </div>
+        ) : (
+          <div>
+            <h3>
+              {note.title.length > 20
+                ? note.title.substring(0, 20) + "..."
+                : note.title}
+            </h3>
+            <div
+              className="content"
+              dangerouslySetInnerHTML={{ __html: note.content }}
+            ></div>
+          </div>
+        )}
       </div>
 
       <span className={`${labelClass}`}>{note.label_name}</span>
@@ -96,7 +112,7 @@ export default function NoteCard(props) {
           <li
             className="editor-icon__item"
             onClick={note.archive ? unArchiveAction : archiveAction}
-            title="Archive"
+            title={note.archive ? "Unarchive" : "Archive"}
           >
             <img src={archive} alt=".." />
           </li>
@@ -108,6 +124,13 @@ export default function NoteCard(props) {
             <img src={trash} alt=".." />
           </li>
         </ul>
+        {note.deleted ? (
+          <span className="labels" style={{ margin: "5px" }}>
+            Deleted
+          </span>
+        ) : (
+          <span></span>
+        )}
       </div>
       {modalOpen && (
         <Modal

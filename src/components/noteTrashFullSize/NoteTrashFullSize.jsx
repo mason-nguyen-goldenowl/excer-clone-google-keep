@@ -38,7 +38,10 @@ export default function NoteTrashFullSize(props) {
     >
       <div className="note-trash-content">
         <h3>{note.title}</h3>
-        <p>{note.content}</p>
+        <div
+          className="content"
+          dangerouslySetInnerHTML={{ __html: note.content }}
+        ></div>
       </div>
       <div className="big-note-trash_feature">
         <div className="note-card__feature">

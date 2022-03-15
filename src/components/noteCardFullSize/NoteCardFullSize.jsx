@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import Swal from "sweetalert2";
 import autosize from "autosize";
 import Moment from "react-moment";
 import DatePicker from "react-datepicker";
@@ -25,30 +24,33 @@ import {
 } from "../../redux/action/NoteAction";
 
 import "./NoteCardFullSize.scss";
+import { convertFromHTML, Editor, EditorState } from "draft-js";
+import { ContentState } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
 
 export default function NoteCardFullSize(props) {
   const noteFullSizeRef = useRef();
   const dispatch = useDispatch();
-  const Toast = Swal.mixin({
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-    timer: 1500,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener("mouseenter", Swal.stopTimer);
-      toast.addEventListener("mouseleave", Swal.resumeTimer);
-    },
-  });
+
   const note = props.content;
   let reminderClass = "";
+  const blocksFromHTML = convertFromHTML(note.content);
+  const state = ContentState.createFromBlockArray(
+    blocksFromHTML.contentBlocks,
+    blocksFromHTML.entityMap
+  );
   const [title, setTitle] = useState(note.title);
-  const [text, setText] = useState(note.content);
   const [remindDate, setRemindDate] = useState();
   const [isReminderActive, setReminderActive] = useState(false);
   const [onRead, setOnRead] = useState(true);
+  const [editorState, setEditorState] = useState(
+    EditorState.createWithContent(state)
+  );
+  const editorRef = useRef();
   const now = new Date();
 
+  let remindTime = new Date(note.remind).getTime();
+  let remainingTime = remindTime - now.getTime();
   const deleteAction = () => {
     const action = deleteNote;
     dispatch(action({ note_id: note._id }));
@@ -69,49 +71,35 @@ export default function NoteCardFullSize(props) {
     setTitle(e.target.value);
   };
 
-  const handleText = (e) => {
-    setText(e.target.value);
-  };
-
   const changeReadToEdit = () => {
     setOnRead(!onRead);
   };
 
   const clearRemind = () => {
-    const action = clearRemindAction;
+    if (note.remind) {
+      const action = clearRemindAction;
 
-    dispatch(action(note));
+      dispatch(action(note));
+    }
+    setRemindDate(undefined);
   };
-  console.log(note);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (title.length > 0 || text.length > 0) {
-      if (title !== note.title || text !== note.content) {
+    let contentLength = editorState.getSelection().getStartOffset();
+    let content = stateToHTML(editorState.getCurrentContent());
+    props.setOpenModal(false);
+    if (
+      (title.length > 0 && !note.deleted) ||
+      (contentLength > 0 && !note.deleted)
+    ) {
+      if (
+        title !== note.title ||
+        content !== note.content ||
+        remindDate - now > 0
+      ) {
         note.title = title;
-        note.content = text;
-        if (remindDate - now) {
-          if (remindDate) {
-            note.remind = remindDate;
-          } else {
-            note.remind = null;
-          }
-        }
-        const action = editNote;
-        await dispatch(action(note));
-
-        props.setOpenModal(false);
-      } else {
-        props.setOpenModal(false);
-      }
-    }
-  };
-
-  useOnClickOutside(noteFullSizeRef, async () => {
-    if (title.length > 0 || text.length > 0) {
-      if (title !== note.title || text !== note.content || remindDate - now) {
-        note.title = title;
-        note.content = text;
+        note.content = content;
         if (remindDate - now) {
           if (remindDate) {
             note.remind = remindDate;
@@ -121,12 +109,12 @@ export default function NoteCardFullSize(props) {
         }
         const action = editNote;
         dispatch(action(note));
-        props.setOpenModal(false);
-      } else {
-        props.setOpenModal(false);
       }
     }
-  });
+  };
+
+  useOnClickOutside(noteFullSizeRef, onSubmit);
+
   useEffect(() => {
     autosize(document.querySelector(".editor-text_area"));
   }, []);
@@ -134,27 +122,31 @@ export default function NoteCardFullSize(props) {
     <div className="editor" ref={noteFullSizeRef}>
       <form onSubmit={onSubmit}>
         <div className="editor-title">
-          <div>
-            <input
-              disabled={onRead}
-              onChange={handleTitle}
-              placeholder="Empty Title"
-              value={title}
-              name="title"
-            />
-          </div>
+          <textarea
+            className="editor-text_area"
+            disabled={onRead}
+            onChange={handleTitle}
+            placeholder="Empty Title"
+            value={title}
+            name="title"
+          />
 
           <div className="editor-title__icon-wrap">
-            <div
-              className="editor-title__icon tooltip"
-              style={{ cursor: "pointer", zIndex: 99 }}
-              onClick={changeReadToEdit}
-            >
-              <span className="tooltiptext">Edit Note</span>
-              <span>
-                <img src={editIcon} alt=".." />{" "}
-              </span>
-            </div>
+            {onRead ? (
+              <div
+                className="editor-title__icon tooltip"
+                style={{ cursor: "pointer", zIndex: 99 }}
+                onClick={changeReadToEdit}
+              >
+                <span className="tooltiptext">Edit Note</span>
+                <span>
+                  <img src={editIcon} alt=".." />{" "}
+                </span>
+              </div>
+            ) : (
+              <div></div>
+            )}
+
             <div
               className="editor-title__icon tooltip"
               style={{ cursor: "pointer" }}
@@ -170,13 +162,12 @@ export default function NoteCardFullSize(props) {
           </div>
         </div>
         <div className="editor-text">
-          <textarea
-            disabled={onRead}
-            className="editor-text_area "
-            onChange={handleText}
-            placeholder="Empty Text"
-            name="text"
-            value={text}
+          <Editor
+            readOnly={onRead}
+            placeholder="Note..."
+            ref={editorRef}
+            editorState={editorState}
+            onChange={(editorState) => setEditorState(editorState)}
           />
         </div>
         <div className="remind-wrap">
@@ -234,7 +225,7 @@ export default function NoteCardFullSize(props) {
 
               <li
                 className="editor-icon__item"
-                title="Archive / Unarchive"
+                title={note.archive ? "Unarchive" : "Archive"}
                 onClick={note.archive ? unArchiveAction : archiveAction}
               >
                 <img src={archive} alt=".." />
@@ -249,7 +240,7 @@ export default function NoteCardFullSize(props) {
             </ul>
           </div>
           <div className="editor-feature__close">
-            <Button disabled={onRead} type="submit">
+            <Button className="btn-bg" disabled={onRead} type="submit">
               Submit
             </Button>
           </div>

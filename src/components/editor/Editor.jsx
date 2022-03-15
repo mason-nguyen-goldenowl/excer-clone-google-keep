@@ -4,28 +4,31 @@ import { useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Moment from "react-moment";
+import { Editor, EditorState } from "draft-js";
+import "draft-js/dist/Draft.css";
+import { stateToHTML } from "draft-js-export-html";
+import { createNote } from "../../redux/action/NoteAction";
 
-import more from "../../asset/editorIcon/more.svg";
 import time from "../../asset/editorIcon/time.svg";
-import undo from "../../asset/editorIcon/undo.svg";
-import colab from "../../asset/editorIcon/colab.svg";
-import image from "../../asset/editorIcon/image.svg";
-import archive from "../../asset/editorIcon/archive.svg";
 import reminder from "../../asset/editorIcon/reminder.svg";
 import closeIcon from "../../asset/menuTopIcon/delete.svg";
-import background from "../../asset/editorIcon/background.svg";
 
 import useOnClickOutside from "../../hook/useClickOutside";
-import { createNote } from "../../redux/action/NoteAction";
 import "./Editor.scss";
 
-export default function Editor(props) {
+export default function EditorComponent(props) {
   const dispatch = useDispatch();
-  const editorRef = useRef("");
+  const editorRef = useRef();
+  const titleRef = useRef();
   const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
   const [remindDate, setRemindDate] = useState();
   const [isReminderActive, setReminderActive] = useState(false);
+  const [editorState, setEditorState] = React.useState(
+    EditorState.createEmpty()
+  );
+
+  const editor = useRef(null);
+
   const action = createNote;
 
   let noteItem = {};
@@ -37,19 +40,20 @@ export default function Editor(props) {
     setTitle(e.target.value);
   };
 
-  const handleText = (e) => {
-    setText(e.target.value);
+  const clearRemind = () => {
+    setRemindDate(undefined);
   };
-
   const submitNote = async (e) => {
     e.preventDefault();
+    let content = stateToHTML(editorState.getCurrentContent());
+    let contentLength = editorState.getSelection().getStartOffset();
     props.setOpenModal(false);
-    if (title.length > 0 || text.length > 0 || remindDate) {
+    if (title.length > 0 || contentLength > 0 || remindDate - now > 0) {
       noteItem = {
         title: title,
-        content: text,
+        content: content,
         remind: remindDate,
-        label_name: props.label,
+        label_id: props.label,
       };
       dispatch(action(noteItem));
     }
@@ -62,21 +66,10 @@ export default function Editor(props) {
   if (props.label) {
     noteItem.label = props.label;
   }
-
-  useOnClickOutside(editorRef, async () => {
-    props.setOpenModal(false);
-    if (title.length > 0 || text.length > 0 || remindDate) {
-      noteItem = {
-        title: title,
-        content: text,
-        remind: remindDate,
-        label_name: props.label,
-      };
-      dispatch(action(noteItem));
-    }
-  });
+  useOnClickOutside(editorRef, submitNote);
   useEffect(() => {
     autosize(document.querySelector(".editor-text_area"));
+    titleRef.current.focus();
   }, []);
   return (
     <div className="editor" ref={editorRef}>
@@ -89,7 +82,13 @@ export default function Editor(props) {
         }
       >
         <div className="editor-title">
-          <input placeholder="Title" name="title" onChange={handleTitle} />
+          <textarea
+            ref={titleRef}
+            className="editor-text_area"
+            placeholder="Title"
+            name="title"
+            onChange={handleTitle}
+          />
           <div
             className="editor-title__icon tooltip"
             onClick={() => {
@@ -103,24 +102,31 @@ export default function Editor(props) {
           </div>
         </div>
         <div className="editor-text">
-          <textarea
-            className="editor-text_area "
-            onChange={handleText}
+          <Editor
             placeholder="Take a note..."
-            name="text"
-            value={text}
+            ref={editor}
+            editorState={editorState}
+            onChange={(editorState) => setEditorState(editorState)}
           />
         </div>
         <div className="remind-wrap">
-          {remindDate - now ? (
+          {remindDate - now > 0 ? (
             <span className="remind-label">
               <Moment format="MMMM ddd yyyy, HH:mm">{remindDate}</Moment>
+              <span onClick={clearRemind} className="clear-remind">
+                X
+              </span>
             </span>
           ) : (
             <div></div>
           )}
         </div>
-        <div className="editor-feature">
+        <div
+          className="editor-feature"
+          onClick={() => {
+            setReminderActive(!isReminderActive);
+          }}
+        >
           <div className="editor-feature__icon">
             <ul className="editor-icon__list">
               <li

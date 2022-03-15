@@ -1,10 +1,11 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import useOnClickOutside from "../../hook/useClickOutside";
 import deleteIcon from "../../asset/menuTopIcon/delete.svg";
 import { useNavigate, useParams } from "react-router-dom";
 import "./EdiitLabel.scss";
 import { useDispatch } from "react-redux";
 import { editLabel } from "../../redux/action/LabelAction";
+import { Button } from "@chakra-ui/react";
 
 export default function EditLabel(props) {
   const dispatch = useDispatch();
@@ -12,43 +13,31 @@ export default function EditLabel(props) {
   const labelName = useParams();
   const editLabelRef = useRef();
   const inpuEditRef = useRef();
+  const [changeLabel, setChangeLabel] = useState(props.label_name);
+  const [textChanged, setTextChanged] = useState(true);
 
   const editLabelAction = () => {
-    let changeLabel = inpuEditRef.current.value;
     props.setOpenModal(false);
-    if (changeLabel.length > 0) {
+    if (changeLabel !== props.label_name) {
       const action = editLabel;
       dispatch(
         action({
-          label_name: props.label_name,
+          label_id: props.label_id,
 
           labelChange: changeLabel,
         })
       );
-      navigate(`/labels/${changeLabel}`);
+      navigate(`/labels/${props.label_id}`);
     }
   };
-  useOnClickOutside(editLabelRef, () => {
-    let changeLabel = inpuEditRef.current.value;
-    props.setOpenModal(false);
-    if (changeLabel.length > 0) {
-      const action = editLabel;
-      dispatch(
-        action({
-          label_name: props.label_name,
-
-          labelChange: changeLabel,
-        })
-      );
-      navigate(`/labels/${changeLabel}`);
-    }
-  });
+  useOnClickOutside(editLabelRef, editLabelAction);
   return (
     <div className="edit-labels" ref={editLabelRef}>
       <form onSubmit={editLabelAction}>
         <div className="edit-labels__title">
           <p className="label-name">Change label name</p>
           <img
+            style={{ cursor: "pointer" }}
             src={deleteIcon}
             alt=".."
             onClick={() => {
@@ -57,12 +46,27 @@ export default function EditLabel(props) {
           />
         </div>
         <div className="edit-labels__body">
-          <input ref={inpuEditRef} type="text" placeholder="New label name" />
+          <input
+            ref={inpuEditRef}
+            onChange={(e) => {
+              setChangeLabel(e.target.value);
+              if (changeLabel !== labelName.id) {
+                setTextChanged(false);
+              }
+            }}
+            type="text"
+            value={changeLabel}
+            placeholder="New label name"
+          />
         </div>
         <div className="edit-labels__footer">
-          <button className="btn-bg" onClick={editLabelAction}>
-            Change
-          </button>
+          <Button
+            disabled={textChanged}
+            className="btn-bg"
+            onClick={editLabelAction}
+          >
+            Save
+          </Button>
         </div>
       </form>
     </div>
