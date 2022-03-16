@@ -42,7 +42,8 @@ const Labels = () => {
     if (!isLogged || !refreshToken) {
       navigate("/login");
     }
-
+    const actionget = getNoteAction;
+    dispatch(actionget());
     const action = getLabelName;
     dispatch(action(id));
   }, [dispatch, id, isLogged, navigate, refreshToken]);

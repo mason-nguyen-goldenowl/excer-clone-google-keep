@@ -15,6 +15,7 @@ import {
 
 import Modal from "../modal/Modal";
 import NoteCardFullSize from "../noteCardFullSize/NoteCardFullSize";
+import NoteTrashFullSize from "../noteTrashFullSize/NoteTrashFullSize";
 import "./NoteCard.scss";
 
 export default function NoteCard(props) {
@@ -136,7 +137,11 @@ export default function NoteCard(props) {
         <Modal
           setOpenModal={setModalOpen}
           children={
-            <NoteCardFullSize setOpenModal={setModalOpen} content={note} />
+            note.deleted ? (
+              <NoteTrashFullSize setOpenModal={setModalOpen} content={note} />
+            ) : (
+              <NoteCardFullSize setOpenModal={setModalOpen} content={note} />
+            )
           }
         />
       )}

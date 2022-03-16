@@ -38,6 +38,8 @@ axiosClient.interceptors.response.use(
         Cookies.set("refresh_token", newRefreshToken);
         return axiosClient(originalConfig);
       } catch (error) {
+        Cookies.remove("isLogged");
+        Cookies.remove("refresh_token");
         return Promise.reject(error);
       }
     }

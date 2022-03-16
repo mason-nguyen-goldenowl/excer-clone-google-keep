@@ -8,7 +8,7 @@ import { Editor, EditorState } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { stateToHTML } from "draft-js-export-html";
 import { createNote } from "../../redux/action/NoteAction";
-
+import labelIcon from "../../asset/editorIcon/label.svg";
 import time from "../../asset/editorIcon/time.svg";
 import reminder from "../../asset/editorIcon/reminder.svg";
 import closeIcon from "../../asset/menuTopIcon/delete.svg";
@@ -21,6 +21,8 @@ export default function EditorComponent(props) {
   const editorRef = useRef();
   const titleRef = useRef();
   const [title, setTitle] = useState("");
+  const [labelName, setLabelName] = useState("");
+  const [isLabelNameActive, setIsLabelNameActive] = useState(false);
   const [remindDate, setRemindDate] = useState();
   const [isReminderActive, setReminderActive] = useState(false);
   const [editorState, setEditorState] = React.useState(
@@ -40,6 +42,10 @@ export default function EditorComponent(props) {
     setTitle(e.target.value);
   };
 
+  const handleLabelName = (e) => {
+    setLabelName(e.target.value);
+  };
+
   const clearRemind = () => {
     setRemindDate(undefined);
   };
@@ -53,6 +59,7 @@ export default function EditorComponent(props) {
         title: title,
         content: content,
         remind: remindDate,
+        label_name: labelName,
         label_id: props.label,
       };
       dispatch(action(noteItem));
@@ -109,7 +116,7 @@ export default function EditorComponent(props) {
             onChange={(editorState) => setEditorState(editorState)}
           />
         </div>
-        <div className="remind-wrap">
+        <div className="remind-wrap" style={{ display: "flex" }}>
           {remindDate - now > 0 ? (
             <span className="remind-label">
               <Moment format="MMMM ddd yyyy, HH:mm">{remindDate}</Moment>
@@ -120,13 +127,20 @@ export default function EditorComponent(props) {
           ) : (
             <div></div>
           )}
+          {isLabelNameActive ? (
+            <span>
+              <input
+                type="text"
+                placeholder="Enter label name"
+                className="remind-label"
+                onChange={handleLabelName}
+              />
+            </span>
+          ) : (
+            <span></span>
+          )}
         </div>
-        <div
-          className="editor-feature"
-          onClick={() => {
-            setReminderActive(!isReminderActive);
-          }}
-        >
+        <div className="editor-feature">
           <div className="editor-feature__icon">
             <ul className="editor-icon__list">
               <li
@@ -161,6 +175,16 @@ export default function EditorComponent(props) {
                       </div>
                     </div>
                   </div>
+                </div>
+              </li>
+              <li
+                className="editor-icon__item "
+                onClick={() => {
+                  setIsLabelNameActive(!isLabelNameActive);
+                }}
+              >
+                <div className="reminder__btn" title="Add Label">
+                  <img src={labelIcon} alt=".." />
                 </div>
               </li>
             </ul>

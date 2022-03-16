@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import {
   ADD_NOTE,
   ARCHIVE_NOTE,
+  CLEAR_LABEL_NAME,
   CLEAR_REMIND,
   DELETE_NOTE,
   EDIT_NOTE,
@@ -80,6 +81,7 @@ export const createNote = (note) => {
       const result = await googleKeepApi.createNote(note);
       dispatch({
         type: ADD_NOTE,
+        newArrLabel: result.newArrLabel,
         newArrNote: result.newArrNote,
       });
     } catch (error) {
@@ -106,6 +108,7 @@ export const editNote = (note) => {
       dispatch({
         type: EDIT_NOTE,
         newArrNote: result.newArrNote,
+        newArrLabel: result.newArrLabel,
       });
     } catch (error) {
       console.log(error.response);
@@ -116,9 +119,23 @@ export const editNote = (note) => {
 export const clearRemindAction = (note) => {
   return async (dispatch) => {
     try {
-      const result = await googleKeepApi.cleaerRemind(note);
+      const result = await googleKeepApi.clearRemind(note);
       dispatch({
         type: CLEAR_REMIND,
+        newArrNote: result.newArrNote,
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+};
+
+export const clearLabelAction = (note) => {
+  return async (dispatch) => {
+    try {
+      const result = await googleKeepApi.clearLabelName(note);
+      dispatch({
+        type: CLEAR_LABEL_NAME,
         newArrNote: result.newArrNote,
       });
     } catch (error) {

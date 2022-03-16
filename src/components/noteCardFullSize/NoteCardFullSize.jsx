@@ -6,7 +6,11 @@ import Moment from "react-moment";
 import DatePicker from "react-datepicker";
 import { Button } from "@chakra-ui/react";
 import "react-datepicker/dist/react-datepicker.css";
+import { convertFromHTML, Editor, EditorState } from "draft-js";
+import { ContentState } from "draft-js";
+import { stateToHTML } from "draft-js-export-html";
 
+import labelIcon from "../../asset/editorIcon/label.svg";
 import editIcon from "../../asset/sideMenuIcon/Edit.svg";
 import trash from "../../asset/editorIcon/trash.svg";
 import time from "../../asset/editorIcon/time.svg";
@@ -17,6 +21,7 @@ import reminder from "../../asset/editorIcon/reminder.svg";
 import useOnClickOutside from "../../hook/useClickOutside";
 import {
   archiveNote,
+  clearLabelAction,
   clearRemindAction,
   deleteNote,
   editNote,
@@ -24,9 +29,6 @@ import {
 } from "../../redux/action/NoteAction";
 
 import "./NoteCardFullSize.scss";
-import { convertFromHTML, Editor, EditorState } from "draft-js";
-import { ContentState } from "draft-js";
-import { stateToHTML } from "draft-js-export-html";
 
 export default function NoteCardFullSize(props) {
   const noteFullSizeRef = useRef();
@@ -41,6 +43,8 @@ export default function NoteCardFullSize(props) {
   );
   const [title, setTitle] = useState(note.title);
   const [remindDate, setRemindDate] = useState();
+  const [isLabelNameActive, setIsLabelNameActive] = useState(false);
+  const [labelName, setLabelName] = useState(note.label_name);
   const [isReminderActive, setReminderActive] = useState(false);
   const [onRead, setOnRead] = useState(true);
   const [editorState, setEditorState] = useState(
@@ -83,6 +87,14 @@ export default function NoteCardFullSize(props) {
     }
     setRemindDate(undefined);
   };
+  const clearLabelName = () => {
+    console.log(note.label_name);
+    if (note.label_name) {
+      const action = clearLabelAction;
+      dispatch(action(note));
+      setLabelName("");
+    }
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -96,10 +108,12 @@ export default function NoteCardFullSize(props) {
       if (
         title !== note.title ||
         content !== note.content ||
-        remindDate - now > 0
+        remindDate - now > 0 ||
+        labelName !== note.label_name
       ) {
         note.title = title;
         note.content = content;
+        note.label_name = labelName;
         if (remindDate - now) {
           if (remindDate) {
             note.remind = remindDate;
@@ -170,10 +184,12 @@ export default function NoteCardFullSize(props) {
             onChange={(editorState) => setEditorState(editorState)}
           />
         </div>
-        <div className="remind-wrap">
+        <div className="remind-wrap" style={{ display: "flex" }}>
           {remindDate || note.remind ? (
             <span className="remind-label">
-              <Moment format="MMMM ddd yyyy, HH:mm">{remindDate}</Moment>
+              <Moment title="Remind time" format="MMMM ddd yyyy, HH:mm">
+                {remindDate}
+              </Moment>
               <span onClick={clearRemind} className="clear-remind">
                 X
               </span>
@@ -181,7 +197,35 @@ export default function NoteCardFullSize(props) {
           ) : (
             <div></div>
           )}
+          {note.label_id || isLabelNameActive ? (
+            <span>
+              {isLabelNameActive ? (
+                <input
+                  title="Label Name"
+                  value={labelName}
+                  className={`remind-label`}
+                  onChange={(e) => {
+                    setLabelName(e.target.value);
+                  }}
+                />
+              ) : (
+                <span
+                  value={note.label_name}
+                  title="Label Name"
+                  className={`remind-label`}
+                >
+                  {note.label_name}
+                  <span onClick={clearLabelName} className="clear-remind">
+                    X
+                  </span>
+                </span>
+              )}
+            </span>
+          ) : (
+            <div></div>
+          )}
         </div>
+
         <div className="editor-feature">
           <div className="editor-feature__icon">
             <ul className="editor-icon__list">
@@ -229,6 +273,16 @@ export default function NoteCardFullSize(props) {
                 onClick={note.archive ? unArchiveAction : archiveAction}
               >
                 <img src={archive} alt=".." />
+              </li>
+              <li
+                className="editor-icon__item "
+                onClick={() => {
+                  setIsLabelNameActive(!isLabelNameActive);
+                }}
+              >
+                <div className="reminder__btn" title="Add Label">
+                  <img src={labelIcon} alt=".." />
+                </div>
               </li>
               <li
                 className="editor-icon__item "
