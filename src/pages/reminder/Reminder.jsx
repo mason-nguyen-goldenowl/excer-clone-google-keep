@@ -1,13 +1,16 @@
-import Cookies from "js-cookie";
 import React, { useEffect } from "react";
-import Masonry from "react-masonry-component";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import Cookies from "js-cookie";
+import Masonry from "react-masonry-component";
+
 import Menu from "../../components/menu/Menu";
 import NoteCard from "../../components/noteCard/NoteCard";
 import NoteText from "../../components/noteText/NoteText";
 import SideMenu from "../../components/sideMenu/SideMenu";
 import { getNoteAction } from "../../redux/action/NoteAction";
+
 import "./Reminder.scss";
 
 export default function Reminder() {

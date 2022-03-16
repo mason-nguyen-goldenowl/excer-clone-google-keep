@@ -1,18 +1,20 @@
 import React, { useRef, useState } from "react";
+import { Button } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+
+import { editLabel } from "../../redux/action/LabelAction";
 import useOnClickOutside from "../../hook/useClickOutside";
 import deleteIcon from "../../asset/menuTopIcon/delete.svg";
-import { useNavigate, useParams } from "react-router-dom";
+
 import "./EdiitLabel.scss";
-import { useDispatch } from "react-redux";
-import { editLabel } from "../../redux/action/LabelAction";
-import { Button } from "@chakra-ui/react";
 
 export default function EditLabel(props) {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const inpuEditRef = useRef();
   const labelName = useParams();
   const editLabelRef = useRef();
-  const inpuEditRef = useRef();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [changeLabel, setChangeLabel] = useState(props.label_name);
   const [textChanged, setTextChanged] = useState(true);
 
@@ -30,7 +32,9 @@ export default function EditLabel(props) {
       navigate(`/labels/${props.label_id}`);
     }
   };
+
   useOnClickOutside(editLabelRef, editLabelAction);
+
   return (
     <div className="edit-labels" ref={editLabelRef}>
       <form onSubmit={editLabelAction}>

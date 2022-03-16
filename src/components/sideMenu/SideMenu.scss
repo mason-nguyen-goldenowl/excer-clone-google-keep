@@ -3,11 +3,11 @@
 .list-item {
   padding: 8px 12px;
   background-color: $white;
-  transition: all 0.3s;
   width: 48px;
   z-index: 10;
   position: fixed;
   transition: all 0.3s;
+
   &:hover {
     padding: 8px 12px;
     box-shadow: 0 16px 10px 0 rgb(0 0 0 / 14%), 0 11px 18px 0 rgb(0 0 0 / 12%),

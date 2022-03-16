@@ -11,10 +11,12 @@
   border-radius: 8px;
   border: 1px solid #dadce0;
   padding: 38px;
+
   h2 {
     font-size: 20px;
     font-weight: 700;
   }
+
   &__body {
     margin-top: 10px;
     .form-input {
@@ -25,6 +27,7 @@
       padding: 6px 8px;
       border: 1px solid #dadce0;
     }
+
     .forgot {
       cursor: pointer;
       color: #1a73e8;
@@ -35,6 +38,7 @@
         color: #24518b;
       }
     }
+
     .submit-group {
       margin-top: 10px;
       display: flex;

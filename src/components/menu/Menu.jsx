@@ -1,15 +1,15 @@
 import Cookies from "js-cookie";
-import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
 
 import search from "../../asset/menuTopIcon/search.svg";
-
 import logo from "../../asset/menuTopIcon/pngwing.com.png";
 
 import { LOG_OUT } from "../../redux/type/UserType";
 import { SEARCH } from "../../redux/type/NoteType";
 import { CHANGE_LIST_CLASS } from "../../redux/type/MenuType";
+
 import "./Menu.scss";
 
 export default function Menu(props) {

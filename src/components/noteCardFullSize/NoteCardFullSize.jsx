@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import autosize from "autosize";
@@ -6,14 +7,13 @@ import Moment from "react-moment";
 import DatePicker from "react-datepicker";
 import { Button } from "@chakra-ui/react";
 import "react-datepicker/dist/react-datepicker.css";
-import { convertFromHTML, Editor, EditorState } from "draft-js";
-import { ContentState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
+import { ContentState, convertFromHTML, Editor, EditorState } from "draft-js";
 
+import time from "../../asset/editorIcon/time.svg";
+import trash from "../../asset/editorIcon/trash.svg";
 import labelIcon from "../../asset/editorIcon/label.svg";
 import editIcon from "../../asset/sideMenuIcon/Edit.svg";
-import trash from "../../asset/editorIcon/trash.svg";
-import time from "../../asset/editorIcon/time.svg";
 import archive from "../../asset/editorIcon/archive.svg";
 import closeIcon from "../../asset/menuTopIcon/delete.svg";
 import reminder from "../../asset/editorIcon/reminder.svg";
@@ -29,7 +29,6 @@ import {
 } from "../../redux/action/NoteAction";
 
 import "./NoteCardFullSize.scss";
-import { Link } from "react-router-dom";
 
 export default function NoteCardFullSize(props) {
   const noteFullSizeRef = useRef();

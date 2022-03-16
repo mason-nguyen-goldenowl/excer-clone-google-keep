@@ -1,13 +1,12 @@
-import { stateToHTML } from "draft-js-export-html";
 import React, { useState } from "react";
-import Moment from "react-moment";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import Moment from "react-moment";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-import archive from "../../asset/editorIcon/archive.svg";
 import time from "../../asset/editorIcon/time.svg";
 import trash from "../../asset/editorIcon/trash.svg";
+import archive from "../../asset/editorIcon/archive.svg";
 
 import {
   archiveNote,
@@ -20,6 +19,7 @@ import {
 import Modal from "../modal/Modal";
 import NoteCardFullSize from "../noteCardFullSize/NoteCardFullSize";
 import NoteTrashFullSize from "../noteTrashFullSize/NoteTrashFullSize";
+
 import "./NoteCard.scss";
 
 export default function NoteCard(props) {

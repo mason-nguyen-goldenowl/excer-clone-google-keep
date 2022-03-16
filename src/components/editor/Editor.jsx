@@ -1,29 +1,32 @@
 import autosize from "autosize";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import Moment from "react-moment";
-import { Editor, EditorState } from "draft-js";
+
 import "draft-js/dist/Draft.css";
+import Moment from "react-moment";
+import DatePicker from "react-datepicker";
+import { Editor, EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
+import "react-datepicker/dist/react-datepicker.css";
 import { createNote } from "../../redux/action/NoteAction";
-import labelIcon from "../../asset/editorIcon/label.svg";
+
 import time from "../../asset/editorIcon/time.svg";
+import labelIcon from "../../asset/editorIcon/label.svg";
 import reminder from "../../asset/editorIcon/reminder.svg";
 import closeIcon from "../../asset/menuTopIcon/delete.svg";
 
 import useOnClickOutside from "../../hook/useClickOutside";
+
 import "./Editor.scss";
 
 export default function EditorComponent(props) {
-  const dispatch = useDispatch();
-  const editorRef = useRef();
   const titleRef = useRef();
+  const editorRef = useRef();
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
+  const [remindDate, setRemindDate] = useState();
   const [labelName, setLabelName] = useState("");
   const [isLabelNameActive, setIsLabelNameActive] = useState(false);
-  const [remindDate, setRemindDate] = useState();
   const [isReminderActive, setReminderActive] = useState(false);
   const [editorState, setEditorState] = React.useState(
     EditorState.createEmpty()

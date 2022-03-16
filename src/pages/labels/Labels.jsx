@@ -1,19 +1,22 @@
-import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
-import Masonry from "react-masonry-component";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import Comfirmlabel from "../../components/comfirm/ComfirmLabel";
-import EditLabel from "../../components/editLabel/EditLabel";
+
+import Cookies from "js-cookie";
+import Masonry from "react-masonry-component";
+
 import Menu from "../../components/menu/Menu";
 import Modal from "../../components/modal/Modal";
 import NoteCard from "../../components/noteCard/NoteCard";
 import NoteText from "../../components/noteText/NoteText";
 import SideMenu from "../../components/sideMenu/SideMenu";
+import EditLabel from "../../components/editLabel/EditLabel";
+import Comfirmlabel from "../../components/comfirm/ComfirmLabel";
 import { getLabelName } from "../../redux/action/LabelAction";
 import { getNoteAction } from "../../redux/action/NoteAction";
 
 import "./Label.scss";
+
 const Labels = () => {
   const { id } = useParams();
   const isLogged = Cookies.get("isLogged");
