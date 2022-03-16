@@ -29,6 +29,7 @@ import {
 } from "../../redux/action/NoteAction";
 
 import "./NoteCardFullSize.scss";
+import { Link } from "react-router-dom";
 
 export default function NoteCardFullSize(props) {
   const noteFullSizeRef = useRef();
@@ -88,7 +89,6 @@ export default function NoteCardFullSize(props) {
     setRemindDate(undefined);
   };
   const clearLabelName = () => {
-    console.log(note.label_name);
     if (note.label_name) {
       const action = clearLabelAction;
       dispatch(action(note));
@@ -101,10 +101,7 @@ export default function NoteCardFullSize(props) {
     let contentLength = editorState.getSelection().getStartOffset();
     let content = stateToHTML(editorState.getCurrentContent());
     props.setOpenModal(false);
-    if (
-      (title.length > 0 && !note.deleted) ||
-      (contentLength > 0 && !note.deleted)
-    ) {
+    if (!note.deleted) {
       if (
         title !== note.title ||
         content !== note.content ||
@@ -114,6 +111,7 @@ export default function NoteCardFullSize(props) {
         note.title = title;
         note.content = content;
         note.label_name = labelName;
+        note.contentLength = contentLength;
         if (remindDate - now) {
           if (remindDate) {
             note.remind = remindDate;
@@ -184,7 +182,7 @@ export default function NoteCardFullSize(props) {
             onChange={(editorState) => setEditorState(editorState)}
           />
         </div>
-        <div className="remind-wrap" style={{ display: "flex" }}>
+        <div className="remind-wrap">
           {remindDate || note.remind ? (
             <span className="remind-label">
               <Moment title="Remind time" format="MMMM ddd yyyy, HH:mm">
@@ -204,6 +202,7 @@ export default function NoteCardFullSize(props) {
                   title="Label Name"
                   value={labelName}
                   className={`remind-label`}
+                  placeholder="Enter label name..."
                   onChange={(e) => {
                     setLabelName(e.target.value);
                   }}
@@ -212,9 +211,9 @@ export default function NoteCardFullSize(props) {
                 <span
                   value={note.label_name}
                   title="Label Name"
-                  className={`remind-label`}
+                  className={`labels`}
                 >
-                  {note.label_name}
+                  <Link to={`/labels/${note.label_id}`}>{note.label_name}</Link>
                   <span onClick={clearLabelName} className="clear-remind">
                     X
                   </span>
@@ -275,12 +274,13 @@ export default function NoteCardFullSize(props) {
                 <img src={archive} alt=".." />
               </li>
               <li
+                title="Change Label"
                 className="editor-icon__item "
                 onClick={() => {
                   setIsLabelNameActive(!isLabelNameActive);
                 }}
               >
-                <div className="reminder__btn" title="Add Label">
+                <div className="reminder__btn">
                   <img src={labelIcon} alt=".." />
                 </div>
               </li>

@@ -54,9 +54,9 @@ export default function EditorComponent(props) {
     let content = stateToHTML(editorState.getCurrentContent());
     let contentLength = editorState.getSelection().getStartOffset();
     props.setOpenModal(false);
-    if (title.length > 0 || contentLength > 0 || remindDate - now > 0) {
+    if (title.trim().length > 0 || contentLength > 0 || remindDate - now > 0) {
       noteItem = {
-        title: title,
+        title: title.trim(),
         content: content,
         remind: remindDate,
         label_name: labelName,
@@ -116,7 +116,7 @@ export default function EditorComponent(props) {
             onChange={(editorState) => setEditorState(editorState)}
           />
         </div>
-        <div className="remind-wrap" style={{ display: "flex" }}>
+        <div className="remind-wrap">
           {remindDate - now > 0 ? (
             <span className="remind-label">
               <Moment format="MMMM ddd yyyy, HH:mm">{remindDate}</Moment>
@@ -131,7 +131,7 @@ export default function EditorComponent(props) {
             <span>
               <input
                 type="text"
-                placeholder="Enter label name"
+                placeholder="Enter label name..."
                 className="remind-label"
                 onChange={handleLabelName}
               />
@@ -179,11 +179,12 @@ export default function EditorComponent(props) {
               </li>
               <li
                 className="editor-icon__item "
+                title="Add Label"
                 onClick={() => {
                   setIsLabelNameActive(!isLabelNameActive);
                 }}
               >
-                <div className="reminder__btn" title="Add Label">
+                <div className="reminder__btn">
                   <img src={labelIcon} alt=".." />
                 </div>
               </li>

@@ -11,6 +11,7 @@
   max-height: 500px;
   margin: 5px;
   overflow: hidden;
+
   @media only screen and (max-width: 600px) {
     width: 400px;
   }
@@ -31,6 +32,7 @@
     box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
       rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
       rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+
     .note-card__feature,
     .note-card__select,
     .note-card__pin {
@@ -45,11 +47,13 @@
     word-wrap: break-word;
     cursor: pointer;
     overflow: hidden;
+
     h3 {
       font-size: 18px;
       font-weight: 700;
       word-wrap: break-word;
     }
+
     .content {
       padding: 14px 10px;
       padding-right: 35px;
@@ -90,8 +94,17 @@
     font-weight: 500;
     padding: 3px 12px;
     font-size: 14px;
-    border-radius: 12px;
+    border-radius: 4px;
     margin-left: 12px;
+    transition: all 0.3s;
+    span {
+      display: none;
+    }
+    &:hover {
+      span {
+        display: inline-block;
+      }
+    }
   }
 
   &__feature {
@@ -113,4 +126,9 @@
     right: 1%;
     top: 8%;
   }
+}
+
+.empty-note {
+  color: #403e3e73;
+  font-size: 20px;
 }

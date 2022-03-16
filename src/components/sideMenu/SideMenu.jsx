@@ -27,7 +27,11 @@ export default function SideMenu(props) {
     return arrLabel?.map((label) => {
       return (
         <Link to={`/labels/${label._id}`} key={label._id}>
-          <li className="list-item__item " id={label.label_name}>
+          <li
+            className="list-item__item "
+            id={label.label_name}
+            title={label.label_name}
+          >
             <div className="item__content">
               <img src={labelIcon} alt="..." />
               <span>{label.label_name}</span>
@@ -58,7 +62,7 @@ export default function SideMenu(props) {
     <div className="side-menu">
       <ul className={`list-item ${listClass}`}>
         <Link to="/">
-          <li className="list-item__item" id="notes">
+          <li className="list-item__item" id="notes" title="Home Page">
             <div className="item__content">
               <NoteIcon />
               <span>Notes</span>
@@ -66,7 +70,7 @@ export default function SideMenu(props) {
           </li>
         </Link>
         <Link to="/reminder">
-          <li className="list-item__item " id="reminders">
+          <li className="list-item__item " id="reminders" title="Reminder Page">
             <div className="item__content">
               <RemindIcon />
               <span>Reminders</span>
@@ -82,6 +86,7 @@ export default function SideMenu(props) {
           onClick={() => {
             setModalOpen(true);
           }}
+          title="Create Label"
         >
           <div className="item__content">
             <EditIcon />
@@ -90,7 +95,7 @@ export default function SideMenu(props) {
         </li>
 
         <Link to={"/archive"}>
-          <li className="list-item__item " id="archive">
+          <li className="list-item__item " id="archive" title="Archive Page">
             <div className="item__content">
               <ArchiveIcon />
               <span>Archive</span>
@@ -98,7 +103,7 @@ export default function SideMenu(props) {
           </li>
         </Link>
         <Link to="/trash">
-          <li className="list-item__item " id="trash">
+          <li className="list-item__item " id="trash" title="Trash Page">
             <div className="item__content">
               <TrashIcon />
               <span>Trash</span>
