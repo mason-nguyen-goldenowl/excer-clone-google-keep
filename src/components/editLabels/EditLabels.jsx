@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { useSelector, useDispatch } from "react-redux";
 
 import useOnClickOutside from "../../hook/useClickOutside";
@@ -19,7 +20,9 @@ import "./EditLables.scss";
 export default function EditLabels(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const editLabelRef = useRef();
+
   const [label, setLabel] = useState("");
   const arrLabel = useSelector((state) => state.note.arrLabel);
 

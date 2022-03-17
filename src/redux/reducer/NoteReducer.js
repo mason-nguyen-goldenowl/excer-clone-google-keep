@@ -12,6 +12,7 @@ import {
   GET_LABELS,
   REMOVE_NOTE,
 } from "../type/NoteType";
+
 import { LOG_OUT } from "../type/UserType";
 
 const stateDefaut = {
@@ -85,6 +86,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
     case DELETE_LABEL: {
       state.arrLabel = action.newArrLabel;
       state.arrNote = action.newArrNote;
+
       return { ...state };
     }
     case LOG_OUT: {
@@ -92,6 +94,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
       state.arrLabel = [];
       return { ...state };
     }
+
     default:
       return { ...state };
   }

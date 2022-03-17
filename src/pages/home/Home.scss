@@ -1,7 +1,5 @@
 @use "../../scss/" as *;
 
-@use "../../scss/" as *;
-
 .body-content {
   display: flex;
   height: 100%;
@@ -27,10 +25,5 @@
 }
 
 .note__content {
-  // display: flex;
-  // flex: 1 auto;
-  // flex-wrap: wrap;
-  // align-content: space-around;
-  // justify-content: flex-start;
   margin-top: 20px;
 }

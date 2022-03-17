@@ -14,11 +14,12 @@ import { ReactComponent as EditIcon } from "../../asset/sideMenuIcon/Edit.svg";
 import { ReactComponent as TrashIcon } from "../../asset/sideMenuIcon/Trash.svg";
 
 import "./SideMenu.scss";
-
 export default function SideMenu(props) {
   const dispatch = useDispatch();
   const { isListActive } = useSelector((state) => state.menu);
+
   const arrLabel = useSelector((state) => state.note.arrLabel);
+
   const [listClass, setListClass] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -58,7 +59,7 @@ export default function SideMenu(props) {
   }, [isListActive, props.active]);
 
   return (
-    <div className="side-menu">
+    <div className="sideMenu">
       <ul className={`list-item ${listClass}`}>
         <Link to="/">
           <li className="list-item__item" id="notes">

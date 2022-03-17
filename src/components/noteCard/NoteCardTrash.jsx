@@ -46,6 +46,7 @@ const Notecardtrash = (props) => {
           >
             <img src={trash} alt=".." />
           </li>
+
           <li
             className="editor-icon__item"
             title="Restore"

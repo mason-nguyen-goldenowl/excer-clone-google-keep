@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,6 +13,7 @@ import gridIcon from "../../asset/menuTopIcon/gridIcon.svg";
 import settings from "../../asset/menuTopIcon/settings.svg";
 
 import { SEARCH } from "../../redux/type/NoteType";
+
 import { CHANGE_LIST_CLASS } from "../../redux/type/MenuType";
 
 import "./Menu.scss";
@@ -24,9 +26,11 @@ export default function Menu(props) {
   const fName = useSelector((state) => state.user.user.full_name);
   const [searchInput, setSearchInput] = useState("");
   const searchRef = useRef("");
+
   if (fName) {
     alphabet = fName[0].toUpperCase();
   }
+
   const [isListActive, setIsListActive] = useState(false);
 
   const handleChangeInput = () => {
@@ -37,6 +41,7 @@ export default function Menu(props) {
       searchInput,
     });
   };
+
   const logOut = async () => {
     try {
       await Cookies.remove("refresh_token");

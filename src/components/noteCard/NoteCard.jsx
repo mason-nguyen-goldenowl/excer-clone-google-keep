@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-
 import { useDispatch } from "react-redux";
-import Moment from "react-moment";
 
+import Moment from "react-moment";
 import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -26,6 +25,7 @@ export default function NoteCard(props) {
   const [remindDate, setRemindDate] = useState(new Date());
 
   let reminderClass = "";
+
   let statusActive = "";
   let labelClass = "";
 
