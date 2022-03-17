@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Moment from "react-moment";
 import time from "../../asset/editorIcon/time.svg";
 import trash from "../../asset/editorIcon/trash.svg";
+
 import refresh from "../../asset/menuTopIcon/refresh.svg";
 
 import Modal from "../modal/Modal";
@@ -90,6 +91,7 @@ const Notecardtrash = (props) => {
           >
             <img src={trash} alt=".." />
           </li>
+
           <li
             className="editor-icon__item"
             title="Restore"

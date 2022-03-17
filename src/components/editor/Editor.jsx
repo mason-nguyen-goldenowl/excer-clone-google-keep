@@ -8,6 +8,7 @@ import DatePicker from "react-datepicker";
 import { Editor, EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import "react-datepicker/dist/react-datepicker.css";
+
 import { createNote } from "../../redux/action/NoteAction";
 
 import time from "../../asset/editorIcon/time.svg";
@@ -22,6 +23,7 @@ import "./Editor.scss";
 export default function EditorComponent(props) {
   const titleRef = useRef();
   const editorRef = useRef();
+
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [remindDate, setRemindDate] = useState();
@@ -106,6 +108,7 @@ export default function EditorComponent(props) {
             }}
           >
             <span className="tooltiptext">Close Editor</span>
+
             <span>
               <img src={closeIcon} alt=".." />
             </span>

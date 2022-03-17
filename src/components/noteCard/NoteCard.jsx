@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import Swal from "sweetalert2";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
@@ -19,6 +20,8 @@ import {
 import Modal from "../modal/Modal";
 import NoteCardFullSize from "../noteCardFullSize/NoteCardFullSize";
 import NoteTrashFullSize from "../noteTrashFullSize/NoteTrashFullSize";
+
+import { ARCHIVE_NOTE, DELETE_NOTE } from "../../redux/type/NoteType";
 
 import "./NoteCard.scss";
 

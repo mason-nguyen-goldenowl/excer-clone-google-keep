@@ -12,6 +12,8 @@ import Resetpassword from "./pages/resetPassword/ResetPassword";
 
 import "./App.scss";
 
+import "./App.scss";
+
 function App() {
   return (
     <BrowserRouter>

@@ -50,6 +50,7 @@ export default function Home() {
   return (
     <div>
       <Menu title="Keep" />
+
       <div className="body-content">
         <div className="left">
           <SideMenu active="notes" />

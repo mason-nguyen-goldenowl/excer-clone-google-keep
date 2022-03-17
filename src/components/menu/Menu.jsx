@@ -6,8 +6,8 @@ import React, { useEffect, useRef, useState } from "react";
 import search from "../../asset/menuTopIcon/search.svg";
 import logo from "../../asset/menuTopIcon/pngwing.com.png";
 
-import { LOG_OUT } from "../../redux/type/UserType";
 import { SEARCH } from "../../redux/type/NoteType";
+import { LOG_OUT } from "../../redux/type/UserType";
 import { CHANGE_LIST_CLASS } from "../../redux/type/MenuType";
 
 import "./Menu.scss";
@@ -25,11 +25,13 @@ export default function Menu(props) {
       searchInput = "";
     }
     searchInput = e.target.value;
+
     dispatch({
       type: SEARCH,
       searchInput,
     });
   };
+
   const logOut = async () => {
     try {
       await Cookies.remove("refresh_token");
@@ -49,6 +51,7 @@ export default function Menu(props) {
       searchRef.current.focus();
     }
   });
+
   return (
     <div className="menu-wrapter">
       <div className="menu">
