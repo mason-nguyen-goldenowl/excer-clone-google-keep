@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Trash from "./pages/trash/Trash";
@@ -9,6 +8,8 @@ import Search from "./pages/search/Search";
 import Archive from "./pages/archive/Archive";
 import Reminder from "./pages/reminder/Reminder";
 import Resetpassword from "./pages/resetPassword/ResetPassword";
+
+import "./App.scss";
 
 import "./App.scss";
 

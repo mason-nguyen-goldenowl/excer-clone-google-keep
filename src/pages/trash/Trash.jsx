@@ -3,12 +3,15 @@ import React, { useEffect, useState } from "react";
 import Masonry from "react-masonry-component";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Comfirm from "../../components/comfirm/Comfirm";
+
 import Menu from "../../components/menu/Menu";
 import Modal from "../../components/modal/Modal";
-import NoteCardTrash from "../../components/noteCard/NoteCardTrash";
+import Comfirm from "../../components/comfirm/Comfirm";
 import SideMenu from "../../components/sideMenu/SideMenu";
+import NoteCardTrash from "../../components/noteCard/NoteCardTrash";
+
 import { getNoteAction } from "../../redux/action/NoteAction";
+
 import "./Trash.scss";
 
 export default function Trash() {

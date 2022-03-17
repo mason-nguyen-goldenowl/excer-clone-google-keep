@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+
 import Moment from "react-moment";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
+
 import archive from "../../asset/editorIcon/archive.svg";
 import time from "../../asset/editorIcon/time.svg";
 import trash from "../../asset/editorIcon/trash.svg";
@@ -15,6 +17,7 @@ import {
 
 import Modal from "../modal/Modal";
 import NoteCardFullSize from "../noteCardFullSize/NoteCardFullSize";
+
 import "./NoteCard.scss";
 
 export default function NoteCard(props) {

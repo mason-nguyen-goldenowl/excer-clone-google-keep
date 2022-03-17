@@ -1,6 +1,7 @@
 import autosize from "autosize";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Moment from "react-moment";
@@ -96,6 +97,7 @@ export default function EditorComponent(props) {
             }}
           >
             <span className="tooltiptext">Close Editor</span>
+
             <span>
               <img src={closeIcon} alt=".." />
             </span>

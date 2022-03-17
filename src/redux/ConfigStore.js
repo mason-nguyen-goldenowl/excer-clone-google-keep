@@ -1,4 +1,5 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
+
 import thunkMidleWare from "redux-thunk";
 
 import { MenuReducer } from "./reducer/MenuReducer";

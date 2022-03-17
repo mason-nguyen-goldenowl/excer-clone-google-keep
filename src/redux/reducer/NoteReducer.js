@@ -15,6 +15,7 @@ import {
   CLEAR_REMIND,
   GET_LABEL_NAME,
 } from "../type/NoteType";
+
 import { LOG_OUT } from "../type/UserType";
 
 const stateDefaut = {
@@ -109,6 +110,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
     case UPDATE_LABEL: {
       state.arrLabel = action.newArrLabel;
       state.arrNote = action.newArrNote.reverse();
+
       return { ...state };
     }
 
@@ -122,6 +124,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
       state.arrLabel = [];
       return { ...state };
     }
+
     default:
       return { ...state };
   }

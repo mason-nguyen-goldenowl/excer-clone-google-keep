@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import search from "../../asset/menuTopIcon/search.svg";
-
 import logo from "../../asset/menuTopIcon/pngwing.com.png";
 
 import { LOG_OUT } from "../../redux/type/UserType";
@@ -25,11 +24,13 @@ export default function Menu(props) {
       searchInput = "";
     }
     searchInput = e.target.value;
+
     dispatch({
       type: SEARCH,
       searchInput,
     });
   };
+
   const logOut = async () => {
     try {
       await Cookies.remove("refresh_token");
@@ -49,6 +50,7 @@ export default function Menu(props) {
       searchRef.current.focus();
     }
   });
+
   return (
     <div className="menu-wrapter">
       <div className="menu">

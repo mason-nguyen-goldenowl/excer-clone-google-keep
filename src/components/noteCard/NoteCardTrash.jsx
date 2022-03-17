@@ -1,13 +1,15 @@
 import React, { useState } from "react";
+import Moment from "react-moment";
 import { useDispatch, useSelector } from "react-redux";
-import refresh from "../../asset/menuTopIcon/refresh.svg";
-import trash from "../../asset/editorIcon/trash.svg";
+
 import time from "../../asset/editorIcon/time.svg";
-import { removeNote, restoreNote } from "../../redux/action/NoteAction";
+import trash from "../../asset/editorIcon/trash.svg";
+import refresh from "../../asset/menuTopIcon/refresh.svg";
+
 import Modal from "../modal/Modal";
+import { removeNote, restoreNote } from "../../redux/action/NoteAction";
 import NoteTrashFullSize from "../noteTrashFullSize/NoteTrashFullSize";
 import "./NoteCard.scss";
-import Moment from "react-moment";
 
 const Notecardtrash = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -75,6 +77,7 @@ const Notecardtrash = (props) => {
           >
             <img src={trash} alt=".." />
           </li>
+
           <li
             className="editor-icon__item"
             title="Restore"
