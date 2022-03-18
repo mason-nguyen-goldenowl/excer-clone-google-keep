@@ -1,21 +1,19 @@
 import React, { useState } from "react";
-
 import { useDispatch } from "react-redux";
+
 import Moment from "react-moment";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import reminder from "../../asset/editorIcon/reminder.svg";
 import pin from "../../asset/editorIcon/pin.svg";
-
 import trash from "../../asset/editorIcon/trash.svg";
-
 import background from "../../asset/editorIcon/background.svg";
 import image from "../../asset/editorIcon/image.svg";
-import archive from "../../asset/editorIcon/archive.svg";
-import more from "../../asset/editorIcon/more.svg";
 import select from "../../asset/editorIcon/select.svg";
+import archive from "../../asset/editorIcon/archive.svg";
+import reminder from "../../asset/editorIcon/reminder.svg";
+import more from "../../asset/editorIcon/more.svg";
 import time from "../../asset/editorIcon/time.svg";
 
 import { ARCHIVE_NOTE, DELETE_NOTE } from "../../redux/type/NoteType";
@@ -25,7 +23,6 @@ import "./NoteCard.scss";
 export default function NoteCard(props) {
   const dispatch = useDispatch();
   const [remindDate, setRemindDate] = useState(new Date());
-
 
   const note = props.content;
 
@@ -64,7 +61,6 @@ export default function NoteCard(props) {
     }, remainingTime);
   }
 
-
   return (
     <div className="note-card">
       <div className="note-card__select">
@@ -76,7 +72,6 @@ export default function NoteCard(props) {
       </div>
 
       <div className="note-card__text">
-
         <span className={`reminderStatus ${statusActive}`}>
           <img src={time} alt="" />
           <Moment format="MMM DD, YYYY, hh:mm:A">{note.remind}</Moment>
@@ -86,13 +81,11 @@ export default function NoteCard(props) {
         <p>{note.text}</p>
       </div>
 
-
       <span className={`${labelClass}`}>{note.label}</span>
 
       <div className="note-card__feature">
         <ul className="editor-icon__list">
           <li className="editor-icon__item  ">
-
             <div className="reminder__btn" title="Reminder">
               <img src={reminder} alt=".." />
 
@@ -100,9 +93,7 @@ export default function NoteCard(props) {
                 <p>Reminder:</p>
 
                 <div className="reminder__items">
-
                   <div className="reminder__item">
-
                     <img src={time} alt="..." />
                     <span> Pick date & time </span>
                   </div>
@@ -120,14 +111,12 @@ export default function NoteCard(props) {
             </div>
           </li>
 
-
           <li
             className="editor-icon__item"
             title="Delete"
             onClick={deleteAction}
           >
             <img src={trash} alt=".." />
-
           </li>
           <li className="editor-icon__item">
             <img src={background} alt=".." />
@@ -137,7 +126,6 @@ export default function NoteCard(props) {
           </li>
 
           <li className="editor-icon__item" onClick={archiveAction}>
-
             <img src={archive} alt=".." />
           </li>
           <li className="editor-icon__item">

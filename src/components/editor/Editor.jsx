@@ -1,12 +1,11 @@
 import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useDispatch } from "react-redux";
 
 import reminder from "../../asset/editorIcon/reminder.svg";
 import closeIcon from "../../asset/menuTopIcon/delete.svg";
-
 import colab from "../../asset/editorIcon/colab.svg";
 import background from "../../asset/editorIcon/background.svg";
 import image from "../../asset/editorIcon/image.svg";
@@ -14,7 +13,6 @@ import archive from "../../asset/editorIcon/archive.svg";
 import more from "../../asset/editorIcon/more.svg";
 import undo from "../../asset/editorIcon/undo.svg";
 import time from "../../asset/editorIcon/time.svg";
-
 
 import { ADD_NOTE } from "../../redux/type/NoteType";
 import useOnClickOutside from "../../hook/useClickOutside";
@@ -27,6 +25,7 @@ export default function Editor(props) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [remindDate, setRemindDate] = useState(new Date());
+
   const editorRef = useRef("");
 
   let reminderClass = "";
@@ -51,7 +50,6 @@ export default function Editor(props) {
     alert("Add note success");
     props.setOpenModal(false);
   };
-
 
   if (isReminderActive === true) {
     reminderClass = "active";
@@ -86,6 +84,7 @@ export default function Editor(props) {
       >
         <div className="editor-title">
           <input placeholder="Title" name="title" onChange={handleTitle} />
+
           <div
             className="editor-title__icon"
             title="Close Editor"
@@ -98,6 +97,7 @@ export default function Editor(props) {
             </span>
           </div>
         </div>
+
         <div className="editor-text">
           <input
             placeholder="Take a note..."
@@ -170,7 +170,6 @@ export default function Editor(props) {
           </div>
         </div>
       </form>
-
     </div>
   );
 }

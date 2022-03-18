@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-
 import Archive from "./pages/archive/Archive";
 import Home from "./pages/home/Home";
 import Labels from "./pages/labels/Labels";
@@ -8,12 +7,7 @@ import Reminder from "./pages/reminder/Reminder";
 import Search from "./pages/search/Search";
 import Trash from "./pages/trash/Trash";
 
-
 import "./App.scss";
-import Archive from "./pages/archive/Archive";
-import Home from "./pages/home/Home";
-import Reminder from "./pages/reminder/Reminder";
-import Trash from "./pages/trash/Trash";
 
 function App() {
   return (

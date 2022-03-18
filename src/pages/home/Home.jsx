@@ -9,9 +9,7 @@ import SideMenu from "../../components/sideMenu/SideMenu";
 import "./Home.scss";
 
 export default function Home() {
-
   const { arrNote } = useSelector((state) => state.note);
-
 
   const renderNoteCard = () => {
     return arrNote.map((note) => {
@@ -24,14 +22,11 @@ export default function Home() {
       <Menu title="Keep" />
 
       <div className="body-content">
-
         <div className="left">
           <SideMenu active="notes" />
         </div>
         <div className="right">
-
           <div className="editor-wrap">
-
             <NoteText />
           </div>
           <div className="note__content">{renderNoteCard()}</div>

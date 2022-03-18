@@ -3,8 +3,8 @@ import { useDispatch } from "react-redux";
 
 import pin from "../../asset/editorIcon/pin.svg";
 import trash from "../../asset/editorIcon/trash.svg";
-import restore from "../../asset/editorIcon/restore.svg";
 import select from "../../asset/editorIcon/select.svg";
+import restore from "../../asset/editorIcon/restore.svg";
 
 import { DELETE_FOREVER, RESTORE } from "../../redux/type/NoteType";
 import "./NoteCard.scss";
@@ -66,6 +66,7 @@ const Notecardtrash = (props) => {
           >
             <img src={trash} alt=".." />
           </li>
+
           <li
             className="editor-icon__item"
             title="Restore"
