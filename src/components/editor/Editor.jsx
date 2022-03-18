@@ -19,6 +19,8 @@ import closeIcon from "../../asset/menuTopIcon/delete.svg";
 import useOnClickOutside from "../../hook/useClickOutside";
 
 import "./Editor.scss";
+import Modal from "../modal/Modal";
+import ComfirmNote from "../comfirm/ComfirmNote";
 
 export default function EditorComponent(props) {
   const titleRef = useRef();
@@ -30,11 +32,9 @@ export default function EditorComponent(props) {
   const [labelName, setLabelName] = useState("");
   const [isLabelNameActive, setIsLabelNameActive] = useState(false);
   const [isReminderActive, setReminderActive] = useState(false);
-  const [editorState, setEditorState] = React.useState(
-    EditorState.createEmpty()
-  );
-
-  const editor = useRef(null);
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [modalOpenComfirm, setModalOpenComfirm] = useState(false);
+  const editor = useRef();
 
   const action = createNote;
 
@@ -46,7 +46,9 @@ export default function EditorComponent(props) {
   const handleTitle = (e) => {
     setTitle(e.target.value);
   };
-
+  const handleChange = (e) => {
+    setEditorState(e);
+  };
   const handleLabelName = (e) => {
     setLabelName(e.target.value);
   };
@@ -54,21 +56,21 @@ export default function EditorComponent(props) {
   const clearRemind = () => {
     setRemindDate(undefined);
   };
+
+  let content = stateToHTML(editorState.getCurrentContent());
+
   const submitNote = async (e) => {
     e.preventDefault();
-    let content = stateToHTML(editorState.getCurrentContent());
-    let contentLength = editorState.getSelection().getStartOffset();
     props.setOpenModal(false);
-    if (title.trim().length > 0 || contentLength > 0 || remindDate - now > 0) {
-      noteItem = {
-        title: title.trim(),
-        content: content,
-        remind: remindDate,
-        label_name: labelName,
-        label_id: props.label,
-      };
-      dispatch(action(noteItem));
-    }
+
+    noteItem = {
+      title: title.trim(),
+      content: content,
+      remind: remindDate,
+      label_name: labelName,
+      label_id: props.label,
+    };
+    dispatch(action(noteItem));
   };
 
   if (isReminderActive === true) {
@@ -78,21 +80,17 @@ export default function EditorComponent(props) {
   if (props.label) {
     noteItem.label = props.label;
   }
-  useOnClickOutside(editorRef, submitNote);
+
+  useOnClickOutside(editorRef, () => {
+    setModalOpenComfirm(true);
+  });
   useEffect(() => {
     autosize(document.querySelector(".editor-text_area"));
     titleRef.current.focus();
   }, []);
   return (
-    <div className="editor" ref={editorRef}>
-      <form
-        onSubmit={
-          ((e) => {
-            e.preventDefault();
-          },
-          submitNote)
-        }
-      >
+    <div className="editor">
+      <form onSubmit={submitNote} ref={editorRef}>
         <div className="editor-title">
           <textarea
             ref={titleRef}
@@ -121,7 +119,8 @@ export default function EditorComponent(props) {
             placeholder="Take a note..."
             ref={editor}
             editorState={editorState}
-            onChange={(editorState) => setEditorState(editorState)}
+            onBlur={handleChange}
+            onChange={handleChange}
           />
         </div>
         <div className="remind-wrap">
@@ -206,6 +205,20 @@ export default function EditorComponent(props) {
           </div>
         </div>
       </form>
+      {modalOpenComfirm && (
+        <Modal
+          setOpenModalComfirm={setModalOpenComfirm}
+          children={
+            <ComfirmNote
+              setOpenModalComfirm={setModalOpenComfirm}
+              content={"Do you want to create this note?"}
+              editorState={editorState}
+              onSubmit={submitNote}
+              setOpenModal={props.setOpenModal}
+            />
+          }
+        />
+      )}
     </div>
   );
 }

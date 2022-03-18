@@ -29,6 +29,8 @@ import {
 } from "../../redux/action/NoteAction";
 
 import "./NoteCardFullSize.scss";
+import Modal from "../modal/Modal";
+import ComfirmNote from "../comfirm/ComfirmNote";
 
 export default function NoteCardFullSize(props) {
   const noteFullSizeRef = useRef();
@@ -50,7 +52,9 @@ export default function NoteCardFullSize(props) {
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(state)
   );
+  const [modalOpenComfirm, setModalOpenComfirm] = useState(false);
   const editorRef = useRef();
+  const editorComponentRef = useRef();
   const now = new Date();
 
   let remindTime = new Date(note.remind).getTime();
@@ -123,15 +127,20 @@ export default function NoteCardFullSize(props) {
       }
     }
   };
-
-  useOnClickOutside(noteFullSizeRef, onSubmit);
+  useOnClickOutside(noteFullSizeRef, () => {
+    if (onRead && !isLabelNameActive && remainingTime < 0) {
+      props.setOpenModal(false);
+    } else {
+      setModalOpenComfirm(true);
+    }
+  });
 
   useEffect(() => {
     autosize(document.querySelector(".editor-text_area"));
   }, []);
   return (
     <div className="editor" ref={noteFullSizeRef}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} ref={editorComponentRef}>
         <div className="editor-title">
           <textarea
             className="editor-text_area"
@@ -299,6 +308,20 @@ export default function NoteCardFullSize(props) {
           </div>
         </div>
       </form>
+      {modalOpenComfirm && (
+        <Modal
+          setOpenModalComfirm={setModalOpenComfirm}
+          children={
+            <ComfirmNote
+              setOpenModalComfirm={setModalOpenComfirm}
+              content={"Did you comfirm this note?"}
+              editorState={editorState}
+              onSubmit={onSubmit}
+              setOpenModal={props.setOpenModal}
+            />
+          }
+        />
+      )}
     </div>
   );
 }
