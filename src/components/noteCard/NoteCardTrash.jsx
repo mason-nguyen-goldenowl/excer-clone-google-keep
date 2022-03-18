@@ -8,8 +8,8 @@ import trash from "../../asset/editorIcon/trash.svg";
 import refresh from "../../asset/menuTopIcon/refresh.svg";
 
 import Modal from "../modal/Modal";
-import NoteTrashFullSize from "../noteTrashFullSize/NoteTrashFullSize";
 import { removeNote, restoreNote } from "../../redux/action/NoteAction";
+import NoteTrashFullSize from "../noteTrashFullSize/NoteTrashFullSize";
 
 import "./NoteCard.scss";
 

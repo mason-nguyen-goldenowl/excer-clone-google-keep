@@ -2,11 +2,11 @@ import autosize from "autosize";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import "draft-js/dist/Draft.css";
 import Moment from "react-moment";
 import DatePicker from "react-datepicker";
 import { Editor, EditorState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
+import "draft-js/dist/Draft.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { createNote } from "../../redux/action/NoteAction";
@@ -101,6 +101,7 @@ export default function EditorComponent(props) {
             name="title"
             onChange={handleTitle}
           />
+
           <div
             className="editor-title__icon tooltip"
             onClick={() => {
@@ -114,6 +115,7 @@ export default function EditorComponent(props) {
             </span>
           </div>
         </div>
+
         <div className="editor-text">
           <Editor
             placeholder="Take a note..."
@@ -133,6 +135,7 @@ export default function EditorComponent(props) {
           ) : (
             <div></div>
           )}
+
           {isLabelNameActive ? (
             <span>
               <input

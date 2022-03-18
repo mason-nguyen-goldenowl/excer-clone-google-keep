@@ -46,6 +46,7 @@ export default function Menu(props) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     if (props.title === "Search") {
       searchRef.current.focus();

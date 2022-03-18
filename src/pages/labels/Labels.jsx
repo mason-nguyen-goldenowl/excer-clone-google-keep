@@ -13,9 +13,9 @@ import SideMenu from "../../components/sideMenu/SideMenu";
 import EditLabel from "../../components/editLabel/EditLabel";
 import Comfirmlabel from "../../components/comfirm/ComfirmLabel";
 import { getLabelName } from "../../redux/action/LabelAction";
-import { getNoteAction } from "../../redux/action/NoteAction";
 
 import "./Label.scss";
+import { getNoteAction } from "../../redux/action/NoteAction";
 
 const Labels = () => {
   const { id } = useParams();

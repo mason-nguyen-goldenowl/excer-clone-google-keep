@@ -30,6 +30,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
   switch (action.type) {
     case GET_NOTE: {
       state.arrNote = action.arrNote.reverse();
+
       return { ...state };
     }
     case ADD_NOTE: {
@@ -51,6 +52,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
 
     case CLEAR_REMIND: {
       state.arrNote = action.newArrNote.reverse();
+
       return { ...state };
     }
 
@@ -66,6 +68,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
 
     case REMOVE_NOTE: {
       state.arrNote = action.newArrNote.reverse();
+
       return { ...state };
     }
     case CLEAR_LABEL_NAME: {
@@ -116,6 +119,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
 
     case UPDATE_LABEL: {
       state.arrLabel = action.newArrLabel;
+
       state.arrNote = action.newArrNote.reverse();
 
       return { ...state };
@@ -124,6 +128,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
     case DELETE_LABEL: {
       state.arrLabel = action.newArrLabel;
       state.arrNote = action.newArrNote.reverse();
+
       return { ...state };
     }
     case LOG_OUT: {

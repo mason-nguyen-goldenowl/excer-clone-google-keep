@@ -17,6 +17,7 @@ import { ReactComponent as RemindIcon } from "../../asset/sideMenuIcon/Remind.sv
 import { ReactComponent as ArchiveIcon } from "../../asset/sideMenuIcon/Archive.svg";
 
 import "./SideMenu.scss";
+
 export default function SideMenu(props) {
   const dispatch = useDispatch();
   const { isListActive } = useSelector((state) => state.menu);

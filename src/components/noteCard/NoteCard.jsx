@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import Swal from "sweetalert2";
+
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +20,7 @@ import {
 
 import Modal from "../modal/Modal";
 import NoteCardFullSize from "../noteCardFullSize/NoteCardFullSize";
+
 import NoteTrashFullSize from "../noteTrashFullSize/NoteTrashFullSize";
 
 import { ARCHIVE_NOTE, DELETE_NOTE } from "../../redux/type/NoteType";
@@ -30,16 +32,19 @@ export default function NoteCard(props) {
   const dispatch = useDispatch();
   const arrLabel = useSelector((state) => state.note.arrLabel);
   const [modalOpen, setModalOpen] = useState(false);
+
   const clearLabelName = () => {
     if (note.label_name) {
       const action = clearLabelAction;
       dispatch(action(note));
     }
   };
+
   const label = arrLabel?.find((label) => label._id === note.label_id);
   if (label) {
     note.label_name = label.label_name;
   }
+
   let statusActive = "";
   let labelClass = "";
 
@@ -138,6 +143,7 @@ export default function NoteCard(props) {
           >
             <img src={archive} alt=".." />
           </li>
+
           <li
             className="editor-icon__item "
             title="Delete"

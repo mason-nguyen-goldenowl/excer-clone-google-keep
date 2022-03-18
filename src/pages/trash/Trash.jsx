@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import Cookies from "js-cookie";
@@ -52,6 +53,7 @@ export default function Trash() {
         <div className="right">
           <div className="trash__dr">
             <p>Notes in Trash will be deleted after 7 days</p>
+
             <span
               className="btn-nonbg"
               onClick={() => {

@@ -24,6 +24,7 @@ export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   let noteSket = { title: "abc", content: "content" };
+
   const renderNoteCard = () => {
     return arrNote.map((note) => {
       if (!note?.archive && !note?.deleted) {
