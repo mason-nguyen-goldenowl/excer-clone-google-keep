@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
 import Cookies from "js-cookie";
+import React, { useEffect } from "react";
+import Masonry from "react-masonry-component";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import Menu from "../../components/menu/Menu";
 import NoteCard from "../../components/noteCard/NoteCard";
 import NoteText from "../../components/noteText/NoteText";
 import SideMenu from "../../components/sideMenu/SideMenu";
-
+import { getNoteAction } from "../../redux/action/NoteAction";
 import "./Reminder.scss";
 
 export default function Reminder() {
   const isLogged = Cookies.get("isLogged");
   const refreshToken = Cookies.get("refresh_token");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const arrNote = useSelector((state) => state.note.arrNote);
 
   const renderNoteCard = () => {
@@ -23,7 +24,11 @@ export default function Reminder() {
       let now = new Date().getTime();
       let remainingTime = remindTime - now;
       if (remainingTime > 0 && !note.archive && !note.deleted) {
-        return <NoteCard content={note} key={note._id} />;
+        return (
+          <div key={note._id}>
+            <NoteCard content={note} k />
+          </div>
+        );
       }
     });
   };
@@ -32,7 +37,9 @@ export default function Reminder() {
     if (!isLogged || !refreshToken) {
       navigate("/login");
     }
-  }, [isLogged, navigate, refreshToken]);
+    const action = getNoteAction;
+    dispatch(action());
+  }, [dispatch, isLogged, navigate, refreshToken]);
   return (
     <div>
       <Menu title="Reminders" />
@@ -45,9 +52,10 @@ export default function Reminder() {
           <div className="editor-wrap">
             <NoteText />
           </div>
-          <div className="note__content">{renderNoteCard()}</div>
+          <div className="note__content grid">
+            <Masonry className={"my-gallery-class"}>{renderNoteCard()}</Masonry>
+          </div>
         </div>
-        <div className="note__content">{renderNoteCard()}</div>
       </div>
     </div>
   );

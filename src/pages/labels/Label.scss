@@ -1,0 +1,10 @@
+@use "../../scss/" as *;
+
+.edit-label {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  span {
+    margin-right: 10px;
+  }
+}

@@ -1,56 +1,64 @@
-import React, { useRef, useState } from "react";
+import autosize from "autosize";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import more from "../../asset/editorIcon/more.svg";
-import undo from "../../asset/editorIcon/undo.svg";
-import time from "../../asset/editorIcon/time.svg";
-import colab from "../../asset/editorIcon/colab.svg";
-import image from "../../asset/editorIcon/image.svg";
-import archive from "../../asset/editorIcon/archive.svg";
-import closeIcon from "../../asset/menuTopIcon/delete.svg";
-import reminder from "../../asset/editorIcon/reminder.svg";
-import background from "../../asset/editorIcon/background.svg";
-
+import Moment from "react-moment";
+import { Editor, EditorState } from "draft-js";
+import "draft-js/dist/Draft.css";
+import { stateToHTML } from "draft-js-export-html";
 import { createNote } from "../../redux/action/NoteAction";
 
-import useOnClickOutside from "../../hook/useClickOutside";
+import time from "../../asset/editorIcon/time.svg";
+import reminder from "../../asset/editorIcon/reminder.svg";
+import closeIcon from "../../asset/menuTopIcon/delete.svg";
 
+import useOnClickOutside from "../../hook/useClickOutside";
 import "./Editor.scss";
 
-export default function Editor(props) {
+export default function EditorComponent(props) {
   const dispatch = useDispatch();
-  const editorRef = useRef("");
+  const editorRef = useRef();
+  const titleRef = useRef();
   const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
   const [remindDate, setRemindDate] = useState();
   const [isReminderActive, setReminderActive] = useState(false);
+  const [editorState, setEditorState] = React.useState(
+    EditorState.createEmpty()
+  );
+
+  const editor = useRef(null);
+
   const action = createNote;
 
   let noteItem = {};
   let reminderClass = "";
 
+  const now = new Date();
+
   const handleTitle = (e) => {
     setTitle(e.target.value);
   };
 
-  const handleText = (e) => {
-    setText(e.target.value);
+  const clearRemind = () => {
+    setRemindDate(undefined);
   };
-
   const submitNote = async (e) => {
     e.preventDefault();
-
+    let content = stateToHTML(editorState.getCurrentContent());
+    let contentLength = editorState.getSelection().getStartOffset();
     props.setOpenModal(false);
-    noteItem = {
-      title: title,
-      content: text,
-      remind: remindDate,
-      label_name: props.label,
-    };
-    dispatch(action(noteItem));
+    if (title.length > 0 || contentLength > 0 || remindDate - now > 0) {
+      noteItem = {
+        title: title,
+        content: content,
+        remind: remindDate,
+        label_id: props.label,
+      };
+      dispatch(action(noteItem));
+    }
   };
 
   if (isReminderActive === true) {
@@ -60,20 +68,11 @@ export default function Editor(props) {
   if (props.label) {
     noteItem.label = props.label;
   }
-
-  useOnClickOutside(editorRef, async () => {
-    props.setOpenModal(false);
-
-    noteItem = {
-      title: title,
-      content: text,
-      remind: remindDate,
-      label_name: props.label,
-    };
-
-    dispatch(action(noteItem));
-  });
-
+  useOnClickOutside(editorRef, submitNote);
+  useEffect(() => {
+    autosize(document.querySelector(".editor-text_area"));
+    titleRef.current.focus();
+  }, []);
   return (
     <div className="editor" ref={editorRef}>
       <form
@@ -85,15 +84,22 @@ export default function Editor(props) {
         }
       >
         <div className="editor-title">
-          <input placeholder="Title" name="title" onChange={handleTitle} />
+          <textarea
+            ref={titleRef}
+            className="editor-text_area"
+            placeholder="Title"
+            name="title"
+            onChange={handleTitle}
+          />
 
           <div
-            className="editor-title__icon"
-            title="Close Editor"
+            className="editor-title__icon tooltip"
             onClick={() => {
               props.setOpenModal(false);
             }}
           >
+            <span className="tooltiptext">Close Editor</span>
+
             <span>
               <img src={closeIcon} alt=".." />
             </span>
@@ -101,13 +107,31 @@ export default function Editor(props) {
         </div>
 
         <div className="editor-text">
-          <input
+          <Editor
             placeholder="Take a note..."
-            name="text"
-            onChange={handleText}
+            ref={editor}
+            editorState={editorState}
+            onChange={(editorState) => setEditorState(editorState)}
           />
         </div>
-        <div className="editor-feature">
+        <div className="remind-wrap">
+          {remindDate - now > 0 ? (
+            <span className="remind-label">
+              <Moment format="MMMM ddd yyyy, HH:mm">{remindDate}</Moment>
+              <span onClick={clearRemind} className="clear-remind">
+                X
+              </span>
+            </span>
+          ) : (
+            <div></div>
+          )}
+        </div>
+        <div
+          className="editor-feature"
+          onClick={() => {
+            setReminderActive(!isReminderActive);
+          }}
+        >
           <div className="editor-feature__icon">
             <ul className="editor-icon__list">
               <li
@@ -144,31 +168,12 @@ export default function Editor(props) {
                   </div>
                 </div>
               </li>
-              <li className="editor-icon__item">
-                <img src={colab} alt=".." />
-              </li>
-              <li className="editor-icon__item">
-                <img src={background} alt=".." />
-              </li>
-              <li className="editor-icon__item">
-                <img src={image} alt=".." />
-              </li>
-              <li className="editor-icon__item">
-                <img src={archive} alt=".." />
-              </li>
-              <li className="editor-icon__item">
-                <img src={more} alt=".." />
-              </li>
-              <li className="editor-icon__item">
-                <img src={undo} alt=".." />
-              </li>
-              <li className="editor-icon__item ">
-                <img src={undo} alt=".." className="redo" />
-              </li>
             </ul>
           </div>
           <div className="editor-feature__close">
-            <button type="submit">Submit</button>
+            <button type="submit" className="btn-bg">
+              Submit
+            </button>
           </div>
         </div>
       </form>

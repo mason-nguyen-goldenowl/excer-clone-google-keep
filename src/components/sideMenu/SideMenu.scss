@@ -6,7 +6,8 @@
   transition: all 0.3s;
   width: 48px;
   z-index: 10;
-
+  position: fixed;
+  transition: all 0.3s;
   &:hover {
     padding: 8px 12px;
     box-shadow: 0 16px 10px 0 rgb(0 0 0 / 14%), 0 11px 18px 0 rgb(0 0 0 / 12%),
@@ -40,7 +41,8 @@
     position: relative;
     min-width: 280px;
     width: 100%;
-    @media only screen and (max-width: 820px) {
+    transition: all 0.3s;
+    @media only screen and (max-width: 950px) {
       position: fixed;
       top: 64px;
       width: fit-content;
@@ -50,7 +52,8 @@
     span {
       display: block;
       font-weight: 700;
-      @media only screen and (max-width: 820px) {
+      transition: all 0.3s;
+      @media only screen and (max-width: 950px) {
         display: none;
       }
     }

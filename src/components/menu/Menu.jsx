@@ -1,39 +1,31 @@
-import React, { useRef, useState } from "react";
-
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-
 import Cookies from "js-cookie";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
-import close from "../../asset/menuTopIcon/delete.svg";
 import search from "../../asset/menuTopIcon/search.svg";
-import refresh from "../../asset/menuTopIcon/refresh.svg";
 import logo from "../../asset/menuTopIcon/pngwing.com.png";
-import gridIcon from "../../asset/menuTopIcon/gridIcon.svg";
-import settings from "../../asset/menuTopIcon/settings.svg";
 
 import { SEARCH } from "../../redux/type/NoteType";
 import { LOG_OUT } from "../../redux/type/UserType";
 import { CHANGE_LIST_CLASS } from "../../redux/type/MenuType";
+
 import "./Menu.scss";
 
 export default function Menu(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  let alphabet;
-  const fName = useSelector((state) => state.user.user.full_name);
-  const [searchInput, setSearchInput] = useState("");
+
   const searchRef = useRef("");
 
-  if (fName) {
-    alphabet = fName[0].toUpperCase();
-  }
-
   const [isListActive, setIsListActive] = useState(false);
+  let searchInput;
+  const handleChangeInput = (e) => {
+    if (e.target.value.length === 0) {
+      searchInput = "";
+    }
+    searchInput = e.target.value;
 
-  const handleChangeInput = () => {
-    setSearchInput(searchRef.current.value);
-    console.log(searchInput);
     dispatch({
       type: SEARCH,
       searchInput,
@@ -54,6 +46,12 @@ export default function Menu(props) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if (props.title === "Search") {
+      searchRef.current.focus();
+    }
+  });
 
   return (
     <div className="menu-wrapter">
@@ -94,42 +92,14 @@ export default function Menu(props) {
                   placeholder="Search"
                   onChange={handleChangeInput}
                 />
-
-                <div className="menu__btn close">
-                  <img src={close} alt="..." />
-                </div>
               </div>
             </Link>
-
-            <div className="settings">
-              <div className="menu__btn">
-                <img src={refresh} alt=".." />
-              </div>
-              <div className="menu__btn">
-                <img src={gridIcon} alt="..." />
-              </div>
-              <div className="menu__btn">
-                <img src={settings} alt="..." />
-              </div>
-            </div>
           </div>
           <div className="menu__acount">
-            <div>
-              <div className="menu__btn">
-                <svg class="gb_Pe" focusable="false" viewBox="0 0 24 24">
-                  <path d="M6,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM16,6c0,1.1 0.9,2 2,2s2,-0.9 2,-2 -0.9,-2 -2,-2 -2,0.9 -2,2zM12,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z"></path>
-                </svg>
-              </div>
-            </div>
-
-            <div className="avt-wrap">
-              <div>{alphabet}</div>
-            </div>
             <div className="profile-menu">
-              <ul>
-                <li>Profile</li>
-                <li onClick={logOut}>Logout</li>
-              </ul>
+              <span className="btn-nonbg" onClick={logOut}>
+                Logout
+              </span>
             </div>
           </div>
         </div>

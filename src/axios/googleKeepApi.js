@@ -29,12 +29,20 @@ const googleKeepApi = {
     return axiosClient.post("/note/create", note);
   },
 
+  editNote: (note) => {
+    return axiosClient.post("/note/edit", note);
+  },
+
   archiveNote: (note) => {
     return axiosClient.put("/note/archive", note);
   },
 
   deleteNote: (note) => {
     return axiosClient.delete("/note/delete", { data: note });
+  },
+
+  cleaerRemind: (note) => {
+    return axiosClient.delete("/note/clear-remind", { data: note });
   },
 
   restoreNote: (note) => {
@@ -49,6 +57,10 @@ const googleKeepApi = {
     return axiosClient.get("/label");
   },
 
+  getLabelName: (label) => {
+    return axiosClient.post("/label/get-name", label);
+  },
+
   createLabel: (label) => {
     return axiosClient.post("/label/create", label);
   },
@@ -59,8 +71,8 @@ const googleKeepApi = {
   deleteLabel: (label) => {
     return axiosClient.delete("/label/delete", { data: label });
   },
-  emptyTrash: () => {
-    return axiosClient.delete("/note/empty");
+  emptyTrash: (arrNote) => {
+    return axiosClient.delete("/note/empty", { data: arrNote });
   },
 };
 

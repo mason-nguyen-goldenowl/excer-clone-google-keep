@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import Editor from "../editor/Editor";
+
+import EditorComponent from "../editor/Editor";
+
 import Modal from "../modal/Modal";
 
 import "./NoteText.scss";
@@ -23,7 +25,9 @@ export default function NoteText(props) {
       {modalOpen && (
         <Modal
           setOpenModal={setModalOpen}
-          children={<Editor setOpenModal={setModalOpen} label={props.label} />}
+          children={
+            <EditorComponent setOpenModal={setModalOpen} label={props.label} />
+          }
         />
       )}
     </div>
