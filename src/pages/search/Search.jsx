@@ -3,15 +3,14 @@ import { useSelector } from "react-redux";
 
 import Menu from "../../components/menu/Menu";
 import NoteCard from "../../components/noteCard/NoteCard";
-
 import SideMenu from "../../components/sideMenu/SideMenu";
 
 const Search = () => {
   const { arrSearch } = useSelector((state) => state.note);
 
   const renderNoteCard = () => {
-    return arrSearch.map((note, index) => {
-      return <NoteCard content={note} key={index} />;
+    return arrSearch.map((note) => {
+      return <NoteCard content={note} key={note.id} />;
     });
   };
   useEffect(() => {}, [arrSearch]);

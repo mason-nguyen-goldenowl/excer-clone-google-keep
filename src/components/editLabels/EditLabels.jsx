@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
+
+import useOnClickOutside from "../../hook/useClickOutside";
 
 import check from "../../asset/editorIcon/check.svg";
 import labelIcon from "../../asset/editorIcon/label.svg";
 import edit from "../../asset/editorIcon/edit.svg";
 import deleteIcon from "../../asset/menuTopIcon/delete.svg";
 
-import { ADD_LABEL, UPDATE_LABEL } from "../../redux/type/NoteType";
+import {
+  ADD_LABEL,
+  DELETE_LABEL,
+  UPDATE_LABEL,
+} from "../../redux/type/NoteType";
 
 import "./EditLables.scss";
 
@@ -16,10 +22,11 @@ export default function EditLabels(props) {
 
   const { arrLabel } = useSelector((state) => state.note);
 
-  const [inputValue, setInputValue] = useState("");
+  const editLabelRef = useRef();
+
   const [label, setLabel] = useState("");
 
-  let arrLabelUpdate = [];
+  let arrLabelUpdate = [...arrLabel];
 
   const onLabelChange = (e) => {
     setLabel(e.target.value);
@@ -27,10 +34,12 @@ export default function EditLabels(props) {
 
   const renderLabel = () => {
     return arrLabel.map((item, index) => {
+      let changeLabel = item;
       const onInputChange = (e) => {
-        setInputValue(e.target.value);
+        item = e.target.value;
       };
-      arrLabelUpdate.push(item);
+
+      arrLabelUpdate[index] = item;
 
       return (
         <div className="label__item" key={index}>
@@ -41,23 +50,40 @@ export default function EditLabels(props) {
               src={deleteIcon}
               alt=".."
               onClick={() => {
-                setInputValue("");
+                dispatch({
+                  type: DELETE_LABEL,
+                  labelDelete: item,
+                });
               }}
             />
           </div>
           <p>{item}</p>
-          <input value={inputValue} onChange={onInputChange} />
+
+          <input onChange={onInputChange} />
           <div className="icon-edit">
             <img className="edit-icon" src={edit} alt=".." />
-            <img className="check-icon" src={check} alt=".." />
+            <img
+              className="check-icon"
+              src={check}
+              alt=".."
+              onClick={() => {
+                dispatch({
+                  type: UPDATE_LABEL,
+                  labelUpdate: changeLabel,
+                  item,
+                });
+              }}
+            />
           </div>
         </div>
       );
     });
   };
 
+  useOnClickOutside(editLabelRef, () => props.setOpenModal(false));
+  console.log(editLabelRef);
   return (
-    <div className="edit-labels">
+    <div className="edit-labels" ref={editLabelRef}>
       <div className="edit-labels__title">
         <p>Edit labels</p>
         <img

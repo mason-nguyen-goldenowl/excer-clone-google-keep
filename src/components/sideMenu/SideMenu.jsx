@@ -7,11 +7,11 @@ import Modal from "../modal/Modal";
 import EditLabels from "../editLabels/EditLabels";
 
 import labelIcon from "../../asset/editorIcon/label.svg";
+import { ReactComponent as EditIcon } from "../../asset/sideMenuIcon/Edit.svg";
 import { ReactComponent as NoteIcon } from "../../asset/sideMenuIcon/Note.svg";
+import { ReactComponent as TrashIcon } from "../../asset/sideMenuIcon/Trash.svg";
 import { ReactComponent as RemindIcon } from "../../asset/sideMenuIcon/Remind.svg";
 import { ReactComponent as ArchiveIcon } from "../../asset/sideMenuIcon/Archive.svg";
-import { ReactComponent as EditIcon } from "../../asset/sideMenuIcon/Edit.svg";
-import { ReactComponent as TrashIcon } from "../../asset/sideMenuIcon/Trash.svg";
 
 import "./SideMenu.scss";
 export default function SideMenu(props) {
@@ -50,22 +50,22 @@ export default function SideMenu(props) {
   return (
     <div className="sideMenu">
       <ul className={`list-item ${listClass}`}>
-        <li className="list-item__item" id="notes">
-          <div className="item__content">
-            <NoteIcon />
-            <span>
-              <Link to="/">Notes</Link>
-            </span>
-          </div>
-        </li>
-        <li className="list-item__item " id="reminders">
-          <div className="item__content">
-            <RemindIcon />
-            <span>
-              <Link to="/reminder">Reminders</Link>
-            </span>
-          </div>
-        </li>
+        <Link to="/">
+          <li className="list-item__item" id="notes">
+            <div className="item__content">
+              <NoteIcon />
+              <span>Notes</span>
+            </div>
+          </li>
+        </Link>
+        <Link to="/reminder">
+          <li className="list-item__item " id="reminders">
+            <div className="item__content">
+              <RemindIcon />
+              <span>Reminders</span>
+            </div>
+          </li>
+        </Link>
         {renderLabels()}
 
         <li
@@ -80,22 +80,22 @@ export default function SideMenu(props) {
             <span>Edit labels</span>
           </div>
         </li>
-        <li className="list-item__item " id="archive">
-          <Link to="/archive">
+        <Link to="/archive">
+          <li className="list-item__item " id="archive">
             <div className="item__content">
               <ArchiveIcon />
               <span>Archive</span>
             </div>
-          </Link>
-        </li>
-        <li className="list-item__item " id="trash">
-          <Link to="/trash">
+          </li>
+        </Link>
+        <Link to="/trash">
+          <li className="list-item__item " id="trash">
             <div className="item__content">
               <TrashIcon />
               <span>Trash</span>
             </div>
-          </Link>
-        </li>
+          </li>
+        </Link>
       </ul>
       {modalOpen && (
         <Modal

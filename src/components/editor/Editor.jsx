@@ -3,78 +3,104 @@ import { useDispatch } from "react-redux";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import moment from "moment";
 
-import reminder from "../../asset/editorIcon/reminder.svg";
+import useOnClickOutside from "../../hook/useClickOutside";
+
 import pin from "../../asset/editorIcon/pin.svg";
-import colab from "../../asset/editorIcon/colab.svg";
-import background from "../../asset/editorIcon/background.svg";
-import image from "../../asset/editorIcon/image.svg";
-import archive from "../../asset/editorIcon/archive.svg";
 import more from "../../asset/editorIcon/more.svg";
 import undo from "../../asset/editorIcon/undo.svg";
 import time from "../../asset/editorIcon/time.svg";
+import image from "../../asset/editorIcon/image.svg";
+import colab from "../../asset/editorIcon/colab.svg";
+import archive from "../../asset/editorIcon/archive.svg";
+import reminder from "../../asset/editorIcon/reminder.svg";
+import background from "../../asset/editorIcon/background.svg";
 
 import { ADD_NOTE } from "../../redux/type/NoteType";
 
 import "./Editor.scss";
 
 export default function Editor(props) {
-  let noteItem = { title: "", text: "", setAlert: null, timeLeft: -1 };
-
   const dispatch = useDispatch();
 
   const [isReminderActive, setReminderActive] = useState(false);
+  const [title, setTitle] = useState("");
+  const [text, setText] = useState("");
   const [remindDate, setRemindDate] = useState(new Date());
   const titleRef = useRef("");
   const textRef = useRef("");
 
+  const editorRef = useRef("");
   let reminderClass = "";
-  let timeLeft = remindDate - new Date();
-  noteItem.timeLeft = timeLeft;
+  let noteItem = { title: "", text: "", setAlert: null, timeLeft: -1 };
 
   if (isReminderActive === true) {
     reminderClass = "active";
   }
 
-  noteItem.remind = moment(remindDate).format();
-  noteItem.timeLeft = timeLeft;
+  noteItem.remind = remindDate;
+  noteItem.title = title;
+  noteItem.text = text;
 
-  noteItem.setAlert = () => {
-    setTimeout(() => {
-      if (timeLeft > 0) {
-        alert(noteItem.title);
-        timeLeft = -1;
-      }
-    }, timeLeft);
+  const handleTitle = (e) => {
+    setTitle(e.target.value);
+  };
+  const handleText = (e) => {
+    setText(e.target.value);
   };
 
   const submitNote = (e) => {
     e.preventDefault();
-    alert("Add note success");
-    noteItem.title = titleRef.current.value;
-    noteItem.text = textRef.current.value;
-
     dispatch({
       type: ADD_NOTE,
       noteItem,
     });
     titleRef.current.value = "";
     textRef.current.value = "";
+
+    alert("Add note success");
+    props.setOpenModal(false);
   };
+
+  useOnClickOutside(editorRef, () => {
+    props.setOpenModal(false);
+    dispatch({
+      type: ADD_NOTE,
+      noteItem,
+    });
+  });
+
   return (
-    <div className="editor">
-      <form onSubmit={submitNote}>
+    <div className="editor" ref={editorRef}>
+      <form
+        onSubmit={
+          ((e) => {
+            e.preventDefault();
+          },
+          submitNote)
+        }
+      >
         <div className="editor-title">
-          <input ref={titleRef} placeholder="Title" name="title" />
+          <input
+            ref={titleRef}
+            placeholder="Title"
+            name="title"
+            onChange={handleTitle}
+          />
           <div className="editor-title__icon">
             <span>
               <img src={pin} alt=".." />
             </span>
           </div>
         </div>
+
         <div className="editor-text">
-          <input placeholder="Take a note..." name="text" ref={textRef} />
+          <input
+            placeholder="Take a note..."
+            name="text"
+            ref={textRef}
+            onChange={handleText}
+          />
         </div>
         <div className="editor-feature">
           <div className="editor-feature__icon">

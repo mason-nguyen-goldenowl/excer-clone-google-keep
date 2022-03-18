@@ -8,6 +8,7 @@ import {
   DELETE_FOREVER,
   RESTORE,
   SEARCH,
+  DELETE_LABEL,
 } from "../type/NoteType";
 
 const stateDefaut = {
@@ -42,10 +43,6 @@ export const NoteReducer = (state = stateDefaut, action) => {
     }
     case ADD_LABEL: {
       state.arrLabel.push(action.label);
-      return { ...state };
-    }
-    case UPDATE_LABEL: {
-      state.arrLabel = [...action.arrLabelUpdate];
       return { ...state };
     }
 
@@ -124,6 +121,22 @@ export const NoteReducer = (state = stateDefaut, action) => {
       );
       state.arrSearch = [...searchInArchive, ...searchInNote];
 
+      return { ...state };
+    }
+
+    case UPDATE_LABEL: {
+      let idLabelIndex = state.arrLabel.findIndex(
+        (label) => label === action.labelUpdate
+      );
+      state.arrLabel[idLabelIndex] = action.item;
+      return { ...state };
+    }
+    case DELETE_LABEL: {
+      let idLabelIndex = state.arrLabel.findIndex(
+        (label) => label === action.labelDelete
+      );
+
+      state.arrLabel.splice(idLabelIndex, 1);
       return { ...state };
     }
 
