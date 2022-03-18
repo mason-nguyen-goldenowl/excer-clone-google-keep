@@ -30,6 +30,7 @@ export default function NoteCard(props) {
   if (label) {
     note.label_name = label.label_name;
   }
+
   let statusActive = "";
   let labelClass = "";
 
@@ -119,6 +120,7 @@ export default function NoteCard(props) {
           >
             <img src={archive} alt=".." />
           </li>
+
           <li
             className="editor-icon__item "
             title="Delete"

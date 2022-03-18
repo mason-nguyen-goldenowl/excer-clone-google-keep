@@ -11,7 +11,6 @@ import NoteCard from "../../components/noteCard/NoteCard";
 import NoteText from "../../components/noteText/NoteText";
 import SideMenu from "../../components/sideMenu/SideMenu";
 import { getLabelName } from "../../redux/action/LabelAction";
-import { getNoteAction } from "../../redux/action/NoteAction";
 
 import "./Label.scss";
 const Labels = () => {

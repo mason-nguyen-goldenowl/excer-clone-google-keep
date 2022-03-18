@@ -11,6 +11,7 @@ import SideMenu from "../../components/sideMenu/SideMenu";
 
 const Search = () => {
   const { arrSearch } = useSelector((state) => state.note);
+
   const isLogged = Cookies.get("isLogged");
   const refreshToken = Cookies.get("refresh_token");
   let navigate = useNavigate();

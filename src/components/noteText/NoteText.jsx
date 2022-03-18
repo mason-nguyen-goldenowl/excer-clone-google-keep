@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+
 import EditorComponent from "../editor/Editor";
 
 import Modal from "../modal/Modal";
+
 import "./NoteText.scss";
 
 export default function NoteText(props) {

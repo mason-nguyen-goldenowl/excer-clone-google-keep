@@ -6,9 +6,10 @@ import { Link, useNavigate } from "react-router-dom";
 import search from "../../asset/menuTopIcon/search.svg";
 import logo from "../../asset/menuTopIcon/pngwing.com.png";
 
-import { LOG_OUT } from "../../redux/type/UserType";
 import { SEARCH } from "../../redux/type/NoteType";
+import { LOG_OUT } from "../../redux/type/UserType";
 import { CHANGE_LIST_CLASS } from "../../redux/type/MenuType";
+
 import "./Menu.scss";
 
 export default function Menu(props) {
@@ -45,6 +46,7 @@ export default function Menu(props) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     if (props.title === "Search") {
       searchRef.current.focus();

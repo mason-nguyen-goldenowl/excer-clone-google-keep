@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
+import edit from "../../asset/editorIcon/edit.svg";
 import check from "../../asset/editorIcon/check.svg";
 import labelIcon from "../../asset/editorIcon/label.svg";
-import edit from "../../asset/editorIcon/edit.svg";
 import deleteIcon from "../../asset/menuTopIcon/delete.svg";
 
 import { ADD_LABEL, UPDATE_LABEL } from "../../redux/type/NoteType";
@@ -14,9 +14,10 @@ import "./EditLables.scss";
 export default function EditLabels(props) {
   const dispatch = useDispatch();
 
-  const { arrLabel } = useSelector((state) => state.note);
+  const editLabelRef = useRef();
 
   const [inputValue, setInputValue] = useState("");
+
   const [label, setLabel] = useState("");
 
   let arrLabelUpdate = [];

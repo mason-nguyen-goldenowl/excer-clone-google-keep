@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -7,11 +8,10 @@ import Masonry from "react-masonry-component";
 
 import Menu from "../../components/menu/Menu";
 import NoteCard from "../../components/noteCard/NoteCard";
-
 import SideMenu from "../../components/sideMenu/SideMenu";
 
-import "./Archive.scss";
 import { getNoteAction } from "../../redux/action/NoteAction";
+import "./Archive.scss";
 
 export default function Archive() {
   const isLogged = Cookies.get("isLogged");

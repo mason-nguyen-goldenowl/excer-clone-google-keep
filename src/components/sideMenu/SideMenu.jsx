@@ -8,11 +8,11 @@ import Modal from "../modal/Modal";
 import { getLabels } from "../../redux/action/LabelAction";
 
 import labelIcon from "../../asset/editorIcon/label.svg";
+import { ReactComponent as EditIcon } from "../../asset/sideMenuIcon/Edit.svg";
 import { ReactComponent as NoteIcon } from "../../asset/sideMenuIcon/Note.svg";
+import { ReactComponent as TrashIcon } from "../../asset/sideMenuIcon/Trash.svg";
 import { ReactComponent as RemindIcon } from "../../asset/sideMenuIcon/Remind.svg";
 import { ReactComponent as ArchiveIcon } from "../../asset/sideMenuIcon/Archive.svg";
-import { ReactComponent as EditIcon } from "../../asset/sideMenuIcon/Edit.svg";
-import { ReactComponent as TrashIcon } from "../../asset/sideMenuIcon/Trash.svg";
 
 import "./SideMenu.scss";
 

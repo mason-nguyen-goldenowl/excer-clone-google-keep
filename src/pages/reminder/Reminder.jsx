@@ -52,10 +52,8 @@ export default function Reminder() {
           <div className="editor-wrap">
             <NoteText />
           </div>
-          <div className="note__content">
-            <Masonry className={"my-gallery-class"}>
-              {renderNoteCard()}{" "}
-            </Masonry>
+          <div className="note__content grid">
+            <Masonry className={"my-gallery-class"}>{renderNoteCard()}</Masonry>
           </div>
         </div>
       </div>

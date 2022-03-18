@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
 import Moment from "react-moment";
 import { Editor, EditorState } from "draft-js";
 import "draft-js/dist/Draft.css";
@@ -90,6 +91,7 @@ export default function EditorComponent(props) {
             name="title"
             onChange={handleTitle}
           />
+
           <div
             className="editor-title__icon tooltip"
             onClick={() => {
@@ -103,6 +105,7 @@ export default function EditorComponent(props) {
             </span>
           </div>
         </div>
+
         <div className="editor-text">
           <Editor
             placeholder="Take a note..."
