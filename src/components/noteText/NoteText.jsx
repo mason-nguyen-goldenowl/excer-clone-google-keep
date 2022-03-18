@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import Editor from "../editor/Editor";
 import Modal from "../modal/Modal";
+
 import "./NoteText.scss";
 
 export default function NoteText(props) {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
-    <div className="noteText">
-      <div className="noteText__show">
+    <div className="note-text">
+      <div className="note-text__show">
         <div
           className="show__input "
           onClick={() => {

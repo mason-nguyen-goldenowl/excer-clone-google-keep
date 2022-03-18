@@ -1,17 +1,28 @@
 import React, { useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import check from "../../asset/editorIcon/check.svg";
-import labelIcon from "../../asset/editorIcon/label.svg";
-import edit from "../../asset/editorIcon/edit.svg";
-import deleteIcon from "../../asset/menuTopIcon/delete.svg";
-import { ADDLABEL, DELETELABEL, UPDATELABEL } from "../../redux/type/NoteType";
-import "./EditLables.scss";
+import { useSelector, useDispatch } from "react-redux";
+
 import useOnClickOutside from "../../hook/useClickOutside";
+
+import check from "../../asset/editorIcon/check.svg";
+import edit from "../../asset/editorIcon/edit.svg";
+import labelIcon from "../../asset/editorIcon/label.svg";
+import deleteIcon from "../../asset/menuTopIcon/delete.svg";
+
+import {
+  ADD_LABEL,
+  DELETE_LABEL,
+  UPDATE_LABEL,
+} from "../../redux/type/NoteType";
+
+import "./EditLables.scss";
+
 export default function EditLabels(props) {
   const dispatch = useDispatch();
+
   const { arrLabel } = useSelector((state) => state.note);
+
   const editLabelRef = useRef();
+
   const [label, setLabel] = useState("");
 
   let arrLabelUpdate = [...arrLabel];
@@ -26,35 +37,37 @@ export default function EditLabels(props) {
       const onInputChange = (e) => {
         item = e.target.value;
       };
+
       arrLabelUpdate[index] = item;
 
       return (
         <div className="label__item" key={index}>
           <div className="icon">
-            <img className="labelIcon" src={labelIcon} alt=".." />
+            <img className="label-icon" src={labelIcon} alt=".." />
             <img
-              className="deleteIcon"
+              className="delete-icon"
               src={deleteIcon}
               alt=".."
               onClick={() => {
                 dispatch({
-                  type: DELETELABEL,
+                  type: DELETE_LABEL,
                   labelDelete: item,
                 });
               }}
             />
           </div>
           <p>{item}</p>
+
           <input onChange={onInputChange} />
-          <div className="iconEdit">
-            <img className="editIcon" src={edit} alt=".." />
+          <div className="icon-edit">
+            <img className="edit-icon" src={edit} alt=".." />
             <img
-              className="checkIcon"
+              className="check-icon"
               src={check}
               alt=".."
               onClick={() => {
                 dispatch({
-                  type: UPDATELABEL,
+                  type: UPDATE_LABEL,
                   labelUpdate: changeLabel,
                   item,
                 });
@@ -65,11 +78,12 @@ export default function EditLabels(props) {
       );
     });
   };
+
   useOnClickOutside(editLabelRef, () => props.setOpenModal(false));
   console.log(editLabelRef);
   return (
-    <div className="editLabels" ref={editLabelRef}>
-      <div className="editLabels__title">
+    <div className="edit-labels" ref={editLabelRef}>
+      <div className="edit-labels__title">
         <p>Edit labels</p>
         <img
           src={deleteIcon}
@@ -79,14 +93,14 @@ export default function EditLabels(props) {
           }}
         />
       </div>
-      <div className="editLabels-wrap">
-        <div className="editLabels__cre">
+      <div className="edit-labels-wrap">
+        <div className="edit-labels__cre">
           <input placeholder="Create new label" onChange={onLabelChange} />
           <div
             className="cre__btn"
             onClick={() => {
               dispatch({
-                type: ADDLABEL,
+                type: ADD_LABEL,
                 label,
               });
               setLabel("");
@@ -95,13 +109,13 @@ export default function EditLabels(props) {
             <img src={check} alt="..." />
           </div>
         </div>
-        <div className="editLabels__body">{renderLabel()}</div>
+        <div className="edit-labels__body">{renderLabel()}</div>
         <hr></hr>
-        <div className="editLabels__footer">
+        <div className="edit-labels__footer">
           <button
             onClick={() => {
               dispatch({
-                type: UPDATELABEL,
+                type: UPDATE_LABEL,
                 arrLabelUpdate,
               });
             }}

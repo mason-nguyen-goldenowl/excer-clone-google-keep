@@ -1,10 +1,11 @@
 import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import reminder from "../../asset/editorIcon/reminder.svg";
 import closeIcon from "../../asset/menuTopIcon/delete.svg";
-
 import colab from "../../asset/editorIcon/colab.svg";
 import background from "../../asset/editorIcon/background.svg";
 import image from "../../asset/editorIcon/image.svg";
@@ -12,19 +13,26 @@ import archive from "../../asset/editorIcon/archive.svg";
 import more from "../../asset/editorIcon/more.svg";
 import undo from "../../asset/editorIcon/undo.svg";
 import time from "../../asset/editorIcon/time.svg";
+import image from "../../asset/editorIcon/image.svg";
+import colab from "../../asset/editorIcon/colab.svg";
+import archive from "../../asset/editorIcon/archive.svg";
+import reminder from "../../asset/editorIcon/reminder.svg";
+import background from "../../asset/editorIcon/background.svg";
+
+import { ADD_NOTE } from "../../redux/type/NoteType";
+
 import "./Editor.scss";
-import { useDispatch } from "react-redux";
-import { ADDNOTE } from "../../redux/type/NoteType";
-import useOnClickOutside from "../../hook/useClickOutside";
 
 export default function Editor(props) {
   const dispatch = useDispatch();
+
   const [isReminderActive, setReminderActive] = useState(false);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [remindDate, setRemindDate] = useState(new Date());
   const titleRef = useRef("");
   const textRef = useRef("");
+
   const editorRef = useRef("");
   let reminderClass = "";
   let noteItem = { title: "", text: "", setAlert: null, timeLeft: -1 };
@@ -49,12 +57,13 @@ export default function Editor(props) {
   const submitNote = (e) => {
     e.preventDefault();
     dispatch({
-      type: ADDNOTE,
+      type: ADD_NOTE,
       noteItem,
       label: props.label,
     });
     titleRef.current.value = "";
     textRef.current.value = "";
+
     alert("Add note success");
     props.setOpenModal(false);
   };
@@ -62,7 +71,7 @@ export default function Editor(props) {
   useOnClickOutside(editorRef, () => {
     props.setOpenModal(false);
     dispatch({
-      type: ADDNOTE,
+      type: ADD_NOTE,
       noteItem,
       label: props.label,
     });
@@ -79,13 +88,14 @@ export default function Editor(props) {
           submitNote)
         }
       >
-        <div className="editorTitle">
+        <div className="editor-title">
           <input
             ref={titleRef}
             placeholder="Title"
             name="title"
             onChange={handleTitle}
           />
+
           <div
             className="editorTitle__icon"
             title="Close Editor"
@@ -98,7 +108,8 @@ export default function Editor(props) {
             </span>
           </div>
         </div>
-        <div className="editorText">
+
+        <div className="editor-text">
           <input
             placeholder="Take a note..."
             name="text"
@@ -106,11 +117,11 @@ export default function Editor(props) {
             onChange={handleText}
           />
         </div>
-        <div className="editorFeature">
-          <div className="editorFeature__icon">
-            <ul className="editorIcon__list">
+        <div className="editor-feature">
+          <div className="editor-feature__icon">
+            <ul className="editor-icon__list">
               <li
-                className="editorIcon__item "
+                className="editor-icon__item "
                 onClick={() => {
                   setReminderActive(!isReminderActive);
                 }}
@@ -143,30 +154,30 @@ export default function Editor(props) {
                   </div>
                 </div>
               </li>
-              <li className="editorIcon__item">
+              <li className="editor-icon__item">
                 <img src={colab} alt=".." />
               </li>
-              <li className="editorIcon__item">
+              <li className="editor-icon__item">
                 <img src={background} alt=".." />
               </li>
-              <li className="editorIcon__item">
+              <li className="editor-icon__item">
                 <img src={image} alt=".." />
               </li>
-              <li className="editorIcon__item">
+              <li className="editor-icon__item">
                 <img src={archive} alt=".." />
               </li>
-              <li className="editorIcon__item">
+              <li className="editor-icon__item">
                 <img src={more} alt=".." />
               </li>
-              <li className="editorIcon__item">
+              <li className="editor-icon__item">
                 <img src={undo} alt=".." />
               </li>
-              <li className="editorIcon__item ">
+              <li className="editor-icon__item ">
                 <img src={undo} alt=".." className="redo" />
               </li>
             </ul>
           </div>
-          <div className="editorFeature__close">
+          <div className="editor-feature__close">
             <button type="submit">Submit</button>
           </div>
         </div>
