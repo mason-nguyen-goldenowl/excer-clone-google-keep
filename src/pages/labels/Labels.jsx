@@ -1,38 +1,38 @@
 import React from "react";
 import { useSelector } from "react-redux";
-
+import { useParams } from "react-router-dom";
 import Menu from "../../components/menu/Menu";
-
 import NoteCard from "../../components/noteCard/NoteCard";
 import NoteText from "../../components/noteText/NoteText";
 import SideMenu from "../../components/sideMenu/SideMenu";
 
-import "./Home.scss";
+const Labels = () => {
+  const { id } = useParams();
 
-export default function Home() {
   const { arrNote } = useSelector((state) => state.note);
-
+  const arrLabel = arrNote.filter((item) => item.label === id);
   const renderNoteCard = () => {
-    return arrNote.map((note) => {
-      return <NoteCard content={note} key={note.id} />;
+    return arrLabel.map((note, index) => {
+      return <NoteCard content={note} key={index} />;
     });
   };
 
   return (
     <div>
-      <Menu title="Keep" />
-
-      <div className="body-content">
+      <Menu title={id} />
+      <div className="bodyContent">
         <div className="left">
-          <SideMenu active="notes" />
+          <SideMenu active={id} />
         </div>
         <div className="right">
-          <div className="editor-wrap">
-            <NoteText />
+          <div className="editorWrap">
+            <NoteText label={id} />
           </div>
           <div className="note__content">{renderNoteCard()}</div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default Labels;

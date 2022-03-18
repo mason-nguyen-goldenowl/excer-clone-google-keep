@@ -4,7 +4,7 @@ import Modal from "../modal/Modal";
 
 import "./NoteText.scss";
 
-export default function NoteText() {
+export default function NoteText(props) {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
@@ -22,15 +22,7 @@ export default function NoteText() {
       {modalOpen && (
         <Modal
           setOpenModal={setModalOpen}
-          children={
-            <Editor
-              setOpenModal={setModalOpen}
-              bgColor="none"
-              display="block"
-              height="auto"
-              width="auto"
-            />
-          }
+          children={<Editor setOpenModal={setModalOpen} label={props.label} />}
         />
       )}
     </div>

@@ -4,9 +4,12 @@ import { useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import useOnClickOutside from "../../hook/useClickOutside";
-
-import pin from "../../asset/editorIcon/pin.svg";
+import reminder from "../../asset/editorIcon/reminder.svg";
+import closeIcon from "../../asset/menuTopIcon/delete.svg";
+import colab from "../../asset/editorIcon/colab.svg";
+import background from "../../asset/editorIcon/background.svg";
+import image from "../../asset/editorIcon/image.svg";
+import archive from "../../asset/editorIcon/archive.svg";
 import more from "../../asset/editorIcon/more.svg";
 import undo from "../../asset/editorIcon/undo.svg";
 import time from "../../asset/editorIcon/time.svg";
@@ -41,7 +44,9 @@ export default function Editor(props) {
   noteItem.remind = remindDate;
   noteItem.title = title;
   noteItem.text = text;
-
+  if (props.label) {
+    noteItem.label = props.label;
+  }
   const handleTitle = (e) => {
     setTitle(e.target.value);
   };
@@ -54,6 +59,7 @@ export default function Editor(props) {
     dispatch({
       type: ADD_NOTE,
       noteItem,
+      label: props.label,
     });
     titleRef.current.value = "";
     textRef.current.value = "";
@@ -67,7 +73,9 @@ export default function Editor(props) {
     dispatch({
       type: ADD_NOTE,
       noteItem,
+      label: props.label,
     });
+    console.log(noteItem);
   });
 
   return (
@@ -87,9 +95,16 @@ export default function Editor(props) {
             name="title"
             onChange={handleTitle}
           />
-          <div className="editor-title__icon">
+
+          <div
+            className="editorTitle__icon"
+            title="Close Editor"
+            onClick={() => {
+              props.setOpenModal(false);
+            }}
+          >
             <span>
-              <img src={pin} alt=".." />
+              <img src={closeIcon} alt=".." />
             </span>
           </div>
         </div>

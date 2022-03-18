@@ -18,6 +18,7 @@ const stateDefaut = {
   arrArchive: [],
   arrTrash: [],
   arrSearch: [],
+  label: [],
 };
 
 export const NoteReducer = (state = stateDefaut, action) => {
@@ -37,7 +38,10 @@ export const NoteReducer = (state = stateDefaut, action) => {
       if (action.noteItem.timeLeft > 0) {
         state.arrRemind.push(action.noteItem);
       }
-      state.arrNote.push(action.noteItem);
+      if (action.noteItem.label) {
+        let labelArrName = "arr" + action.label;
+        state[labelArrName].push(action.noteItem);
+      }
 
       return { ...state };
     }
@@ -128,7 +132,8 @@ export const NoteReducer = (state = stateDefaut, action) => {
       let idLabelIndex = state.arrLabel.findIndex(
         (label) => label === action.labelUpdate
       );
-      state.arrLabel[idLabelIndex] = action.item;
+      state.arrLabel[idLabel] = action.item;
+
       return { ...state };
     }
     case DELETE_LABEL: {

@@ -23,11 +23,11 @@ export default function SideMenu(props) {
   const renderLabels = () => {
     return arrLabel.map((label) => {
       return (
-        <li className="list-item__item ">
+        <li className="listItem__item " id={label}>
           <div className="item__content">
             <img src={labelIcon} alt="..." />
             <span>
-              <Link to="/">{label}</Link>
+              <Link to={`/labels/${label}`}>{label}</Link>
             </span>
           </div>
         </li>
