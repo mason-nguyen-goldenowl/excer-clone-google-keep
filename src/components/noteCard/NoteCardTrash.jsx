@@ -1,14 +1,16 @@
 import React, { useState } from "react";
-import Moment from "react-moment";
 import { useDispatch, useSelector } from "react-redux";
 
+import Moment from "react-moment";
 import time from "../../asset/editorIcon/time.svg";
 import trash from "../../asset/editorIcon/trash.svg";
+
 import refresh from "../../asset/menuTopIcon/refresh.svg";
 
 import Modal from "../modal/Modal";
 import { removeNote, restoreNote } from "../../redux/action/NoteAction";
 import NoteTrashFullSize from "../noteTrashFullSize/NoteTrashFullSize";
+
 import "./NoteCard.scss";
 
 const Notecardtrash = (props) => {
@@ -56,11 +58,23 @@ const Notecardtrash = (props) => {
           <img src={time} alt="" />
           <Moment format="MMM DD, YYYY, hh:mm:A">{note.remind}</Moment>
         </span>
-        <h3>
-          {note.title.length > 20
-            ? note.title.substring(0, 20) + "..."
-            : note.title}
-        </h3>
+        {note.title.trim().length === 0 && note.content === "<p><br></p>" ? (
+          <div>
+            <h2 className="empty-note">Empty Note</h2>
+          </div>
+        ) : (
+          <div>
+            <h3>
+              {note.title.length > 20
+                ? note.title.substring(0, 20) + "..."
+                : note.title}
+            </h3>
+            <div
+              className="content"
+              dangerouslySetInnerHTML={{ __html: note.content }}
+            ></div>
+          </div>
+        )}
         <div
           className="content"
           dangerouslySetInnerHTML={{ __html: note.content }}

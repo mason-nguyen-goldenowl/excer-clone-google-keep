@@ -1,16 +1,17 @@
-import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
-import Masonry from "react-masonry-component";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
+
+import Cookies from "js-cookie";
+import Masonry from "react-masonry-component";
 
 import Menu from "../../components/menu/Menu";
 import Modal from "../../components/modal/Modal";
 import Comfirm from "../../components/comfirm/Comfirm";
 import SideMenu from "../../components/sideMenu/SideMenu";
-import NoteCardTrash from "../../components/noteCard/NoteCardTrash";
-
 import { getNoteAction } from "../../redux/action/NoteAction";
+import NoteCardTrash from "../../components/noteCard/NoteCardTrash";
 
 import "./Trash.scss";
 

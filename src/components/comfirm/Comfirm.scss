@@ -3,12 +3,14 @@
   background-color: #fff;
   padding: 25px 30px;
   border-radius: 12px;
+  z-index: 9999;
   &__ques {
     p {
       font-weight: 700;
     }
   }
 }
+
 .cofirm__choosing {
   display: flex;
   justify-content: end;

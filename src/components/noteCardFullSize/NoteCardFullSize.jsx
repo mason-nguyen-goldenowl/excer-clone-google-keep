@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import autosize from "autosize";
@@ -6,10 +7,13 @@ import Moment from "react-moment";
 import DatePicker from "react-datepicker";
 import { Button } from "@chakra-ui/react";
 import "react-datepicker/dist/react-datepicker.css";
+import { stateToHTML } from "draft-js-export-html";
+import { ContentState, convertFromHTML, Editor, EditorState } from "draft-js";
 
-import editIcon from "../../asset/sideMenuIcon/Edit.svg";
-import trash from "../../asset/editorIcon/trash.svg";
 import time from "../../asset/editorIcon/time.svg";
+import trash from "../../asset/editorIcon/trash.svg";
+import labelIcon from "../../asset/editorIcon/label.svg";
+import editIcon from "../../asset/sideMenuIcon/Edit.svg";
 import archive from "../../asset/editorIcon/archive.svg";
 import closeIcon from "../../asset/menuTopIcon/delete.svg";
 import reminder from "../../asset/editorIcon/reminder.svg";
@@ -17,6 +21,7 @@ import reminder from "../../asset/editorIcon/reminder.svg";
 import useOnClickOutside from "../../hook/useClickOutside";
 import {
   archiveNote,
+  clearLabelAction,
   clearRemindAction,
   deleteNote,
   editNote,
@@ -24,9 +29,8 @@ import {
 } from "../../redux/action/NoteAction";
 
 import "./NoteCardFullSize.scss";
-import { convertFromHTML, Editor, EditorState } from "draft-js";
-import { ContentState } from "draft-js";
-import { stateToHTML } from "draft-js-export-html";
+import Modal from "../modal/Modal";
+import ComfirmNote from "../comfirm/ComfirmNote";
 
 export default function NoteCardFullSize(props) {
   const noteFullSizeRef = useRef();
@@ -41,12 +45,16 @@ export default function NoteCardFullSize(props) {
   );
   const [title, setTitle] = useState(note.title);
   const [remindDate, setRemindDate] = useState();
+  const [isLabelNameActive, setIsLabelNameActive] = useState(false);
+  const [labelName, setLabelName] = useState(note.label_name);
   const [isReminderActive, setReminderActive] = useState(false);
   const [onRead, setOnRead] = useState(true);
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(state)
   );
+  const [modalOpenComfirm, setModalOpenComfirm] = useState(false);
   const editorRef = useRef();
+  const editorComponentRef = useRef();
   const now = new Date();
 
   let remindTime = new Date(note.remind).getTime();
@@ -83,23 +91,30 @@ export default function NoteCardFullSize(props) {
     }
     setRemindDate(undefined);
   };
+  const clearLabelName = () => {
+    if (note.label_name) {
+      const action = clearLabelAction;
+      dispatch(action(note));
+      setLabelName("");
+    }
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
     let contentLength = editorState.getSelection().getStartOffset();
     let content = stateToHTML(editorState.getCurrentContent());
     props.setOpenModal(false);
-    if (
-      (title.length > 0 && !note.deleted) ||
-      (contentLength > 0 && !note.deleted)
-    ) {
+    if (!note.deleted) {
       if (
         title !== note.title ||
         content !== note.content ||
-        remindDate - now > 0
+        remindDate - now > 0 ||
+        labelName !== note.label_name
       ) {
         note.title = title;
         note.content = content;
+        note.label_name = labelName;
+        note.contentLength = contentLength;
         if (remindDate - now) {
           if (remindDate) {
             note.remind = remindDate;
@@ -112,15 +127,21 @@ export default function NoteCardFullSize(props) {
       }
     }
   };
-
-  useOnClickOutside(noteFullSizeRef, onSubmit);
+  useOnClickOutside(noteFullSizeRef, () => {
+    console.log(remainingTime);
+    if (onRead && !isLabelNameActive && !remindDate) {
+      props.setOpenModal(false);
+    } else {
+      setModalOpenComfirm(true);
+    }
+  });
 
   useEffect(() => {
     autosize(document.querySelector(".editor-text_area"));
   }, []);
   return (
     <div className="editor" ref={noteFullSizeRef}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit} ref={editorComponentRef}>
         <div className="editor-title">
           <textarea
             className="editor-text_area"
@@ -173,7 +194,9 @@ export default function NoteCardFullSize(props) {
         <div className="remind-wrap">
           {remindDate || note.remind ? (
             <span className="remind-label">
-              <Moment format="MMMM ddd yyyy, HH:mm">{remindDate}</Moment>
+              <Moment title="Remind time" format="MMMM ddd yyyy, HH:mm">
+                {remindDate}
+              </Moment>
               <span onClick={clearRemind} className="clear-remind">
                 X
               </span>
@@ -181,7 +204,36 @@ export default function NoteCardFullSize(props) {
           ) : (
             <div></div>
           )}
+          {note.label_id || isLabelNameActive ? (
+            <span>
+              {isLabelNameActive ? (
+                <input
+                  title="Label Name"
+                  value={labelName}
+                  className={`remind-label`}
+                  placeholder="Enter label name..."
+                  onChange={(e) => {
+                    setLabelName(e.target.value);
+                  }}
+                />
+              ) : (
+                <span
+                  value={note.label_name}
+                  title="Label Name"
+                  className={`labels`}
+                >
+                  <Link to={`/labels/${note.label_id}`}>{note.label_name}</Link>
+                  <span onClick={clearLabelName} className="clear-remind">
+                    X
+                  </span>
+                </span>
+              )}
+            </span>
+          ) : (
+            <div></div>
+          )}
         </div>
+
         <div className="editor-feature">
           <div className="editor-feature__icon">
             <ul className="editor-icon__list">
@@ -231,6 +283,17 @@ export default function NoteCardFullSize(props) {
                 <img src={archive} alt=".." />
               </li>
               <li
+                title="Change Label"
+                className="editor-icon__item "
+                onClick={() => {
+                  setIsLabelNameActive(!isLabelNameActive);
+                }}
+              >
+                <div className="reminder__btn">
+                  <img src={labelIcon} alt=".." />
+                </div>
+              </li>
+              <li
                 className="editor-icon__item "
                 title="Delete"
                 onClick={deleteAction}
@@ -246,6 +309,20 @@ export default function NoteCardFullSize(props) {
           </div>
         </div>
       </form>
+      {modalOpenComfirm && (
+        <Modal
+          setOpenModalComfirm={setModalOpenComfirm}
+          children={
+            <ComfirmNote
+              setOpenModalComfirm={setModalOpenComfirm}
+              content={"Did you comfirm this note?"}
+              editorState={editorState}
+              onSubmit={onSubmit}
+              setOpenModal={props.setOpenModal}
+            />
+          }
+        />
+      )}
     </div>
   );
 }

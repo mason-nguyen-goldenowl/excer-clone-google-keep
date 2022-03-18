@@ -41,8 +41,12 @@ const googleKeepApi = {
     return axiosClient.delete("/note/delete", { data: note });
   },
 
-  cleaerRemind: (note) => {
+  clearRemind: (note) => {
     return axiosClient.delete("/note/clear-remind", { data: note });
+  },
+
+  clearLabelName: (note) => {
+    return axiosClient.delete("/note/clear-label", { data: note });
   },
 
   restoreNote: (note) => {

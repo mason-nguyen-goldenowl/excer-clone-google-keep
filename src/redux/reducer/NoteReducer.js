@@ -14,6 +14,7 @@ import {
   EDIT_NOTE,
   CLEAR_REMIND,
   GET_LABEL_NAME,
+  CLEAR_LABEL_NAME,
 } from "../type/NoteType";
 
 import { LOG_OUT } from "../type/UserType";
@@ -34,6 +35,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
     }
     case ADD_NOTE: {
       state.arrNote = action.newArrNote.reverse();
+      state.arrLabel = action.newArrLabel;
       return { ...state };
     }
 
@@ -44,6 +46,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
 
     case EDIT_NOTE: {
       state.arrNote = action.newArrNote.reverse();
+      state.arrLabel = action.newArrLabel;
       return { ...state };
     }
 
@@ -66,6 +69,10 @@ export const NoteReducer = (state = stateDefaut, action) => {
     case REMOVE_NOTE: {
       state.arrNote = action.newArrNote.reverse();
 
+      return { ...state };
+    }
+    case CLEAR_LABEL_NAME: {
+      state.arrNote = action.newArrNote.reverse();
       return { ...state };
     }
 

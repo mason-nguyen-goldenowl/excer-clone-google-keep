@@ -1,12 +1,12 @@
 import React, { useRef } from "react";
+import { useDispatch } from "react-redux";
 import useOnClickOutside from "../../hook/useClickOutside";
 
-import refresh from "../../asset/menuTopIcon/refresh.svg";
 import trash from "../../asset/editorIcon/trash.svg";
+import refresh from "../../asset/menuTopIcon/refresh.svg";
+import { removeNote, restoreNote } from "../../redux/action/NoteAction";
 
 import "./NoteTrashFullSize.scss";
-import { useDispatch } from "react-redux";
-import { removeNote, restoreNote } from "../../redux/action/NoteAction";
 
 export default function NoteTrashFullSize(props) {
   const dispatch = useDispatch();

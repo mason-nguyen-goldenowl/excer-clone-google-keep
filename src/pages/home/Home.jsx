@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Cookies from "js-cookie";
 import { Skeleton } from "@chakra-ui/react";
-
 import Masonry from "react-masonry-component";
 
 import { getNoteAction } from "../../redux/action/NoteAction";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import edit from "../../asset/editorIcon/edit.svg";
 import check from "../../asset/editorIcon/check.svg";
@@ -14,7 +14,7 @@ import "./EditLables.scss";
 export default function EditLabels(props) {
   const dispatch = useDispatch();
 
-  const editLabelRef = useRef();
+  const { arrLabel } = useSelector((state) => state.note);
 
   const [inputValue, setInputValue] = useState("");
 

@@ -12,4 +12,5 @@ export const UPDATE_LABEL = "UPDATE_LABEL";
 export const CLEAR_REMIND = "CLEAR_REMIND";
 export const DELETE_LABEL = "DELETE_LABEL";
 export const ARCHIVE_NOTE = "ARCHIVE_NOTE";
+export const CLEAR_LABEL_NAME = "CLEAR_LABEL_NAME";
 export const GET_LABEL_NAME = "GET_LABEL_NAME";

@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 
-import Moment from "react-moment";
-import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 
-import archive from "../../asset/editorIcon/archive.svg";
+import Moment from "react-moment";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import time from "../../asset/editorIcon/time.svg";
 import trash from "../../asset/editorIcon/trash.svg";
+import archive from "../../asset/editorIcon/archive.svg";
 
 import {
   archiveNote,
+  clearLabelAction,
   clearRemindAction,
   deleteNote,
   unArchiveNote,
@@ -18,6 +21,10 @@ import {
 import Modal from "../modal/Modal";
 import NoteCardFullSize from "../noteCardFullSize/NoteCardFullSize";
 
+import NoteTrashFullSize from "../noteTrashFullSize/NoteTrashFullSize";
+
+import { ARCHIVE_NOTE, DELETE_NOTE } from "../../redux/type/NoteType";
+
 import "./NoteCard.scss";
 
 export default function NoteCard(props) {
@@ -25,6 +32,13 @@ export default function NoteCard(props) {
   const dispatch = useDispatch();
   const arrLabel = useSelector((state) => state.note.arrLabel);
   const [modalOpen, setModalOpen] = useState(false);
+
+  const clearLabelName = () => {
+    if (note.label_name) {
+      const action = clearLabelAction;
+      dispatch(action(note));
+    }
+  };
 
   const label = arrLabel?.find((label) => label._id === note.label_id);
   if (label) {
@@ -90,9 +104,9 @@ export default function NoteCard(props) {
           <img src={time} alt="" />
           <Moment format="MMM DD, YYYY, hh:mm:A">{note.remind}</Moment>
         </span>
-        {note.title.length === 0 && note.content.length === 0 ? (
+        {note.title.trim().length === 0 && note.content === "<p><br></p>" ? (
           <div>
-            <h2>Empty Note</h2>
+            <h2 className="empty-note">Empty Note</h2>
           </div>
         ) : (
           <div>
@@ -109,7 +123,16 @@ export default function NoteCard(props) {
         )}
       </div>
 
-      <span className={`${labelClass}`}>{note.label_name}</span>
+      <span className={`${labelClass}`}>
+        <Link to={`/labels/${note.label_id}`}>{note.label_name}</Link>
+        {note.label_name ? (
+          <span onClick={clearLabelName} className="clear-remind">
+            X
+          </span>
+        ) : (
+          <span></span>
+        )}
+      </span>
 
       <div className="note-card__feature">
         <ul className="editor-icon__list">
@@ -141,7 +164,11 @@ export default function NoteCard(props) {
         <Modal
           setOpenModal={setModalOpen}
           children={
-            <NoteCardFullSize setOpenModal={setModalOpen} content={note} />
+            note.deleted ? (
+              <NoteTrashFullSize setOpenModal={setModalOpen} content={note} />
+            ) : (
+              <NoteCardFullSize setOpenModal={setModalOpen} content={note} />
+            )
           }
         />
       )}

@@ -143,6 +143,7 @@
     background-color: #5f636828;
   }
 }
+
 div.DraftEditor-root {
   width: 100%;
   outline: none;
@@ -161,4 +162,9 @@ div.DraftEditor-root {
 
 .react-datepicker {
   display: flex;
+}
+
+.remind-wrap {
+  display: flex;
+  align-items: baseline;
 }
