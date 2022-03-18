@@ -128,7 +128,8 @@ export default function NoteCardFullSize(props) {
     }
   };
   useOnClickOutside(noteFullSizeRef, () => {
-    if (onRead && !isLabelNameActive && remainingTime < 0) {
+    console.log(remainingTime);
+    if (onRead && !isLabelNameActive && !remindDate) {
       props.setOpenModal(false);
     } else {
       setModalOpenComfirm(true);
