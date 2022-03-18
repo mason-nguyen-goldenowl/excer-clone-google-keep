@@ -2,62 +2,61 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
 import Moment from "react-moment";
-
+import Swal from "sweetalert2";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { archiveNote, deleteNote } from "../../redux/action/NoteAction";
 
 import pin from "../../asset/editorIcon/pin.svg";
-import trash from "../../asset/editorIcon/trash.svg";
-import background from "../../asset/editorIcon/background.svg";
+import more from "../../asset/editorIcon/more.svg";
+import time from "../../asset/editorIcon/time.svg";
 import image from "../../asset/editorIcon/image.svg";
+import trash from "../../asset/editorIcon/trash.svg";
 import select from "../../asset/editorIcon/select.svg";
 import archive from "../../asset/editorIcon/archive.svg";
 import reminder from "../../asset/editorIcon/reminder.svg";
-import more from "../../asset/editorIcon/more.svg";
-import time from "../../asset/editorIcon/time.svg";
-
-import { ARCHIVE_NOTE, DELETE_NOTE } from "../../redux/type/NoteType";
+import background from "../../asset/editorIcon/background.svg";
 
 import "./NoteCard.scss";
 
 export default function NoteCard(props) {
+  const note = props.content;
   const dispatch = useDispatch();
   const [remindDate, setRemindDate] = useState(new Date());
-
-  const note = props.content;
 
   let reminderClass = "";
 
   let statusActive = "";
   let labelClass = "";
-  let remindTime = new Date(note.remind).getTime();
+
   let now = new Date().getTime();
+  let remindTime = new Date(note.remind).getTime();
   let remainingTime = remindTime - now;
 
   const archiveAction = () => {
-    dispatch({
-      type: ARCHIVE_NOTE,
-      noteArchive: note,
-    });
+    const action = archiveNote;
+    dispatch(action({ note_id: note._id }));
   };
 
   const deleteAction = () => {
-    note.deleteDay = new Date();
-    dispatch({
-      type: DELETE_NOTE,
-      noteDelete: note,
-    });
+    const action = deleteNote;
+    dispatch(action({ note_id: note._id }));
   };
 
-  if (note.label) {
+  if (note.label_name) {
     labelClass = "labels";
   }
 
   if (remainingTime > 0) {
     statusActive = "active";
     setTimeout(() => {
-      alert(note.title);
       remainingTime = -1;
+      Swal.fire({
+        icon: "warning",
+        title: note.title,
+        text: note.content,
+        showConfirmButton: false,
+      });
     }, remainingTime);
   }
 
@@ -78,10 +77,14 @@ export default function NoteCard(props) {
         </span>
 
         <h3>{note.title}</h3>
-        <p>{note.text}</p>
+        <p>
+          {note.content.length > 200
+            ? note.content.substring(0, 150) + "..."
+            : note.content}
+        </p>
       </div>
 
-      <span className={`${labelClass}`}>{note.label}</span>
+      <span className={`${labelClass}`}>{note.label_name}</span>
 
       <div className="note-card__feature">
         <ul className="editor-icon__list">
@@ -125,7 +128,11 @@ export default function NoteCard(props) {
             <img src={image} alt=".." />
           </li>
 
-          <li className="editor-icon__item" onClick={archiveAction}>
+          <li
+            className="editor-icon__item"
+            onClick={archiveAction}
+            title="Archive"
+          >
             <img src={archive} alt=".." />
           </li>
           <li className="editor-icon__item">

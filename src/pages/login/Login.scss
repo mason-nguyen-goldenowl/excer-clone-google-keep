@@ -1,0 +1,44 @@
+@use "../../scss/" as *;
+
+.login-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login {
+  border-radius: 8px;
+  border: 1px solid #dadce0;
+  padding: 38px;
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  &__body {
+    margin-top: 10px;
+    .form-input {
+      height: 40px;
+      border-radius: 4px;
+      margin: 10px 0;
+      margin-right: 10px;
+      padding: 6px 8px;
+      border: 1px solid #dadce0;
+    }
+    .forgot {
+      cursor: pointer;
+      color: #1a73e8;
+      font-weight: 700;
+      margin-bottom: 10px;
+      transition: all 0.3s;
+      &:hover {
+        color: #24518b;
+      }
+    }
+    .submit-group {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

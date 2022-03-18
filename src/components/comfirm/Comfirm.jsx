@@ -1,16 +1,17 @@
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import useOnClickOutside from "../../hook/useClickOutside";
-import { EMPTY_TRASH } from "../../redux/type/NoteType";
+import { emptyTrash } from "../../redux/action/NoteAction";
+
 import "./Comfirm.scss";
+
 const Comfirm = (props) => {
   const comfirmRef = useRef();
   const dispatch = useDispatch();
 
   const emptyTrashAction = () => {
-    dispatch({
-      type: EMPTY_TRASH,
-    });
+    const action = emptyTrash;
+    dispatch(action());
   };
 
   const emptyOnClick = () => {

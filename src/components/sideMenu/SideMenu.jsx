@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import EditLabels from "../editLabels/EditLabels";
 import Modal from "../modal/Modal";
+import EditLabels from "../editLabels/EditLabels";
+import { getLabels } from "../../redux/action/LabelAction";
 
 import labelIcon from "../../asset/editorIcon/label.svg";
 import { ReactComponent as EditIcon } from "../../asset/sideMenuIcon/Edit.svg";
@@ -15,20 +16,26 @@ import { ReactComponent as ArchiveIcon } from "../../asset/sideMenuIcon/Archive.
 
 import "./SideMenu.scss";
 export default function SideMenu(props) {
+  const dispatch = useDispatch();
   const { isListActive } = useSelector((state) => state.menu);
-  const { arrLabel } = useSelector((state) => state.note);
+
+  const arrLabel = useSelector((state) => state.note.arrLabel);
 
   const [listClass, setListClass] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
   const renderLabels = () => {
-    return arrLabel.map((label) => {
+    return arrLabel?.map((label) => {
       return (
-        <Link to={`/labels/${label}`}>
-          <li className="list-item__item " id={label} key={label}>
+        <Link to={`/labels/${label.label_name}`}>
+          <li
+            className="list-item__item "
+            id={label.label_name}
+            key={label._id}
+          >
             <div className="item__content">
               <img src={labelIcon} alt="..." />
-              <span>{label}</span>
+              <span>{label.label_name}</span>
             </div>
           </li>
         </Link>
@@ -37,6 +44,9 @@ export default function SideMenu(props) {
   };
 
   useEffect(() => {
+    const action = getLabels();
+    dispatch(action);
+
     if (isListActive) {
       setListClass("active");
     } else {
@@ -68,6 +78,7 @@ export default function SideMenu(props) {
             </div>
           </li>
         </Link>
+
         {renderLabels()}
 
         <li

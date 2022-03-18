@@ -1,5 +1,11 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import { Skeleton } from "@chakra-ui/react";
+
+import { getNoteAction } from "../../redux/action/NoteAction";
 
 import Menu from "../../components/menu/Menu";
 import NoteCard from "../../components/noteCard/NoteCard";
@@ -9,18 +15,35 @@ import SideMenu from "../../components/sideMenu/SideMenu";
 import "./Home.scss";
 
 export default function Home() {
-  const { arrNote } = useSelector((state) => state.note);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLogged = Cookies.get("isLogged");
+  const refreshToken = Cookies.get("refresh_token");
+  const arrNote = useSelector((state) => state.note.arrNote);
+  const [isLoaded, setIsLoaded] = useState(false);
+  let noteSket = { title: "abc", content: "content" };
 
   const renderNoteCard = () => {
     return arrNote.map((note) => {
-      return <NoteCard content={note} key={note.id} />;
+      if (!note?.archive && !note?.deleted) {
+        return <NoteCard content={note} key={note._id} />;
+      }
     });
   };
 
+  useEffect(() => {
+    if (!isLogged || !refreshToken) {
+      navigate("/login");
+    }
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 1500);
+    const action = getNoteAction;
+    dispatch(action());
+  }, [dispatch, isLogged, navigate, refreshToken]);
   return (
     <div>
       <Menu title="Keep" />
-
       <div className="body-content">
         <div className="left">
           <SideMenu active="notes" />
@@ -29,7 +52,20 @@ export default function Home() {
           <div className="editor-wrap">
             <NoteText />
           </div>
-          <div className="note__content">{renderNoteCard()}</div>
+          <div className="note__content">
+            {isLoaded ? (
+              renderNoteCard()
+            ) : (
+              <div style={{ display: "flex" }}>
+                <Skeleton margin={"5"}>
+                  <NoteCard content={noteSket} />
+                </Skeleton>
+                <Skeleton margin={"5"}>
+                  <NoteCard content={noteSket} />
+                </Skeleton>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

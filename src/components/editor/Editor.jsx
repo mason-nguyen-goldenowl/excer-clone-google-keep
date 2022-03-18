@@ -4,32 +4,33 @@ import { useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import reminder from "../../asset/editorIcon/reminder.svg";
-import closeIcon from "../../asset/menuTopIcon/delete.svg";
-import colab from "../../asset/editorIcon/colab.svg";
-import background from "../../asset/editorIcon/background.svg";
-import image from "../../asset/editorIcon/image.svg";
-import archive from "../../asset/editorIcon/archive.svg";
 import more from "../../asset/editorIcon/more.svg";
 import undo from "../../asset/editorIcon/undo.svg";
 import time from "../../asset/editorIcon/time.svg";
+import colab from "../../asset/editorIcon/colab.svg";
+import image from "../../asset/editorIcon/image.svg";
+import archive from "../../asset/editorIcon/archive.svg";
+import closeIcon from "../../asset/menuTopIcon/delete.svg";
+import reminder from "../../asset/editorIcon/reminder.svg";
+import background from "../../asset/editorIcon/background.svg";
 
-import { ADD_NOTE } from "../../redux/type/NoteType";
+import { createNote } from "../../redux/action/NoteAction";
+
 import useOnClickOutside from "../../hook/useClickOutside";
 
 import "./Editor.scss";
 
 export default function Editor(props) {
   const dispatch = useDispatch();
-  const [isReminderActive, setReminderActive] = useState(false);
+  const editorRef = useRef("");
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const [remindDate, setRemindDate] = useState(new Date());
+  const [remindDate, setRemindDate] = useState();
+  const [isReminderActive, setReminderActive] = useState(false);
+  const action = createNote;
 
-  const editorRef = useRef("");
-
-  let reminderClass = "";
   let noteItem = {};
+  let reminderClass = "";
 
   const handleTitle = (e) => {
     setTitle(e.target.value);
@@ -39,37 +40,38 @@ export default function Editor(props) {
     setText(e.target.value);
   };
 
-  const submitNote = (e) => {
+  const submitNote = async (e) => {
     e.preventDefault();
-    dispatch({
-      type: ADD_NOTE,
-      noteItem,
-      label: props.label,
-    });
 
-    alert("Add note success");
     props.setOpenModal(false);
+    noteItem = {
+      title: title,
+      content: text,
+      remind: remindDate,
+      label_name: props.label,
+    };
+    dispatch(action(noteItem));
   };
 
   if (isReminderActive === true) {
     reminderClass = "active";
   }
 
-  noteItem.remind = remindDate;
-  noteItem.title = title;
-  noteItem.text = text;
   if (props.label) {
     noteItem.label = props.label;
   }
 
-  useOnClickOutside(editorRef, () => {
+  useOnClickOutside(editorRef, async () => {
     props.setOpenModal(false);
 
-    dispatch({
-      type: ADD_NOTE,
-      noteItem,
-      label: props.label,
-    });
+    noteItem = {
+      title: title,
+      content: text,
+      remind: remindDate,
+      label_name: props.label,
+    };
+
+    dispatch(action(noteItem));
   });
 
   return (
@@ -132,7 +134,7 @@ export default function Editor(props) {
                       </div>
                       <div className="reminder__item">
                         <DatePicker
-                          selected={remindDate}
+                          selected={remindDate || new Date()}
                           showTimeSelect
                           dateFormat="Pp"
                           onChange={(date) => setRemindDate(date)}

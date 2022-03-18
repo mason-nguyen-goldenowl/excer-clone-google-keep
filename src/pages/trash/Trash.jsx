@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import Cookies from "js-cookie";
 
 import Comfirm from "../../components/comfirm/Comfirm";
+
 import Menu from "../../components/menu/Menu";
 import Modal from "../../components/modal/Modal";
 import NoteCardTrash from "../../components/noteCard/NoteCardTrash";
@@ -11,14 +16,24 @@ import SideMenu from "../../components/sideMenu/SideMenu";
 import "./Trash.scss";
 
 export default function Trash() {
-  const { arrTrash } = useSelector((state) => state.note);
+  const navigate = useNavigate();
+  const isLogged = Cookies.get("isLogged");
+  const refreshToken = Cookies.get("refresh_token");
+  const arrNote = useSelector((state) => state.note.arrNote);
   const [modalOpen, setModalOpen] = useState(false);
 
   const renderNoteCard = () => {
-    return arrTrash?.map((note) => {
-      return <NoteCardTrash content={note} key={note.id} />;
+    return arrNote.map((note) => {
+      if (note.deleted) {
+        return <NoteCardTrash content={note} key={note._id} />;
+      }
     });
   };
+  useEffect(() => {
+    if (!isLogged || !refreshToken) {
+      navigate("/login");
+    }
+  }, [isLogged, navigate, refreshToken]);
 
   return (
     <div>

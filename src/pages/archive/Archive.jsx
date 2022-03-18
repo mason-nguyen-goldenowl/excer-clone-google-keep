@@ -1,21 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
+
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import Cookies from "js-cookie";
 
 import Menu from "../../components/menu/Menu";
 import NoteCard from "../../components/noteCard/NoteCard";
+
 import SideMenu from "../../components/sideMenu/SideMenu";
 
 import "./Archive.scss";
 
 export default function Archive() {
-  const { arrArchive } = useSelector((state) => state.note);
+  const isLogged = Cookies.get("isLogged");
+  const refreshToken = Cookies.get("refresh_token");
+  const navigate = useNavigate();
+  const arrNote = useSelector((state) => state.note.arrNote);
+  const isLogin = useSelector((state) => state.user.isLogin);
 
   const renderNoteCard = () => {
-    return arrArchive?.map((note) => {
-      return <NoteCard content={note} key={note.id} />;
+    return arrNote?.map((note) => {
+      if (note.archive && !note?.deleted) {
+        return <NoteCard content={note} key={note._id} />;
+      }
     });
   };
-
+  useEffect(() => {
+    if (!isLogged || !refreshToken) {
+      navigate("/login");
+    }
+  }, [isLogged, isLogin, navigate, refreshToken]);
   return (
     <div>
       <Menu title="Archive" />

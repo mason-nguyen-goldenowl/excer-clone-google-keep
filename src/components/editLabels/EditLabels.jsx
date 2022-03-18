@@ -1,19 +1,18 @@
 import React, { useRef, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import check from "../../asset/editorIcon/check.svg";
-import edit from "../../asset/editorIcon/edit.svg";
-import labelIcon from "../../asset/editorIcon/label.svg";
-import deleteIcon from "../../asset/menuTopIcon/delete.svg";
-
-import {
-  ADD_LABEL,
-  DELETE_LABEL,
-  UPDATE_LABEL,
-} from "../../redux/type/NoteType";
+import { useSelector, useDispatch } from "react-redux";
 
 import useOnClickOutside from "../../hook/useClickOutside";
+import {
+  createLabels,
+  deleteLabel,
+  editLabel,
+} from "../../redux/action/LabelAction";
+
+import edit from "../../asset/editorIcon/edit.svg";
+import check from "../../asset/editorIcon/check.svg";
+import labelIcon from "../../asset/editorIcon/label.svg";
+import deleteIcon from "../../asset/menuTopIcon/delete.svg";
 
 import "./EditLables.scss";
 
@@ -21,44 +20,59 @@ export default function EditLabels(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { arrLabel } = useSelector((state) => state.note);
-
   const editLabelRef = useRef();
 
   const [label, setLabel] = useState("");
-
-  let arrLabelUpdate = [...arrLabel];
+  const arrLabel = useSelector((state) => state.note.arrLabel);
 
   const onLabelChange = (e) => {
     setLabel(e.target.value);
   };
 
+  const addLabel = () => {
+    const action = createLabels;
+    dispatch(action({ label_name: label }));
+  };
+
   const renderLabel = () => {
-    return arrLabel.map((item, index) => {
-      let changeLabel = item;
+    return arrLabel?.map((label) => {
+      const editLabelAction = () => {
+        const action = editLabel;
+        dispatch(
+          action({
+            label_name: label.label_name,
+            label_id: label._id,
+            labelChange: changeLabel,
+          })
+        );
+        navigate(`/labels/${changeLabel}`);
+      };
+      let changeLabel;
+
       const onInputChange = (e) => {
-        item = e.target.value;
+        changeLabel = e.target.value;
       };
 
-      arrLabelUpdate[index] = item;
+      const deleteLabelAction = () => {
+        const action = deleteLabel;
+        console.log(label.label_name);
+        dispatch(action({ label_name: label.label_name }));
+
+        navigate(`/`);
+      };
 
       return (
-        <div className="label__item" key={index}>
+        <div className="label__item" key={label._id}>
           <div className="icon">
             <img className="label-icon" src={labelIcon} alt=".." />
             <img
               className="delete-icon"
               src={deleteIcon}
               alt=".."
-              onClick={() => {
-                dispatch({
-                  type: DELETE_LABEL,
-                  labelDelete: item,
-                });
-              }}
+              onClick={deleteLabelAction}
             />
           </div>
-          <p>{item}</p>
+          <p>{label.label_name}</p>
 
           <input onChange={onInputChange} />
           <div className="icon-edit">
@@ -67,14 +81,7 @@ export default function EditLabels(props) {
               className="check-icon"
               src={check}
               alt=".."
-              onClick={() => {
-                dispatch({
-                  type: UPDATE_LABEL,
-                  labelUpdate: changeLabel,
-                  item,
-                });
-                navigate(`/labels/${item}`);
-              }}
+              onClick={editLabelAction}
             />
           </div>
         </div>
@@ -99,16 +106,7 @@ export default function EditLabels(props) {
       <div className="edit-labels-wrap">
         <div className="edit-labels__cre">
           <input placeholder="Create new label" onChange={onLabelChange} />
-          <div
-            className="cre__btn"
-            onClick={() => {
-              dispatch({
-                type: ADD_LABEL,
-                label,
-              });
-              setLabel("");
-            }}
-          >
+          <div className="cre__btn" onClick={addLabel}>
             <img src={check} alt="..." />
           </div>
         </div>
