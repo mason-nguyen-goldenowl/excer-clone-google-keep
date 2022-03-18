@@ -36,6 +36,7 @@ export default function Reminder() {
   return (
     <div>
       <Menu title="Reminders" />
+
       <div className="body-content">
         <div className="left">
           <SideMenu active="reminders" />
@@ -46,6 +47,7 @@ export default function Reminder() {
           </div>
           <div className="note__content">{renderNoteCard()}</div>
         </div>
+        <div className="note__content">{renderNoteCard()}</div>
       </div>
     </div>
   );

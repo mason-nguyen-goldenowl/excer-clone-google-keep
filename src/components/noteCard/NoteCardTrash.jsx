@@ -3,8 +3,9 @@ import { useDispatch } from "react-redux";
 
 import pin from "../../asset/editorIcon/pin.svg";
 import trash from "../../asset/editorIcon/trash.svg";
-import restore from "../../asset/editorIcon/restore.svg";
 import select from "../../asset/editorIcon/select.svg";
+import restore from "../../asset/editorIcon/restore.svg";
+
 import { removeNote, restoreNote } from "../../redux/action/NoteAction";
 
 import "./NoteCard.scss";

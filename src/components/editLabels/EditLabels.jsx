@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { useSelector, useDispatch } from "react-redux";
 
 import useOnClickOutside from "../../hook/useClickOutside";
@@ -49,6 +48,7 @@ export default function EditLabels(props) {
         navigate(`/labels/${changeLabel}`);
       };
       let changeLabel;
+
       const onInputChange = (e) => {
         changeLabel = e.target.value;
       };

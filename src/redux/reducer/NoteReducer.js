@@ -25,6 +25,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
   switch (action.type) {
     case GET_NOTE: {
       state.arrNote = action.arrNote;
+
       return { ...state };
     }
     case ADD_NOTE: {
@@ -34,6 +35,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
 
     case ARCHIVE_NOTE: {
       state.arrNote = action.newArrNote;
+
       return { ...state };
     }
 
@@ -49,6 +51,7 @@ export const NoteReducer = (state = stateDefaut, action) => {
 
     case REMOVE_NOTE: {
       state.arrNote = action.newArrNote;
+
       return { ...state };
     }
 

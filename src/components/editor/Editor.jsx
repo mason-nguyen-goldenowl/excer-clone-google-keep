@@ -15,6 +15,7 @@ import reminder from "../../asset/editorIcon/reminder.svg";
 import background from "../../asset/editorIcon/background.svg";
 
 import { createNote } from "../../redux/action/NoteAction";
+
 import useOnClickOutside from "../../hook/useClickOutside";
 
 import "./Editor.scss";
@@ -85,6 +86,7 @@ export default function Editor(props) {
       >
         <div className="editor-title">
           <input placeholder="Title" name="title" onChange={handleTitle} />
+
           <div
             className="editor-title__icon"
             title="Close Editor"
@@ -97,6 +99,7 @@ export default function Editor(props) {
             </span>
           </div>
         </div>
+
         <div className="editor-text">
           <input
             placeholder="Take a note..."

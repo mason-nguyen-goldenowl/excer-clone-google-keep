@@ -13,11 +13,9 @@ import gridIcon from "../../asset/menuTopIcon/gridIcon.svg";
 import settings from "../../asset/menuTopIcon/settings.svg";
 
 import { SEARCH } from "../../redux/type/NoteType";
-
-import { CHANGE_LIST_CLASS } from "../../redux/type/MenuType";
-
-import "./Menu.scss";
 import { LOG_OUT } from "../../redux/type/UserType";
+import { CHANGE_LIST_CLASS } from "../../redux/type/MenuType";
+import "./Menu.scss";
 
 export default function Menu(props) {
   const navigate = useNavigate();

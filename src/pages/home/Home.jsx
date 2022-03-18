@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
-import { Skeleton, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
+import { Skeleton } from "@chakra-ui/react";
 
 import { getNoteAction } from "../../redux/action/NoteAction";
 
@@ -22,6 +22,7 @@ export default function Home() {
   const arrNote = useSelector((state) => state.note.arrNote);
   const [isLoaded, setIsLoaded] = useState(false);
   let noteSket = { title: "abc", content: "content" };
+
   const renderNoteCard = () => {
     return arrNote.map((note) => {
       if (!note?.archive && !note?.deleted) {
