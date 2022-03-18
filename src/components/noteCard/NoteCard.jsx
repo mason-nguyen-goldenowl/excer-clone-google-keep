@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
+import Moment from "react-moment";
+
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import pin from "../../asset/editorIcon/pin.svg";
-import more from "../../asset/editorIcon/more.svg";
-import time from "../../asset/editorIcon/time.svg";
 import trash from "../../asset/editorIcon/trash.svg";
+import background from "../../asset/editorIcon/background.svg";
 import image from "../../asset/editorIcon/image.svg";
 import select from "../../asset/editorIcon/select.svg";
 import archive from "../../asset/editorIcon/archive.svg";
 import reminder from "../../asset/editorIcon/reminder.svg";
-import background from "../../asset/editorIcon/background.svg";
+import more from "../../asset/editorIcon/more.svg";
+import time from "../../asset/editorIcon/time.svg";
 
 import { ARCHIVE_NOTE, DELETE_NOTE } from "../../redux/type/NoteType";
 
@@ -22,19 +24,15 @@ export default function NoteCard(props) {
   const dispatch = useDispatch();
   const [remindDate, setRemindDate] = useState(new Date());
 
+  const note = props.content;
+
   let reminderClass = "";
 
-  const note = props.content;
+  let statusActive = "";
+  let labelClass = "";
   let remindTime = new Date(note.remind).getTime();
   let now = new Date().getTime();
   let remainingTime = remindTime - now;
-
-  if (remainingTime > 0) {
-    setTimeout(() => {
-      alert(note.title);
-      remainingTime = -1;
-    }, remainingTime);
-  }
 
   const archiveAction = () => {
     dispatch({
@@ -44,11 +42,24 @@ export default function NoteCard(props) {
   };
 
   const deleteAction = () => {
+    note.deleteDay = new Date();
     dispatch({
       type: DELETE_NOTE,
       noteDelete: note,
     });
   };
+
+  if (note.label) {
+    labelClass = "labels";
+  }
+
+  if (remainingTime > 0) {
+    statusActive = "active";
+    setTimeout(() => {
+      alert(note.title);
+      remainingTime = -1;
+    }, remainingTime);
+  }
 
   return (
     <div className="note-card">
@@ -61,13 +72,20 @@ export default function NoteCard(props) {
       </div>
 
       <div className="note-card__text">
+        <span className={`reminderStatus ${statusActive}`}>
+          <img src={time} alt="" />
+          <Moment format="MMM DD, YYYY, hh:mm:A">{note.remind}</Moment>
+        </span>
+
         <h3>{note.title}</h3>
         <p>{note.text}</p>
       </div>
 
+      <span className={`${labelClass}`}>{note.label}</span>
+
       <div className="note-card__feature">
         <ul className="editor-icon__list">
-          <li className="note-cardIcon ">
+          <li className="editor-icon__item  ">
             <div className="reminder__btn" title="Reminder">
               <img src={reminder} alt=".." />
 

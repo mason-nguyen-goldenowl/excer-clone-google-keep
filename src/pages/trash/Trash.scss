@@ -1,25 +1,30 @@
 @use "../../scss/" as *;
 
+
 .trash__dr {
   display: flex;
   justify-content: center;
   padding-top: 36px;
   align-items: center;
   padding-bottom: 8px;
+
   p {
     margin-right: 16px;
     font-weight: 700;
     font-style: italic;
     font-size: 18px;
   }
+
   span {
     cursor: pointer;
     color: #1a73e8;
     padding: 8px 24px;
     transition: all 0.2s;
     font-weight: 500;
+
     &:hover {
       background-color: rgba(66, 133, 244, 0.039);
     }
   }
 }
+

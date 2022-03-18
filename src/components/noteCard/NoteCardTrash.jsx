@@ -7,7 +7,6 @@ import select from "../../asset/editorIcon/select.svg";
 import restore from "../../asset/editorIcon/restore.svg";
 
 import { DELETE_FOREVER, RESTORE } from "../../redux/type/NoteType";
-
 import "./NoteCard.scss";
 
 const Notecardtrash = (props) => {
@@ -15,12 +14,17 @@ const Notecardtrash = (props) => {
 
   const note = props.content;
 
+  let after7Days = new Date(note.deleteDay).setDate(new Date().getDate() + 7);
+  let now = new Date().getTime();
+  let remainingTime = after7Days - now;
+
   const deleteForeverAction = () => {
     dispatch({
       type: DELETE_FOREVER,
       noteDeleteForever: note,
     });
   };
+
   const restoreAction = () => {
     dispatch({
       type: RESTORE,
@@ -29,14 +33,18 @@ const Notecardtrash = (props) => {
   };
 
   const deleteAfter7Day = () => {
-    setTimeout(() => {
-      dispatch({
-        type: DELETE_FOREVER,
-        noteDeleteForever: note,
-      });
-    }, 604800000);
+    if (remainingTime > 0) {
+      setTimeout(() => {
+        dispatch({
+          type: DELETE_FOREVER,
+          noteDeleteForever: note,
+        });
+      }, remainingTime);
+    }
   };
+
   deleteAfter7Day();
+
   return (
     <div className="note-card">
       <div className="note-card__select">
@@ -50,16 +58,20 @@ const Notecardtrash = (props) => {
         <p>{note.text}</p>
       </div>
       <div className="note-card__feature">
-        <ul className="editorIcon__list">
+        <ul className="editor-icon__list">
           <li
-            className="note-cardIcon"
+            className="editor-icon__item"
             title="Delete Forever"
             onClick={deleteForeverAction}
           >
             <img src={trash} alt=".." />
           </li>
 
-          <li className="note-cardIcon" title="Restore" onClick={restoreAction}>
+          <li
+            className="editor-icon__item"
+            title="Restore"
+            onClick={restoreAction}
+          >
             <img src={restore} alt=".." />
           </li>
         </ul>

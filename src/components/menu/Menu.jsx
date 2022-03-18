@@ -1,20 +1,21 @@
 import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import close from "../../asset/menuTopIcon/delete.svg";
-import search from "../../asset/menuTopIcon/search.svg";
-import refresh from "../../asset/menuTopIcon/refresh.svg";
 import gridIcon from "../../asset/menuTopIcon/gridIcon.svg";
+import search from "../../asset/menuTopIcon/search.svg";
+import close from "../../asset/menuTopIcon/delete.svg";
+import refresh from "../../asset/menuTopIcon/refresh.svg";
 import settings from "../../asset/menuTopIcon/settings.svg";
 
-import { SEARCH } from "../../redux/type/NoteType";
 import { CHANGE_LIST_CLASS } from "../../redux/type/MenuType";
+import { SEARCH } from "../../redux/type/NoteType";
 
 import "./Menu.scss";
 
 export default function Menu(props) {
   const dispatch = useDispatch();
+
   const [searchInput, setSearchInput] = useState("");
   const searchRef = useRef("");
 

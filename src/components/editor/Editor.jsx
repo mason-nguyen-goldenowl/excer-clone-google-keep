@@ -13,43 +13,28 @@ import archive from "../../asset/editorIcon/archive.svg";
 import more from "../../asset/editorIcon/more.svg";
 import undo from "../../asset/editorIcon/undo.svg";
 import time from "../../asset/editorIcon/time.svg";
-import image from "../../asset/editorIcon/image.svg";
-import colab from "../../asset/editorIcon/colab.svg";
-import archive from "../../asset/editorIcon/archive.svg";
-import reminder from "../../asset/editorIcon/reminder.svg";
-import background from "../../asset/editorIcon/background.svg";
 
 import { ADD_NOTE } from "../../redux/type/NoteType";
+import useOnClickOutside from "../../hook/useClickOutside";
 
 import "./Editor.scss";
 
 export default function Editor(props) {
   const dispatch = useDispatch();
-
   const [isReminderActive, setReminderActive] = useState(false);
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [remindDate, setRemindDate] = useState(new Date());
-  const titleRef = useRef("");
-  const textRef = useRef("");
 
   const editorRef = useRef("");
+
   let reminderClass = "";
-  let noteItem = { title: "", text: "", setAlert: null, timeLeft: -1 };
+  let noteItem = {};
 
-  if (isReminderActive === true) {
-    reminderClass = "active";
-  }
-
-  noteItem.remind = remindDate;
-  noteItem.title = title;
-  noteItem.text = text;
-  if (props.label) {
-    noteItem.label = props.label;
-  }
   const handleTitle = (e) => {
     setTitle(e.target.value);
   };
+
   const handleText = (e) => {
     setText(e.target.value);
   };
@@ -61,21 +46,30 @@ export default function Editor(props) {
       noteItem,
       label: props.label,
     });
-    titleRef.current.value = "";
-    textRef.current.value = "";
 
     alert("Add note success");
     props.setOpenModal(false);
   };
 
+  if (isReminderActive === true) {
+    reminderClass = "active";
+  }
+
+  noteItem.remind = remindDate;
+  noteItem.title = title;
+  noteItem.text = text;
+  if (props.label) {
+    noteItem.label = props.label;
+  }
+
   useOnClickOutside(editorRef, () => {
     props.setOpenModal(false);
+
     dispatch({
       type: ADD_NOTE,
       noteItem,
       label: props.label,
     });
-    console.log(noteItem);
   });
 
   return (
@@ -89,15 +83,10 @@ export default function Editor(props) {
         }
       >
         <div className="editor-title">
-          <input
-            ref={titleRef}
-            placeholder="Title"
-            name="title"
-            onChange={handleTitle}
-          />
+          <input placeholder="Title" name="title" onChange={handleTitle} />
 
           <div
-            className="editorTitle__icon"
+            className="editor-title__icon"
             title="Close Editor"
             onClick={() => {
               props.setOpenModal(false);
@@ -113,7 +102,6 @@ export default function Editor(props) {
           <input
             placeholder="Take a note..."
             name="text"
-            ref={textRef}
             onChange={handleText}
           />
         </div>

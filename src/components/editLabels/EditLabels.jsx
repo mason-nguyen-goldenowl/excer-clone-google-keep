@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
-import useOnClickOutside from "../../hook/useClickOutside";
+import { useNavigate } from "react-router-dom";
 
 import check from "../../asset/editorIcon/check.svg";
 import edit from "../../asset/editorIcon/edit.svg";
@@ -14,9 +13,12 @@ import {
   UPDATE_LABEL,
 } from "../../redux/type/NoteType";
 
+import useOnClickOutside from "../../hook/useClickOutside";
+
 import "./EditLables.scss";
 
 export default function EditLabels(props) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { arrLabel } = useSelector((state) => state.note);
@@ -71,6 +73,7 @@ export default function EditLabels(props) {
                   labelUpdate: changeLabel,
                   item,
                 });
+                navigate(`/labels/${item}`);
               }}
             />
           </div>
@@ -80,7 +83,7 @@ export default function EditLabels(props) {
   };
 
   useOnClickOutside(editLabelRef, () => props.setOpenModal(false));
-  console.log(editLabelRef);
+
   return (
     <div className="edit-labels" ref={editLabelRef}>
       <div className="edit-labels__title">
@@ -114,10 +117,7 @@ export default function EditLabels(props) {
         <div className="edit-labels__footer">
           <button
             onClick={() => {
-              dispatch({
-                type: UPDATE_LABEL,
-                arrLabelUpdate,
-              });
+              props.setOpenModal(false);
             }}
           >
             Done

@@ -13,12 +13,15 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="reminder" element={<Reminder />} />
+        <Route path="archive" element={<Archive />} />
+        <Route path="trash" element={<Trash />} />
+        <Route path="search" element={<Search />} />
+        <Route path="labels/:id" element={<Labels />} />
         <Route path="/" element={<Home />} />
         <Route path="/reminder" element={<Reminder />} />
         <Route path="/archive" element={<Archive />} />
         <Route path="/trash" element={<Trash />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/labels/:id" element={<Labels />} />
       </Routes>
     </BrowserRouter>
   );

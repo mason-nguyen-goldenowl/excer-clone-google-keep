@@ -14,6 +14,7 @@ const Search = () => {
     });
   };
   useEffect(() => {}, [arrSearch]);
+
   return (
     <div>
       <Menu title="Search" />

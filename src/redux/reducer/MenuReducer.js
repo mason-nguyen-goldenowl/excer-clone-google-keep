@@ -10,6 +10,7 @@ export const MenuReducer = (state = stateDefaut, action) => {
       state.isListActive = action.isListActive;
       return { ...state };
     }
+
     default:
       return { ...state };
   }

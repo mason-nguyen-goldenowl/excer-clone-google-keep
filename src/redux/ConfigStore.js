@@ -10,16 +10,19 @@ import { NoteReducer } from "./reducer/NoteReducer";
 
 const persistConfig = {
   key: "root",
-  storage: storage,
+  storage,
   stateReconciler: hardSet,
 };
+
 const rootReducer = combineReducers({
   menu: MenuReducer,
   note: NoteReducer,
 });
+
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = createStore(persistedReducer, applyMiddleware(thunk));
+
 const persistor = persistStore(store);
 
 export { store, persistor };

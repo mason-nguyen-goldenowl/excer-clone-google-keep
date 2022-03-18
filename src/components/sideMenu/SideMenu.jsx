@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 
-import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
-import Modal from "../modal/Modal";
 import EditLabels from "../editLabels/EditLabels";
+import Modal from "../modal/Modal";
 
 import labelIcon from "../../asset/editorIcon/label.svg";
 import { ReactComponent as EditIcon } from "../../asset/sideMenuIcon/Edit.svg";
@@ -17,20 +17,21 @@ import "./SideMenu.scss";
 export default function SideMenu(props) {
   const { isListActive } = useSelector((state) => state.menu);
   const { arrLabel } = useSelector((state) => state.note);
+
   const [listClass, setListClass] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
   const renderLabels = () => {
     return arrLabel.map((label) => {
       return (
-        <li className="listItem__item " id={label}>
-          <div className="item__content">
-            <img src={labelIcon} alt="..." />
-            <span>
-              <Link to={`/labels/${label}`}>{label}</Link>
-            </span>
-          </div>
-        </li>
+        <Link to={`/labels/${label}`}>
+          <li className="list-item__item " id={label} key={label}>
+            <div className="item__content">
+              <img src={labelIcon} alt="..." />
+              <span>{label}</span>
+            </div>
+          </li>
+        </Link>
       );
     });
   };
@@ -41,11 +42,12 @@ export default function SideMenu(props) {
     } else {
       setListClass("");
     }
-    for (let item of document.querySelectorAll(".list-item__item")) {
+
+    for (let item of document.querySelectorAll(".listItem__item")) {
       item.classList.remove("active");
     }
     document.getElementById(`${props.active}`)?.classList.add("active");
-  }, []);
+  }, [isListActive, props.active]);
 
   return (
     <div className="sideMenu">
@@ -80,7 +82,8 @@ export default function SideMenu(props) {
             <span>Edit labels</span>
           </div>
         </li>
-        <Link to="/archive">
+
+        <Link to={"/archive"}>
           <li className="list-item__item " id="archive">
             <div className="item__content">
               <ArchiveIcon />
