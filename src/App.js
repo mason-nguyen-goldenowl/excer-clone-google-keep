@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Home from "./pages/home/Home";
-import Login from "./pages/login/Login";
-import Trash from "./pages/trash/Trash";
-import Signup from "./pages/signup/Signup";
-import Labels from "./pages/labels/Labels";
-import Search from "./pages/search/Search";
-import Archive from "./pages/archive/Archive";
-import Reminder from "./pages/reminder/Reminder";
-import Resetpassword from "./pages/resetPassword/ResetPassword";
+import Home from "./Pages/Home/Home";
+import Login from "./Pages/Login/Login";
+import Trash from "./Pages/Trash/Trash";
+import Signup from "./Pages/Signup/Signup";
+import Labels from "./Pages/Labels/Labels";
+import Search from "./Pages/Search/Search";
+import Archive from "./Pages/Archive/Archive";
+import Reminder from "./Pages/Reminder/Reminder";
+import Resetpassword from "./Pages/ResetPassword/ResetPassword";
 
 import "./App.scss";
 
