@@ -25,6 +25,10 @@ const googleKeepApi = {
     return axiosClient.get("/note");
   },
 
+  searchNote: (note) => {
+    return axiosClient.post("/note/search", note);
+  },
+
   createNote: (note) => {
     return axiosClient.post("/note/create", note);
   },
@@ -47,6 +51,10 @@ const googleKeepApi = {
 
   clearLabelName: (note) => {
     return axiosClient.delete("/note/clear-label", { data: note });
+  },
+
+  clearImage: (note) => {
+    return axiosClient.delete("/note/clear-image", { data: note });
   },
 
   restoreNote: (note) => {

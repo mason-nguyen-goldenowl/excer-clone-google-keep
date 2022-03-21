@@ -11,6 +11,7 @@ import {
   GET_NOTE,
   REMOVE_NOTE,
   RESTORE,
+  SEARCH,
 } from "../type/noteType";
 
 export const getNoteAction = () => {
@@ -72,13 +73,13 @@ export const unArchiveNote = (note) => {
 export const createNote = (note) => {
   return async (dispatch) => {
     try {
+      const result = await googleKeepApi.createNote(note);
       Swal.fire({
         icon: "success",
         title: "Your note has been created",
         showConfirmButton: false,
         timer: 2000,
       });
-      const result = await googleKeepApi.createNote(note);
       dispatch({
         type: ADD_NOTE,
         newArrLabel: result.newArrLabel,
@@ -91,6 +92,21 @@ export const createNote = (note) => {
         showConfirmButton: false,
         timer: 2000,
       });
+    }
+  };
+};
+
+export const searchNote = (note) => {
+  return async (dispatch) => {
+    try {
+      const result = await googleKeepApi.searchNote(note);
+      console.log(note);
+      dispatch({
+        type: SEARCH,
+        arrSearch: result.notes,
+      });
+    } catch (error) {
+      console.log(error.response);
     }
   };
 };
@@ -134,6 +150,20 @@ export const clearLabelAction = (note) => {
   return async (dispatch) => {
     try {
       const result = await googleKeepApi.clearLabelName(note);
+      dispatch({
+        type: CLEAR_LABEL_NAME,
+        newArrNote: result.newArrNote,
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+};
+
+export const clearImageAction = (note) => {
+  return async (dispatch) => {
+    try {
+      const result = await googleKeepApi.clearImage(note);
       dispatch({
         type: CLEAR_LABEL_NAME,
         newArrNote: result.newArrNote,

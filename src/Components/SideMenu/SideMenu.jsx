@@ -33,12 +33,12 @@ export default function SideMenu(props) {
         <Link to={`/labels/${label._id}`} key={label._id}>
           <li
             className="list-item__item "
-            id={label.label_name}
-            title={label.label_name}
+            id={label.labelName}
+            title={label.labelName}
           >
             <div className="item__content">
               <img src={labelIcon} alt="..." />
-              <span>{label.label_name}</span>
+              <span>{label.labelName}</span>
             </div>
           </li>
         </Link>

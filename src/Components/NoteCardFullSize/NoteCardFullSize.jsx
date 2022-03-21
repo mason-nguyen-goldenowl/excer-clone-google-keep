@@ -12,6 +12,7 @@ import { ContentState, convertFromHTML, Editor, EditorState } from "draft-js";
 
 import time from "../../asset/editorIcon/time.svg";
 import trash from "../../asset/editorIcon/trash.svg";
+import image from "../../asset/editorIcon/image.svg";
 import labelIcon from "../../asset/editorIcon/label.svg";
 import editIcon from "../../asset/sideMenuIcon/Edit.svg";
 import archive from "../../asset/editorIcon/archive.svg";
@@ -23,6 +24,7 @@ import ComfirmNote from "../Comfirm/ComfirmNote";
 import useOnClickOutside from "../../hook/useClickOutside";
 import {
   archiveNote,
+  clearImageAction,
   clearLabelAction,
   clearRemindAction,
   deleteNote,
@@ -46,9 +48,11 @@ export default function NoteCardFullSize(props) {
   const [title, setTitle] = useState(note.title);
   const [remindDate, setRemindDate] = useState();
   const [isLabelNameActive, setIsLabelNameActive] = useState(false);
-  const [labelName, setLabelName] = useState(note.label_name);
+  const [labelName, setLabelName] = useState(note.labelName);
   const [isReminderActive, setReminderActive] = useState(false);
   const [onRead, setOnRead] = useState(true);
+  const [imgSrc, setImgSrc] = useState();
+  const [imgFile, setImgFile] = useState(null);
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(state)
   );
@@ -82,6 +86,22 @@ export default function NoteCardFullSize(props) {
   const changeReadToEdit = () => {
     setOnRead(!onRead);
   };
+  const handleChangeFile = async (e) => {
+    let file = e.target.files[0];
+    if (
+      file.type === "image/jpeg" ||
+      file.type === "image/jpg" ||
+      file.type === "image/png"
+    ) {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        setImgSrc(e.target.result);
+      };
+    }
+
+    setImgFile(file);
+  };
 
   const clearRemind = () => {
     if (note.remind) {
@@ -91,45 +111,61 @@ export default function NoteCardFullSize(props) {
     }
     setRemindDate(undefined);
   };
+
   const clearLabelName = () => {
-    if (note.label_name) {
+    if (note.labelName) {
       const action = clearLabelAction;
       dispatch(action(note));
       setLabelName("");
     }
   };
-
+  const clearImage = () => {
+    if (note.imageUrl) {
+      const action = clearImageAction;
+      dispatch(action(note));
+    }
+    setImgSrc();
+    setImgFile();
+  };
   const onSubmit = async (e) => {
     e.preventDefault();
     let contentLength = editorState.getSelection().getStartOffset();
     let content = stateToHTML(editorState.getCurrentContent());
     props.setOpenModal(false);
+
     if (!note.deleted) {
       if (
         title !== note.title ||
         content !== note.content ||
         remindDate - now > 0 ||
-        labelName !== note.label_name
+        labelName !== note.labelName ||
+        imgSrc
       ) {
-        note.title = title;
-        note.content = content;
-        note.label_name = labelName;
-        note.contentLength = contentLength;
+        let noteData = new FormData();
+        noteData.append("_id", note._id);
+        noteData.append("creator", note.creator);
+        noteData.append("title", title.trim());
+        noteData.append("content", content);
+        if (labelName) {
+          noteData.append("labelName", labelName);
+        }
+        noteData.append("contentLength", contentLength);
         if (remindDate - now) {
           if (remindDate) {
-            note.remind = remindDate;
-          } else {
-            note.remind = null;
+            noteData.append("remind", remindDate);
           }
         }
+        if (imgFile) {
+          noteData.append("image", imgFile);
+        }
         const action = editNote;
-        dispatch(action(note));
+        dispatch(action(noteData));
       }
     }
   };
+
   useOnClickOutside(noteFullSizeRef, () => {
-    console.log(remainingTime);
-    if (onRead && !isLabelNameActive && !remindDate) {
+    if (onRead && !isLabelNameActive && !remindDate && !imgSrc) {
       props.setOpenModal(false);
     } else {
       setModalOpenComfirm(true);
@@ -142,6 +178,32 @@ export default function NoteCardFullSize(props) {
   return (
     <div className="editor" ref={noteFullSizeRef}>
       <form onSubmit={onSubmit} ref={editorComponentRef}>
+        {imgSrc || note.imageUrl ? (
+          <div className="editor-image">
+            <img
+              src={
+                imgSrc
+                  ? imgSrc
+                  : `${process.env.REACT_APP_API}/${note.imageUrl}`
+              }
+              alt=""
+            />
+            <span className="clear-image" onClick={clearImage}>
+              <img src={closeIcon} alt=".." />
+            </span>
+          </div>
+        ) : (
+          <div></div>
+        )}
+
+        <input
+          type="file"
+          id="noteImgEdit"
+          name="image"
+          className="pick-image"
+          onChange={handleChangeFile}
+          accept="image/png, image/jpg, image/jpeg"
+        />
         <div className="editor-title">
           <textarea
             className="editor-text_area"
@@ -156,10 +218,10 @@ export default function NoteCardFullSize(props) {
             {onRead ? (
               <div
                 className="editor-title__icon tooltip"
+                title="Edit Note"
                 style={{ cursor: "pointer", zIndex: 99 }}
                 onClick={changeReadToEdit}
               >
-                <span className="tooltiptext">Edit Note</span>
                 <span>
                   <img src={editIcon} alt=".." />{" "}
                 </span>
@@ -167,19 +229,6 @@ export default function NoteCardFullSize(props) {
             ) : (
               <div></div>
             )}
-
-            <div
-              className="editor-title__icon tooltip"
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                props.setOpenModal(false);
-              }}
-            >
-              <span className="tooltiptext">Close Editor</span>
-              <span>
-                <img src={closeIcon} alt=".." />
-              </span>
-            </div>
           </div>
         </div>
         <div className="editor-text">
@@ -204,7 +253,7 @@ export default function NoteCardFullSize(props) {
           ) : (
             <div></div>
           )}
-          {note.label_id || isLabelNameActive ? (
+          {note.labelId || isLabelNameActive ? (
             <span>
               {isLabelNameActive ? (
                 <input
@@ -218,11 +267,11 @@ export default function NoteCardFullSize(props) {
                 />
               ) : (
                 <span
-                  value={note.label_name}
+                  value={note.labelName}
                   title="Label Name"
                   className={`labels`}
                 >
-                  <Link to={`/labels/${note.label_id}`}>{note.label_name}</Link>
+                  <Link to={`/labels/${note.labelId}`}>{note.labelName}</Link>
                   <span onClick={clearLabelName} className="clear-remind">
                     X
                   </span>
@@ -291,6 +340,17 @@ export default function NoteCardFullSize(props) {
               >
                 <div className="reminder__btn">
                   <img src={labelIcon} alt=".." />
+                </div>
+              </li>
+              <li
+                className="editor-icon__item "
+                title="Add Image"
+                onClick={() => {
+                  document.querySelector("#noteImgEdit").click();
+                }}
+              >
+                <div className="reminder__btn">
+                  <img src={image} alt=".." />
                 </div>
               </li>
               <li

@@ -41,12 +41,12 @@ export default function Home() {
     if (!isLogged || !refreshToken) {
       navigate("/login");
     }
+    const action = getNoteAction;
+    dispatch(action());
 
     setTimeout(() => {
       setIsLoaded(true);
-    }, 2500);
-    const action = getNoteAction;
-    dispatch(action());
+    }, 1000);
   }, [dispatch, isLogged, navigate, refreshToken]);
   return (
     <div>

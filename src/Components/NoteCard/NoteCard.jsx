@@ -31,15 +31,15 @@ export default function NoteCard(props) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const clearLabelName = () => {
-    if (note.label_name) {
+    if (note.labelName) {
       const action = clearLabelAction;
       dispatch(action(note));
     }
   };
 
-  const label = arrLabel?.find((label) => label._id === note.label_id);
+  const label = arrLabel?.find((label) => label._id === note.labelId);
   if (label) {
-    note.label_name = label.label_name;
+    note.labelName = label.labelName;
   }
 
   let statusActive = "";
@@ -71,7 +71,7 @@ export default function NoteCard(props) {
     }
   };
 
-  if (note.label_name) {
+  if (note.labelName) {
     labelClass = "labels";
   }
 
@@ -101,6 +101,11 @@ export default function NoteCard(props) {
           <img src={time} alt="" />
           <Moment format="MMM DD, YYYY, hh:mm:A">{note.remind}</Moment>
         </span>
+        {note.imageUrl ? (
+          <img src={`${process.env.REACT_APP_API}/${note.imageUrl}`} />
+        ) : (
+          <span></span>
+        )}
         {note.title.trim().length === 0 && note.content === "<p><br></p>" ? (
           <div>
             <h2 className="empty-note">Empty Note</h2>
@@ -121,8 +126,8 @@ export default function NoteCard(props) {
       </div>
 
       <span className={`${labelClass}`}>
-        <Link to={`/labels/${note.label_id}`}>{note.label_name}</Link>
-        {note.label_name ? (
+        <Link to={`/labels/${note.labelId}`}>{note.labelName}</Link>
+        {note.labelId ? (
           <span onClick={clearLabelName} className="clear-remind">
             X
           </span>

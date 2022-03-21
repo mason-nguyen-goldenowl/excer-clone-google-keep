@@ -57,6 +57,11 @@ const Notecardtrash = (props) => {
           <img src={time} alt="" />
           <Moment format="MMM DD, YYYY, hh:mm:A">{note.remind}</Moment>
         </span>
+        {note.imageUrl ? (
+          <img src={`${process.env.REACT_APP_API}/${note.imageUrl}`} />
+        ) : (
+          <span></span>
+        )}
         {note.title.trim().length === 0 && note.content === "<p><br></p>" ? (
           <div>
             <h2 className="empty-note">Empty Note</h2>
@@ -74,10 +79,6 @@ const Notecardtrash = (props) => {
             ></div>
           </div>
         )}
-        <div
-          className="content"
-          dangerouslySetInnerHTML={{ __html: note.content }}
-        ></div>
 
         <span className={`${labelClass}`}>{note.label_name}</span>
       </div>

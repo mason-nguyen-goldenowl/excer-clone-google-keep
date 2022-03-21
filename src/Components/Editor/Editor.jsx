@@ -12,6 +12,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { createNote } from "../../redux/action/noteAction";
 
 import time from "../../asset/editorIcon/time.svg";
+import image from "../../asset/editorIcon/image.svg";
 import labelIcon from "../../asset/editorIcon/label.svg";
 import reminder from "../../asset/editorIcon/reminder.svg";
 import closeIcon from "../../asset/menuTopIcon/delete.svg";
@@ -30,6 +31,8 @@ export default function EditorComponent(props) {
   const [title, setTitle] = useState("");
   const [remindDate, setRemindDate] = useState();
   const [labelName, setLabelName] = useState("");
+  const [imgSrc, setImgSrc] = useState("");
+  const [imgFile, setImgFile] = useState(null);
   const [isLabelNameActive, setIsLabelNameActive] = useState(false);
   const [isReminderActive, setReminderActive] = useState(false);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -52,6 +55,25 @@ export default function EditorComponent(props) {
   const handleLabelName = (e) => {
     setLabelName(e.target.value);
   };
+  const clearImage = () => {
+    setImgSrc();
+    setImgFile();
+  };
+  const handleChangeFile = async (e) => {
+    let file = e.target.files[0];
+    if (
+      file.type === "image/jpeg" ||
+      file.type === "image/jpg" ||
+      file.type === "image/png"
+    ) {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        setImgSrc(e.target.result);
+      };
+    }
+    setImgFile(file);
+  };
 
   const clearRemind = () => {
     setRemindDate(undefined);
@@ -60,16 +82,20 @@ export default function EditorComponent(props) {
   let content = stateToHTML(editorState.getCurrentContent());
 
   const submitNote = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     props.setOpenModal(false);
+    let noteItem = new FormData();
 
-    noteItem = {
-      title: title.trim(),
-      content: content,
-      remind: remindDate,
-      label_name: labelName,
-      label_id: props.label,
-    };
+    noteItem.append("title", title.trim());
+    noteItem.append("content", content);
+    if (remindDate) {
+      noteItem.append("remind", remindDate);
+    }
+    noteItem.append("labelName", labelName);
+    if (props.label) {
+      noteItem.append("labelId", props.label);
+    }
+    noteItem.append("image", imgFile);
     dispatch(action(noteItem));
   };
 
@@ -90,7 +116,18 @@ export default function EditorComponent(props) {
   }, []);
   return (
     <div className="editor">
-      <form onSubmit={submitNote} ref={editorRef}>
+      <form id="noteForm" onSubmit={submitNote} ref={editorRef}>
+        {imgSrc ? (
+          <div className="editor-image">
+            <img src={imgSrc} alt="" />
+            <span className="clear-image" onClick={clearImage}>
+              <img src={closeIcon} alt=".." />
+            </span>
+          </div>
+        ) : (
+          <span></span>
+        )}
+
         <div className="editor-title">
           <textarea
             ref={titleRef}
@@ -113,6 +150,15 @@ export default function EditorComponent(props) {
             </span>
           </div>
         </div>
+        <input
+          type="file"
+          id="noteImg"
+          name="image"
+          className="pick-image"
+          onChange={handleChangeFile}
+          accept="image/png, image/jpg, image/jpeg"
+        />
+        <br />
 
         <div className="editor-text">
           <Editor
@@ -123,6 +169,7 @@ export default function EditorComponent(props) {
             onChange={handleChange}
           />
         </div>
+
         <div className="remind-wrap">
           {remindDate - now > 0 ? (
             <span className="remind-label">
@@ -194,6 +241,17 @@ export default function EditorComponent(props) {
               >
                 <div className="reminder__btn">
                   <img src={labelIcon} alt=".." />
+                </div>
+              </li>
+              <li
+                className="editor-icon__item "
+                title="Add Image"
+                onClick={() => {
+                  document.querySelector("#noteImg").click();
+                }}
+              >
+                <div className="reminder__btn">
+                  <img src={image} alt=".." />
                 </div>
               </li>
             </ul>
