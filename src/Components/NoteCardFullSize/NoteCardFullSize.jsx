@@ -164,7 +164,7 @@ export default function NoteCardFullSize(props) {
     }
   };
 
-  useOnClickOutside(noteFullSizeRef, () => {
+  useOnClickOutside(editorComponentRef, () => {
     if (onRead && !isLabelNameActive && !remindDate && !imgSrc) {
       props.setOpenModal(false);
     } else {
@@ -176,199 +176,201 @@ export default function NoteCardFullSize(props) {
     autosize(document.querySelector(".editor-text_area"));
   }, []);
   return (
-    <div className="editor" ref={noteFullSizeRef}>
-      <form onSubmit={onSubmit} ref={editorComponentRef}>
-        {imgSrc || note.imageUrl ? (
-          <div className="editor-image">
-            <img
-              src={
-                imgSrc
-                  ? imgSrc
-                  : `${process.env.REACT_APP_API}/${note.imageUrl}`
-              }
-              alt=""
-            />
-            <span className="clear-image" onClick={clearImage}>
-              <img src={closeIcon} alt=".." />
-            </span>
-          </div>
-        ) : (
-          <div></div>
-        )}
+    <form className="form-editor" onSubmit={onSubmit} ref={editorComponentRef}>
+      <div className="editor-wrap" ref={noteFullSizeRef}>
+        <div className="editor">
+          {imgSrc || note.imageUrl ? (
+            <div className="editor-image">
+              <img
+                title="Delete Image"
+                src={
+                  imgSrc
+                    ? imgSrc
+                    : `${process.env.REACT_APP_API}/${note.imageUrl}`
+                }
+                alt=""
+              />
+              <span className="clear-image" onClick={clearImage}>
+                <img src={trash} alt=".." />
+              </span>
+            </div>
+          ) : (
+            <div></div>
+          )}
 
-        <input
-          type="file"
-          id="noteImgEdit"
-          name="image"
-          className="pick-image"
-          onChange={handleChangeFile}
-          accept="image/png, image/jpg, image/jpeg"
-        />
-        <div className="editor-title">
-          <textarea
-            className="editor-text_area"
-            disabled={onRead}
-            onChange={handleTitle}
-            placeholder="Empty Title"
-            value={title}
-            name="title"
+          <input
+            type="file"
+            id="noteImgEdit"
+            name="image"
+            className="pick-image"
+            onChange={handleChangeFile}
+            accept="image/png, image/jpg, image/jpeg"
           />
+          <div className="editor-title">
+            <textarea
+              className="editor-text_area"
+              disabled={onRead}
+              onChange={handleTitle}
+              placeholder="Empty Title"
+              value={title}
+              name="title"
+            />
 
-          <div className="editor-title__icon-wrap">
-            {onRead ? (
-              <div
-                className="editor-title__icon tooltip"
-                title="Edit Note"
-                style={{ cursor: "pointer", zIndex: 99 }}
-                onClick={changeReadToEdit}
-              >
-                <span>
-                  <img src={editIcon} alt=".." />{" "}
+            <div className="editor-title__icon-wrap">
+              {onRead ? (
+                <div
+                  className="editor-title__icon tooltip"
+                  title="Edit Note"
+                  style={{ cursor: "pointer", zIndex: 99 }}
+                  onClick={changeReadToEdit}
+                >
+                  <span>
+                    <img src={editIcon} alt=".." />{" "}
+                  </span>
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </div>
+          </div>
+          <div className="editor-text">
+            <Editor
+              readOnly={onRead}
+              placeholder="Note..."
+              ref={editorRef}
+              editorState={editorState}
+              onChange={(editorState) => setEditorState(editorState)}
+            />
+          </div>
+          <div className="remind-wrap">
+            {remindDate || note.remind ? (
+              <span className="remind-label">
+                <Moment title="Remind time" format="MMMM ddd yyyy, HH:mm">
+                  {remindDate}
+                </Moment>
+                <span onClick={clearRemind} className="clear-remind">
+                  X
                 </span>
-              </div>
+              </span>
+            ) : (
+              <div></div>
+            )}
+            {note.labelId || isLabelNameActive ? (
+              <span>
+                {isLabelNameActive ? (
+                  <input
+                    title="Label Name"
+                    value={labelName}
+                    className={`remind-label`}
+                    placeholder="Enter label name..."
+                    onChange={(e) => {
+                      setLabelName(e.target.value);
+                    }}
+                  />
+                ) : (
+                  <span
+                    value={note.labelName}
+                    title="Label Name"
+                    className={`labels`}
+                  >
+                    <Link to={`/labels/${note.labelId}`}>{note.labelName}</Link>
+                    <span onClick={clearLabelName} className="clear-remind">
+                      X
+                    </span>
+                  </span>
+                )}
+              </span>
             ) : (
               <div></div>
             )}
           </div>
         </div>
-        <div className="editor-text">
-          <Editor
-            readOnly={onRead}
-            placeholder="Note..."
-            ref={editorRef}
-            editorState={editorState}
-            onChange={(editorState) => setEditorState(editorState)}
-          />
-        </div>
-        <div className="remind-wrap">
-          {remindDate || note.remind ? (
-            <span className="remind-label">
-              <Moment title="Remind time" format="MMMM ddd yyyy, HH:mm">
-                {remindDate}
-              </Moment>
-              <span onClick={clearRemind} className="clear-remind">
-                X
-              </span>
-            </span>
-          ) : (
-            <div></div>
-          )}
-          {note.labelId || isLabelNameActive ? (
-            <span>
-              {isLabelNameActive ? (
-                <input
-                  title="Label Name"
-                  value={labelName}
-                  className={`remind-label`}
-                  placeholder="Enter label name..."
-                  onChange={(e) => {
-                    setLabelName(e.target.value);
-                  }}
-                />
-              ) : (
-                <span
-                  value={note.labelName}
-                  title="Label Name"
-                  className={`labels`}
-                >
-                  <Link to={`/labels/${note.labelId}`}>{note.labelName}</Link>
-                  <span onClick={clearLabelName} className="clear-remind">
-                    X
-                  </span>
-                </span>
-              )}
-            </span>
-          ) : (
-            <div></div>
-          )}
-        </div>
+      </div>
+      <div className="editor-feature">
+        <div className="editor-feature__icon">
+          <ul className="editor-icon__list">
+            <li
+              className="editor-icon__item "
+              title="Reminder"
+              onClick={() => {
+                setReminderActive(!isReminderActive);
+              }}
+            >
+              <div className="reminder__btn" title="Reminder">
+                <img src={reminder} alt=".." />
 
-        <div className="editor-feature">
-          <div className="editor-feature__icon">
-            <ul className="editor-icon__list">
-              <li
-                className="editor-icon__item "
-                title="Reminder"
-                onClick={() => {
-                  setReminderActive(!isReminderActive);
-                }}
-              >
-                <div className="reminder__btn" title="Reminder">
-                  <img src={reminder} alt=".." />
+                <div className={`reminder ${reminderClass}`}>
+                  <p>Reminder:</p>
 
-                  <div className={`reminder ${reminderClass}`}>
-                    <p>Reminder:</p>
-
-                    <div className="reminder__items">
-                      <div
-                        className="reminder__item"
-                        onClick={() => {
-                          setReminderActive(true);
+                  <div className="reminder__items">
+                    <div
+                      className="reminder__item"
+                      onClick={() => {
+                        setReminderActive(true);
+                      }}
+                    >
+                      <img src={time} alt="..." />
+                      <span> Pick date & time </span>
+                    </div>
+                    <div className="reminder__item">
+                      <DatePicker
+                        selected={remindDate || now}
+                        showTimeSelect
+                        dateFormat="MMMM dd yyyy, HH:mm "
+                        onChange={(date) => {
+                          setRemindDate(date);
                         }}
-                      >
-                        <img src={time} alt="..." />
-                        <span> Pick date & time </span>
-                      </div>
-                      <div className="reminder__item">
-                        <DatePicker
-                          selected={remindDate || now}
-                          showTimeSelect
-                          dateFormat="MMMM dd yyyy, HH:mm "
-                          onChange={(date) => {
-                            setRemindDate(date);
-                          }}
-                        />
-                      </div>
+                      />
                     </div>
                   </div>
                 </div>
-              </li>
+              </div>
+            </li>
 
-              <li
-                className="editor-icon__item"
-                title={note.archive ? "Unarchive" : "Archive"}
-                onClick={note.archive ? unArchiveAction : archiveAction}
-              >
-                <img src={archive} alt=".." />
-              </li>
-              <li
-                title="Change Label"
-                className="editor-icon__item "
-                onClick={() => {
-                  setIsLabelNameActive(!isLabelNameActive);
-                }}
-              >
-                <div className="reminder__btn">
-                  <img src={labelIcon} alt=".." />
-                </div>
-              </li>
-              <li
-                className="editor-icon__item "
-                title="Add Image"
-                onClick={() => {
-                  document.querySelector("#noteImgEdit").click();
-                }}
-              >
-                <div className="reminder__btn">
-                  <img src={image} alt=".." />
-                </div>
-              </li>
-              <li
-                className="editor-icon__item "
-                title="Delete"
-                onClick={deleteAction}
-              >
-                <img src={trash} alt=".." />
-              </li>
-            </ul>
-          </div>
-          <div className="editor-feature__close">
-            <Button className="btn-bg" disabled={onRead} type="submit">
-              Submit
-            </Button>
-          </div>
+            <li
+              className="editor-icon__item"
+              title={note.archive ? "Unarchive" : "Archive"}
+              onClick={note.archive ? unArchiveAction : archiveAction}
+            >
+              <img src={archive} alt=".." />
+            </li>
+            <li
+              title="Change Label"
+              className="editor-icon__item "
+              onClick={() => {
+                setIsLabelNameActive(!isLabelNameActive);
+              }}
+            >
+              <div className="reminder__btn">
+                <img src={labelIcon} alt=".." />
+              </div>
+            </li>
+            <li
+              className="editor-icon__item "
+              title="Add Image"
+              onClick={() => {
+                document.querySelector("#noteImgEdit").click();
+              }}
+            >
+              <div className="reminder__btn">
+                <img src={image} alt=".." />
+              </div>
+            </li>
+            <li
+              className="editor-icon__item "
+              title="Delete"
+              onClick={deleteAction}
+            >
+              <img src={trash} alt=".." />
+            </li>
+          </ul>
         </div>
-      </form>
+        <div className="editor-feature__close">
+          <Button className="btn-bg" disabled={onRead} type="submit">
+            Submit
+          </Button>
+        </div>
+      </div>
       {modalOpenComfirm && (
         <Modal
           setOpenModalComfirm={setModalOpenComfirm}
@@ -383,6 +385,6 @@ export default function NoteCardFullSize(props) {
           }
         />
       )}
-    </div>
+    </form>
   );
 }

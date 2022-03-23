@@ -58,7 +58,7 @@ const Labels = () => {
           <SideMenu active={labelName} />
         </div>
         <div className="right">
-          <div className="editor-wrap">
+          <div className="create-note-wrap">
             <NoteText label={id} />
           </div>
           <div className="edit-label">

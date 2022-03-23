@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-
-import Swal from "sweetalert2";
+import React, { useEffect, useState } from "react";
 
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import time from "../../asset/editorIcon/time.svg";
+import logo from "../../asset/menuTopIcon/pngwing.com.png";
 import trash from "../../asset/editorIcon/trash.svg";
 import archive from "../../asset/editorIcon/archive.svg";
 
@@ -31,15 +30,15 @@ export default function NoteCard(props) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const clearLabelName = () => {
-    if (note.labelName) {
+    if (note.label_name) {
       const action = clearLabelAction;
       dispatch(action(note));
     }
   };
 
-  const label = arrLabel?.find((label) => label._id === note.labelId);
+  const label = arrLabel?.find((label) => label._id === note.label_id);
   if (label) {
-    note.labelName = label.labelName;
+    note.label_name = label.label_name;
   }
 
   let statusActive = "";
@@ -71,23 +70,32 @@ export default function NoteCard(props) {
     }
   };
 
-  if (note.labelName) {
+  if (note.label_name) {
     labelClass = "labels";
   }
 
+  const postMess = (title, body, remainingTime) => {
+    navigator.serviceWorker?.controller.postMessage({
+      type: "MESSAGE_IDENTIFIER",
+      title: title,
+      text: body,
+      remainingTime,
+    });
+  };
   if (remainingTime > 0) {
     statusActive = "active";
     var alert = setTimeout(() => {
       remainingTime = -1;
-      Swal.fire({
-        icon: "warning",
-        title: note.title,
-        html: note.content,
-        showConfirmButton: false,
-      });
       clearRemind();
     }, remainingTime);
+    postMess("abc", "test", remainingTime);
   }
+  useEffect(() => {
+    if (remainingTime > 0) {
+    } else {
+      note.remind = undefined;
+    }
+  }, []);
 
   return (
     <div className="note-card">
@@ -102,7 +110,9 @@ export default function NoteCard(props) {
           <Moment format="MMM DD, YYYY, hh:mm:A">{note.remind}</Moment>
         </span>
         {note.imageUrl ? (
-          <img src={`${process.env.REACT_APP_API}/${note.imageUrl}`} />
+          <div className="note-image">
+            <img src={`${process.env.REACT_APP_API}/${note.imageUrl}`} alt="" />
+          </div>
         ) : (
           <span></span>
         )}

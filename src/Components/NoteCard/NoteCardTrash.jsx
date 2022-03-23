@@ -28,9 +28,9 @@ const Notecardtrash = (props) => {
     const action = restoreNote;
     dispatch(action({ note_id: note._id }));
   };
-  const label = arrLabel?.find((label) => label._id === note.label_id);
+  const label = arrLabel?.find((label) => label._id === note.labelId);
   if (label) {
-    note.label_name = label.label_name;
+    note.labelName = label.labelName;
   }
   let statusActive = "";
   let labelClass = "";
@@ -41,7 +41,7 @@ const Notecardtrash = (props) => {
   if (remainingTime > 0) {
     statusActive = "active";
   }
-  if (note.label_name) {
+  if (note.labelName) {
     labelClass = "labels";
   }
 
@@ -79,9 +79,8 @@ const Notecardtrash = (props) => {
             ></div>
           </div>
         )}
-
-        <span className={`${labelClass}`}>{note.label_name}</span>
       </div>
+      <span className={`${labelClass}`}>{note.labelName}</span>
       <div className="note-card__feature">
         <ul className="editor-icon__list">
           <li

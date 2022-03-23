@@ -1,5 +1,11 @@
 @use "../../scss" as *;
 
+.menu-wrapter {
+  position: fixed;
+  width: 100%;
+  background-color: white;
+  z-index: 9;
+}
 .menu__btn {
   padding: 12px;
   cursor: pointer;
@@ -70,6 +76,12 @@
     justify-content: end;
   }
 
+  .search-btn {
+    @include mobile {
+      display: none;
+    }
+  }
+
   .search__input {
     max-width: 720px;
     width: 100%;
@@ -78,7 +90,7 @@
     overflow: hidden;
 
     @include mobile {
-      background-color: transparent;
+      // background-color: transparent;
       width: fit-content;
     }
 
@@ -106,7 +118,7 @@
       font-size: 16px;
       outline: none;
       @include mobile {
-        display: none;
+        // display: none;
       }
     }
   }

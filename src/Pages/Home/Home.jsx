@@ -57,7 +57,7 @@ export default function Home() {
           <SideMenu active="notes" />
         </div>
         <div className="right">
-          <div className="editor-wrap">
+          <div className="create-note-wrap">
             <NoteText />
           </div>
           <div className="note__content grid">
@@ -65,7 +65,7 @@ export default function Home() {
               {isLoaded ? (
                 renderNoteCard()
               ) : (
-                <div style={{ display: "flex" }}>
+                <div className="skeleton-wrap">
                   <Skeleton margin={"5"}>
                     <NoteCard content={noteSket} />
                   </Skeleton>

@@ -21,11 +21,19 @@ export default function Menu(props) {
 
   const [isListActive, setIsListActive] = useState(false);
 
+  const debounce = (callback, timeout) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(callback, timeout);
+    };
+  };
+
   const handleChangeInput = (e) => {
     if (e.target.value.length === 0) {
-      dispatch(action({ keyWord: null }));
+      debounce(dispatch(action({ keyWord: null })), 1500);
     }
-
+    debounce(dispatch(action({ keyWord: searchInput })), 1500);
     setSearchInput(e.target.value);
   };
 
@@ -89,7 +97,7 @@ export default function Menu(props) {
           <div className="menu__search">
             <Link to="/search" className="search__input">
               <form onSubmit={handleSubmit} className="search__wrap">
-                <div className="menu__btn">
+                <div className="menu__btn search-btn">
                   <img src={search} alt="..." />
                 </div>
 

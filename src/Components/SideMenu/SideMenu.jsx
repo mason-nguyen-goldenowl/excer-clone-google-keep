@@ -63,7 +63,7 @@ export default function SideMenu(props) {
   }, [dispatch, isListActive, props.active]);
 
   return (
-    <div className="sideMenu">
+    <div className="side-menu">
       <ul className={`list-item ${listClass}`}>
         <Link to="/">
           <li className="list-item__item" id="notes" title="Home Page">

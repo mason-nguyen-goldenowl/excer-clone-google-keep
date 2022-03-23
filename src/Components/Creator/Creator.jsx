@@ -19,13 +19,13 @@ import closeIcon from "../../asset/menuTopIcon/delete.svg";
 
 import useOnClickOutside from "../../hook/useClickOutside";
 
-import "./Editor.scss";
+import "./Creator.scss";
 import Modal from "../Modal/Modal";
 import ComfirmNote from "../Comfirm/ComfirmNote";
 
-export default function EditorComponent(props) {
+export default function CreatorComponent(props) {
   const titleRef = useRef();
-  const editorRef = useRef();
+  const creatorRef = useRef();
 
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
@@ -80,9 +80,10 @@ export default function EditorComponent(props) {
   };
 
   let content = stateToHTML(editorState.getCurrentContent());
+  let contentLength = editorState.getSelection().getStartOffset();
 
   const submitNote = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     props.setOpenModal(false);
     let noteItem = new FormData();
 
@@ -107,16 +108,25 @@ export default function EditorComponent(props) {
     noteItem.label = props.label;
   }
 
-  useOnClickOutside(editorRef, () => {
-    setModalOpenComfirm(true);
+  useOnClickOutside(creatorRef, () => {
+    if (title.length > 0 || contentLength > 0 || imgFile || remindDate) {
+      setModalOpenComfirm(true);
+    } else {
+      props.setOpenModal(false);
+    }
   });
   useEffect(() => {
-    autosize(document.querySelector(".editor-text_area"));
+    autosize(document.querySelector(".creator-text__area"));
     titleRef.current.focus();
   }, []);
   return (
-    <div className="editor">
-      <form id="noteForm" onSubmit={submitNote} ref={editorRef}>
+    <form
+      id="noteForm"
+      className="form-creator"
+      onSubmit={submitNote}
+      ref={creatorRef}
+    >
+      <div className="creator">
         {imgSrc ? (
           <div className="editor-image">
             <img src={imgSrc} alt="" />
@@ -128,27 +138,21 @@ export default function EditorComponent(props) {
           <span></span>
         )}
 
-        <div className="editor-title">
+        <div className="creator-title">
           <textarea
             ref={titleRef}
-            className="editor-text_area"
+            className="creator-text__area"
             placeholder="Title"
             name="title"
             onChange={handleTitle}
           />
 
           <div
-            className="editor-title__icon tooltip"
+            className="creator-title__icon"
             onClick={() => {
               props.setOpenModal(false);
             }}
-          >
-            <span className="tooltiptext">Close Editor</span>
-
-            <span>
-              <img src={closeIcon} alt=".." />
-            </span>
-          </div>
+          ></div>
         </div>
         <input
           type="file"
@@ -160,7 +164,7 @@ export default function EditorComponent(props) {
         />
         <br />
 
-        <div className="editor-text">
+        <div className="creator-text">
           <Editor
             placeholder="Take a note..."
             ref={editor}
@@ -195,11 +199,11 @@ export default function EditorComponent(props) {
             <span></span>
           )}
         </div>
-        <div className="editor-feature">
-          <div className="editor-feature__icon">
-            <ul className="editor-icon__list">
+        <div className="creator-feature">
+          <div className="creator-feature__icon">
+            <ul className="creator-icon__list">
               <li
-                className="editor-icon__item "
+                className="creator-icon__item "
                 onClick={() => {
                   setReminderActive(!isReminderActive);
                 }}
@@ -233,7 +237,7 @@ export default function EditorComponent(props) {
                 </div>
               </li>
               <li
-                className="editor-icon__item "
+                className="creator-icon__item "
                 title="Add Label"
                 onClick={() => {
                   setIsLabelNameActive(!isLabelNameActive);
@@ -244,7 +248,7 @@ export default function EditorComponent(props) {
                 </div>
               </li>
               <li
-                className="editor-icon__item "
+                className="creator-icon__item "
                 title="Add Image"
                 onClick={() => {
                   document.querySelector("#noteImg").click();
@@ -256,27 +260,28 @@ export default function EditorComponent(props) {
               </li>
             </ul>
           </div>
-          <div className="editor-feature__close">
+          <div className="creator-feature__close">
             <button type="submit" className="btn-bg">
               Submit
             </button>
           </div>
         </div>
-      </form>
-      {modalOpenComfirm && (
-        <Modal
-          setOpenModalComfirm={setModalOpenComfirm}
-          children={
-            <ComfirmNote
-              setOpenModalComfirm={setModalOpenComfirm}
-              content={"Do you want to create this note?"}
-              editorState={editorState}
-              onSubmit={submitNote}
-              setOpenModal={props.setOpenModal}
-            />
-          }
-        />
-      )}
-    </div>
+
+        {modalOpenComfirm && (
+          <Modal
+            setOpenModalComfirm={setModalOpenComfirm}
+            children={
+              <ComfirmNote
+                setOpenModalComfirm={setModalOpenComfirm}
+                content={"Do you want to create this note?"}
+                editorState={editorState}
+                onSubmit={submitNote}
+                setOpenModal={props.setOpenModal}
+              />
+            }
+          />
+        )}
+      </div>
+    </form>
   );
 }

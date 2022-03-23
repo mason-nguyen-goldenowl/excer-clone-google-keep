@@ -39,7 +39,7 @@ const Signup = () => {
       setIsDisable(false);
     }, 4000);
   }
-  console.log(isSuccess);
+
   useEffect(() => {
     if (isLogged) {
       navigate("/");

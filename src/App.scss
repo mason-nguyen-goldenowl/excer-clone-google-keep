@@ -41,10 +41,6 @@ a {
     background-color: #99beee36;
     color: #0d71f3;
   }
-
-  @include tablet {
-    font-size: 12px;
-  }
 }
 
 .btn-bg {
@@ -61,10 +57,6 @@ a {
   &:hover {
     background-color: #99beee36 !important;
     color: #0d71f3;
-  }
-
-  @include tablet {
-    font-size: 12px;
   }
 }
 
