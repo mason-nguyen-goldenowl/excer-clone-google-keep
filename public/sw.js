@@ -4,6 +4,7 @@ this.addEventListener("push", (event) => {
     this.registration.showNotification(payload.title.replace(/<[^>]+>/g, ""), {
       body: payload.content.replace(/<[^>]+>/g, ""),
       icon: "./favicon.png",
+      vibrate: [200, 100, 200],
     })
   );
 });

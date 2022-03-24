@@ -30,15 +30,15 @@ export default function NoteCard(props) {
   const [modalOpen, setModalOpen] = useState(false);
 
   const clearLabelName = () => {
-    if (note.label_name) {
+    if (note.labelName) {
       const action = clearLabelAction;
       dispatch(action(note));
     }
   };
+  const label = arrLabel?.find((label) => label._id === note.labelId);
 
-  const label = arrLabel?.find((label) => label._id === note.label_id);
   if (label) {
-    note.label_name = label.label_name;
+    note.labelName = label.labelName;
   }
 
   let statusActive = "";
@@ -70,7 +70,7 @@ export default function NoteCard(props) {
     }
   };
 
-  if (note.label_name) {
+  if (note.labelName) {
     labelClass = "labels";
   }
 
