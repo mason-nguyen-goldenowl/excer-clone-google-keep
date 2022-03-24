@@ -22,7 +22,7 @@ const googleKeepApi = {
   },
 
   getNote: () => {
-    return axiosClient.get("/note");
+    return axiosClient.post("/note", localStorage.getItem("sub"));
   },
 
   searchNote: (note) => {

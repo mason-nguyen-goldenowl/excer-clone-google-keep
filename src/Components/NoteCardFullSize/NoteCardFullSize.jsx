@@ -62,7 +62,7 @@ export default function NoteCardFullSize(props) {
   const now = new Date();
 
   let remindTime = new Date(note.remind).getTime();
-  let remainingTime = remindTime - now.getTime();
+  let remainingTime = remindDate - now.getTime();
   const deleteAction = () => {
     const action = deleteNote;
     dispatch(action({ note_id: note._id }));
@@ -137,7 +137,7 @@ export default function NoteCardFullSize(props) {
       if (
         title !== note.title ||
         content !== note.content ||
-        remindDate - now > 0 ||
+        remainingTime > 0 ||
         labelName !== note.labelName ||
         imgSrc
       ) {

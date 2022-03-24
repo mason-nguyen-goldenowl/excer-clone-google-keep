@@ -36,11 +36,12 @@ export default function Home() {
       }
     });
   };
-
+  console.log(Notification.permission);
   useEffect(() => {
     if (!isLogged || !refreshToken) {
       navigate("/login");
     }
+
     const action = getNoteAction;
     dispatch(action());
 

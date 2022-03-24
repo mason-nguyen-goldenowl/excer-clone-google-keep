@@ -127,6 +127,7 @@ export const editNote = (note) => {
         icon: "success",
         title: "Your note has been eddited",
       });
+      googleKeepApi.getNote();
       dispatch({
         type: EDIT_NOTE,
         newArrNote: result.newArrNote,

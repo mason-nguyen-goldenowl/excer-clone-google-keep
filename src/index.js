@@ -5,6 +5,7 @@ import { store } from "./redux/configStore";
 import { ChakraProvider } from "@chakra-ui/react";
 
 import App from "./App";
+import { serviceWorker } from "./service-worker";
 
 const requestNotificationPermission = async () => {
   const permission = await window.Notification.requestPermission();
@@ -13,12 +14,7 @@ const requestNotificationPermission = async () => {
     throw new Error("Permission not granted for Notification");
   }
 };
-const serviceWorker = () => {
-  requestNotificationPermission().then(async (reuslt) => {
-    let swUrl = `${process.env.PUBLIC_URL}/sw.js`;
-    await navigator.serviceWorker.register(swUrl);
-  });
-};
+requestNotificationPermission();
 
 serviceWorker();
 ReactDOM.render(

@@ -74,28 +74,19 @@ export default function NoteCard(props) {
     labelClass = "labels";
   }
 
-  const postMess = (title, body, remainingTime) => {
-    navigator.serviceWorker?.controller.postMessage({
-      type: "MESSAGE_IDENTIFIER",
-      title: title,
-      text: body,
-      remainingTime,
-    });
-  };
   if (remainingTime > 0) {
     statusActive = "active";
     var alert = setTimeout(() => {
       remainingTime = -1;
       clearRemind();
     }, remainingTime);
-    postMess("abc", "test", remainingTime);
   }
+
   useEffect(() => {
-    if (remainingTime > 0) {
-    } else {
+    if (remainingTime < 0) {
       note.remind = undefined;
     }
-  }, []);
+  }, [note, remainingTime]);
 
   return (
     <div className="note-card">
