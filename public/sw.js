@@ -1,11 +1,11 @@
 import { precacheAndRoute } from "workbox-precaching";
+var self = this;
+precacheAndRoute(self.__WB_MANIFEST);
 
-precacheAndRoute(this.__WB_MANIFEST);
-
-this.addEventListener("push", (event) => {
+self.addEventListener("push", (event) => {
   const payload = event.data.json();
   event.waitUntil(
-    this.registration.showNotification(payload.title.replace(/<[^>]+>/g, ""), {
+    self.registration.showNotification(payload.title.replace(/<[^>]+>/g, ""), {
       body: payload.content.replace(/<[^>]+>/g, ""),
       icon: "./favicon.png",
       vibrate: [200, 100, 200],
