@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Cookies from "js-cookie";
 import { Button } from "@chakra-ui/react";
@@ -10,32 +10,32 @@ import { loginAction } from "../../redux/action/userAction";
 import logo from "../../asset/menuTopIcon/pngwing.com.png";
 
 import "./Login.scss";
+import { LOGGING } from "../../redux/type/userType";
 
 export default function Login() {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const isLogged = Cookies.get("isLogged");
   const refreshToken = Cookies.get("refresh_token");
-  const [isDisable, setIsDisable] = useState(false);
+  const { isDisableLogginBTN } = useSelector((state) => state.user);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data) => {
     const action = loginAction;
-    setIsDisable(true);
-    await dispatch(action(data));
+    dispatch({
+      type: LOGGING,
+      isDisableLogginBTN: true,
+    });
+    dispatch(action(data));
     if (isLogged && refreshToken) {
       navigate("/");
     }
   };
-  if (isDisable) {
-    setTimeout(() => {
-      setIsDisable(false);
-    }, 5000);
-  }
+
   useEffect(() => {
     if (isLogged && refreshToken) {
       return navigate("/");
@@ -53,7 +53,7 @@ export default function Login() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
               <input
-                disabled={isDisable}
+                disabled={isDisableLogginBTN}
                 className="form-input"
                 type="text"
                 placeholder="Your email"
@@ -74,7 +74,7 @@ export default function Login() {
             </div>
             <div className="form-group">
               <input
-                disabled={isDisable}
+                disabled={isDisableLogginBTN}
                 className="form-input"
                 type="password"
                 placeholder="Your password"
@@ -114,7 +114,11 @@ export default function Login() {
                 Create Account
               </span>
 
-              <Button isLoading={isDisable} type="submit" className="btn-bg">
+              <Button
+                isLoading={isDisableLogginBTN}
+                type="submit"
+                className="btn-bg"
+              >
                 Submit
               </Button>
             </div>

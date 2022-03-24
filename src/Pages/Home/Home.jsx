@@ -14,6 +14,7 @@ import NoteText from "../../Components/NoteText/NoteText";
 import SideMenu from "../../Components/SideMenu/SideMenu";
 
 import "./Home.scss";
+import { serviceWorker } from "../../service-worker";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -36,7 +37,10 @@ export default function Home() {
       }
     });
   };
-  console.log(Notification.permission);
+  serviceWorker();
+  setTimeout(() => {
+    setIsLoaded(true);
+  }, 1000);
   useEffect(() => {
     if (!isLogged || !refreshToken) {
       navigate("/login");
@@ -44,10 +48,6 @@ export default function Home() {
 
     const action = getNoteAction;
     dispatch(action());
-
-    setTimeout(() => {
-      setIsLoaded(true);
-    }, 1000);
   }, [dispatch, isLogged, navigate, refreshToken]);
   return (
     <div>

@@ -1,6 +1,6 @@
 import googleKeepApi from "../../axios/googleKeepApi";
 import Swal from "sweetalert2";
-import { useToast } from "@chakra-ui/react";
+
 import {
   ADD_NOTE,
   ARCHIVE_NOTE,
@@ -49,6 +49,10 @@ export const getNoteAction = () => {
 export const archiveNote = (note) => {
   return async (dispatch) => {
     try {
+      Toast.fire({
+        icon: "warning",
+        title: "Your note is archiving",
+      });
       const result = await googleKeepApi.archiveNote(note);
       Toast.fire({
         icon: "success",
@@ -59,13 +63,20 @@ export const archiveNote = (note) => {
         newArrNote: result.newArrNote,
       });
     } catch (error) {
-      console.log(error.response);
+      Toast.fire({
+        icon: "error",
+        title: "Archive note failed",
+      });
     }
   };
 };
 export const unArchiveNote = (note) => {
   return async (dispatch) => {
     try {
+      Toast.fire({
+        icon: "warning",
+        title: "Your note is unarchiving",
+      });
       const result = await googleKeepApi.archiveNote(note);
       Toast.fire({
         icon: "success",
@@ -77,7 +88,10 @@ export const unArchiveNote = (note) => {
         newArrNote: result.newArrNote,
       });
     } catch (error) {
-      console.log(error.response);
+      Toast.fire({
+        icon: "error",
+        title: "Unarchive note failed",
+      });
     }
   };
 };
@@ -85,6 +99,10 @@ export const unArchiveNote = (note) => {
 export const createNote = (note) => {
   return async (dispatch) => {
     try {
+      Toast.fire({
+        icon: "warning",
+        title: "Your note is creating",
+      });
       const result = await googleKeepApi.createNote(note);
       Toast.fire({
         icon: "success",
@@ -98,7 +116,7 @@ export const createNote = (note) => {
       });
     } catch (error) {
       Toast.fire({
-        icon: "errpr",
+        icon: "error",
         title: "Create note unsuccessfully",
       });
     }
@@ -122,6 +140,10 @@ export const searchNote = (note) => {
 export const editNote = (note) => {
   return async (dispatch) => {
     try {
+      Toast.fire({
+        icon: "warning",
+        title: "Your note is editing",
+      });
       const result = await googleKeepApi.editNote(note);
       Toast.fire({
         icon: "success",
@@ -134,7 +156,10 @@ export const editNote = (note) => {
         newArrLabel: result.newArrLabel,
       });
     } catch (error) {
-      console.log(error.response);
+      Toast.fire({
+        icon: "error",
+        title: "Edit note unsuccessfully",
+      });
     }
   };
 };
@@ -148,7 +173,10 @@ export const clearRemindAction = (note) => {
         newArrNote: result.newArrNote,
       });
     } catch (error) {
-      console.log(error.response);
+      Toast.fire({
+        icon: "error",
+        title: "Cleare remind of note unsuccessfully",
+      });
     }
   };
 };
@@ -162,7 +190,10 @@ export const clearLabelAction = (note) => {
         newArrNote: result.newArrNote,
       });
     } catch (error) {
-      console.log(error.response);
+      Toast.fire({
+        icon: "error",
+        title: "Cleare label of note unsuccessfully",
+      });
     }
   };
 };
@@ -184,6 +215,10 @@ export const clearImageAction = (note) => {
 export const deleteNote = (note) => {
   return async (dispatch) => {
     try {
+      Toast.fire({
+        icon: "warning",
+        title: "Your note is deleting",
+      });
       const result = await googleKeepApi.deleteNote(note);
       Toast.fire({
         icon: "success",
@@ -202,6 +237,10 @@ export const deleteNote = (note) => {
 export const restoreNote = (note) => {
   return async (dispatch) => {
     try {
+      Toast.fire({
+        icon: "warning",
+        title: "Your note is restoring",
+      });
       const result = await googleKeepApi.restoreNote(note);
       Toast.fire({
         icon: "success",
@@ -213,7 +252,10 @@ export const restoreNote = (note) => {
         newArrNote: result.newArrNote,
       });
     } catch (error) {
-      console.log(error.response);
+      Toast.fire({
+        icon: "error",
+        title: "Restoring unsuccessful",
+      });
     }
   };
 };
@@ -221,6 +263,10 @@ export const restoreNote = (note) => {
 export const removeNote = (note) => {
   return async (dispatch) => {
     try {
+      Toast.fire({
+        icon: "warning",
+        title: "Your note is removing",
+      });
       const result = await googleKeepApi.removeNote(note);
       Toast.fire({
         icon: "success",
@@ -232,7 +278,10 @@ export const removeNote = (note) => {
         newArrNote: result.newArrNote,
       });
     } catch (error) {
-      console.log(error.response);
+      Toast.fire({
+        icon: "error",
+        title: "Remove note unsuccessful",
+      });
     }
   };
 };
@@ -240,6 +289,10 @@ export const removeNote = (note) => {
 export const emptyTrash = (arrNoteId) => {
   return async (dispatch) => {
     try {
+      Toast.fire({
+        icon: "warning",
+        title: "Your trash will be empty",
+      });
       const result = await googleKeepApi.emptyTrash(arrNoteId);
       Toast.fire({
         icon: "success",
@@ -250,7 +303,10 @@ export const emptyTrash = (arrNoteId) => {
         newArrNote: result.newArrNote,
       });
     } catch (error) {
-      console.log(error.response);
+      Toast.fire({
+        icon: "error",
+        title: "Empty trash unsuccessful",
+      });
     }
   };
 };
