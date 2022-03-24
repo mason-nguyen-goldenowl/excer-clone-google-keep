@@ -13,7 +13,7 @@ const Toast = Swal.mixin({
   toast: true,
   position: "top-end",
   showConfirmButton: false,
-  timer: 1500,
+  timer: 2500,
   timerProgressBar: true,
   didOpen: (toast) => {
     toast.addEventListener("mouseenter", Swal.stopTimer);
@@ -79,6 +79,10 @@ export const signUp = (user) => {
 export const requestResetPassword = (user) => {
   return async (dispatch) => {
     try {
+      Toast.fire({
+        icon: "info",
+        title: "Request reset password is loading",
+      });
       const result = await googleKeepApi.requestResetPassword(user);
       dispatch({
         type: REQUEST_RESET_PASSWORD,
@@ -100,6 +104,10 @@ export const requestResetPassword = (user) => {
 export const resetPassword = (user) => {
   return async (dispatch) => {
     try {
+      Toast.fire({
+        icon: "info",
+        title: "System is reseting your password",
+      });
       const result = await googleKeepApi.resetPassword(user);
       dispatch({
         type: REQUEST_RESET_PASSWORD,
