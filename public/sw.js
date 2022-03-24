@@ -1,3 +1,7 @@
+import { precacheAndRoute } from "workbox-precaching";
+
+precacheAndRoute(this.__WB_MANIFEST);
+
 this.addEventListener("push", (event) => {
   const payload = event.data.json();
   event.waitUntil(
