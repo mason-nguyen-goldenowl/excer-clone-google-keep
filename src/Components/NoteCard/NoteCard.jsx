@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-
-import Swal from "sweetalert2";
+import React, { useEffect, useState } from "react";
 
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import time from "../../asset/editorIcon/time.svg";
+import logo from "../../asset/menuTopIcon/pngwing.com.png";
 import trash from "../../asset/editorIcon/trash.svg";
 import archive from "../../asset/editorIcon/archive.svg";
 
@@ -79,15 +78,15 @@ export default function NoteCard(props) {
     statusActive = "active";
     var alert = setTimeout(() => {
       remainingTime = -1;
-      Swal.fire({
-        icon: "warning",
-        title: note.title,
-        html: note.content,
-        showConfirmButton: false,
-      });
       clearRemind();
     }, remainingTime);
   }
+
+  useEffect(() => {
+    if (remainingTime < 0) {
+      note.remind = undefined;
+    }
+  }, [note, remainingTime]);
 
   return (
     <div className="note-card">
@@ -101,6 +100,13 @@ export default function NoteCard(props) {
           <img src={time} alt="" />
           <Moment format="MMM DD, YYYY, hh:mm:A">{note.remind}</Moment>
         </span>
+        {note.imageUrl ? (
+          <div className="note-image">
+            <img src={`${process.env.REACT_APP_API}/${note.imageUrl}`} alt="" />
+          </div>
+        ) : (
+          <span></span>
+        )}
         {note.title.trim().length === 0 && note.content === "<p><br></p>" ? (
           <div>
             <h2 className="empty-note">Empty Note</h2>
@@ -121,8 +127,8 @@ export default function NoteCard(props) {
       </div>
 
       <span className={`${labelClass}`}>
-        <Link to={`/labels/${note.label_id}`}>{note.label_name}</Link>
-        {note.label_name ? (
+        <Link to={`/labels/${note.labelId}`}>{note.labelName}</Link>
+        {note.labelId ? (
           <span onClick={clearLabelName} className="clear-remind">
             X
           </span>

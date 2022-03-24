@@ -1,11 +1,12 @@
 @use "../../scss/" as *;
-
+.side-menu {
+  position: fixed;
+  top: 64px;
+  z-index: 89;
+}
 .list-item {
   padding: 8px 12px;
   background-color: $white;
-  width: 48px;
-  z-index: 10;
-  position: fixed;
   transition: all 0.3s;
 
   &:hover {
@@ -19,7 +20,7 @@
     padding: 8px 0;
     position: fixed;
     top: 64px;
-    width: 280px;
+    width: 240px;
 
     span {
       display: block;
@@ -32,25 +33,27 @@
     }
 
     .item__content {
-      min-width: 48px;
+      min-width: 20px;
     }
   }
 
   &.active {
     padding: 8px 0;
-    min-width: 280px;
+    min-width: 250px;
+    width: auto;
     transition: all 0.3s;
-    @media only screen and (max-width: 950px) {
+    @media only screen and (max-width: 1020px) {
       top: 64px;
       width: fit-content;
-      min-width: 0px;
+      max-width: 0;
+      min-width: 50px;
     }
 
     span {
       display: block;
       font-weight: 700;
       transition: all 0.3s;
-      @media only screen and (max-width: 950px) {
+      @media only screen and (max-width: 1020px) {
         display: none;
       }
     }

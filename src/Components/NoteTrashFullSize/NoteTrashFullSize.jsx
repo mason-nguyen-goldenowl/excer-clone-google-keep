@@ -36,6 +36,13 @@ export default function NoteTrashFullSize(props) {
       ref={noteTrashRef}
       style={{ height: cardHeight }}
     >
+      <div className="editor-image">
+        {note.imageUrl ? (
+          <img src={`${process.env.REACT_APP_API}/${note.imageUrl}`} />
+        ) : (
+          <span></span>
+        )}
+      </div>
       <div className="note-trash-content">
         <h3>{note.title}</h3>
         <div

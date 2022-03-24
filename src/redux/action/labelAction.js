@@ -10,9 +10,12 @@ import {
 
 const Toast = Swal.mixin({
   toast: true,
-  position: "top-end",
+  position: "bottom",
   showConfirmButton: false,
-  timer: 1500,
+  timer: 3000,
+  background: "#000",
+  iconColor: "#ffbb00",
+  color: "#ffff",
   timerProgressBar: true,
   didOpen: (toast) => {
     toast.addEventListener("mouseenter", Swal.stopTimer);
@@ -51,6 +54,10 @@ export const getLabelName = (label_id) => {
 export const createLabels = (label) => {
   return async (dispatch) => {
     try {
+      Toast.fire({
+        icon: "info",
+        title: "Your label is creating",
+      });
       const result = await googleKeepApi.createLabel(label);
       Toast.fire({
         icon: "success",
@@ -70,10 +77,14 @@ export const editLabel = (label) => {
   return async (dispatch) => {
     try {
       Toast.fire({
+        icon: "info",
+        title: "Your label is editing",
+      });
+      const result = await googleKeepApi.editLabel(label);
+      Toast.fire({
         icon: "success",
         title: "Your label have been updated",
       });
-      const result = await googleKeepApi.editLabel(label);
 
       dispatch({
         type: UPDATE_LABEL,
@@ -90,10 +101,14 @@ export const deleteLabel = (label) => {
   return async (dispatch) => {
     try {
       Toast.fire({
+        icon: "info",
+        title: "Your label is deleting",
+      });
+      const result = await googleKeepApi.deleteLabel(label);
+      Toast.fire({
         icon: "success",
         title: "Your label have been deleted",
       });
-      const result = await googleKeepApi.deleteLabel(label);
       dispatch({
         type: DELETE_LABEL,
         newArrLabel: result.newArrLabels,

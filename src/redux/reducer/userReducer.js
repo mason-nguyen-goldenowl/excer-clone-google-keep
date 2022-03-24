@@ -1,4 +1,5 @@
 import {
+  LOGGING,
   LOGIN,
   LOG_OUT,
   REQUEST_RESET_PASSWORD,
@@ -9,6 +10,7 @@ const stateDefaut = {
   user: {},
   isRequest: "",
   signUpSuccess: false,
+  isDisableLogginBTN: false,
 };
 
 export const UserReducer = (state = stateDefaut, action) => {
@@ -25,6 +27,10 @@ export const UserReducer = (state = stateDefaut, action) => {
     }
     case REQUEST_RESET_PASSWORD: {
       state.isRequest = action.isRequest;
+      return { ...state };
+    }
+    case LOGGING: {
+      state.isDisableLogginBTN = action.isDisableLogginBTN;
       return { ...state };
     }
     case LOG_OUT: {

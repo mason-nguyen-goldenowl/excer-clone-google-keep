@@ -1,0 +1,144 @@
+@use "../../scss/" as *;
+
+.form-creator {
+  position: relative;
+  padding: 10px 10px 10px;
+  background-color: white;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  border: 1px solid #e0e0e0;
+}
+.creator {
+  padding-bottom: 50px;
+  border-radius: 8px;
+  max-height: 400px;
+  overflow: hidden;
+  overflow-y: auto;
+  input {
+    line-height: 20px;
+    border: none;
+    outline: none;
+  }
+
+  .remind-wrap {
+    margin-top: 10px;
+  }
+
+  &-text__area {
+    width: 100%;
+    outline: none;
+    resize: none;
+    height: 16px;
+    min-height: 16px;
+    max-height: 200px;
+    box-sizing: "border-box";
+    font-weight: 700;
+    margin-right: 50px;
+    &:disabled {
+      background-color: transparent;
+    }
+  }
+  &-feature {
+    background-color: transparent;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 80;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media only screen and (max-width: 700px) {
+    }
+    &__close {
+      padding: 8px 24px;
+    }
+  }
+
+  &-icon__list {
+    list-style: none;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+  }
+  &-icon__item .reminder__btn:focus-within {
+    .reminder {
+      display: block;
+    }
+  }
+  &-icon__item {
+    width: 32px;
+    height: 32px;
+    margin: 0 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    transition: all 0.3s;
+    position: relative;
+
+    .reminder {
+      display: none;
+      position: absolute;
+      padding: 6px 0;
+      min-width: 300px;
+      top: 100%;
+      left: 100%;
+      box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%),
+        0 2px 6px 2px rgb(60 64 67 / 15%);
+      background-color: $white;
+      z-index: 80;
+      padding: 8px 12px;
+      border-radius: 4px;
+      width: auto;
+
+      &__item {
+        width: auto;
+      }
+
+      &.active {
+        display: block;
+      }
+
+      &__item {
+        display: flex;
+        align-items: center;
+        padding: 10px 13px;
+        font-size: 13px;
+
+        &:hover {
+          background-color: #00000014;
+        }
+
+        span {
+          margin-left: 8px;
+        }
+      }
+
+      p {
+        margin-bottom: 16px;
+      }
+
+      ul {
+        list-style: none;
+      }
+    }
+
+    .redo {
+      transform: scaleX(-1);
+    }
+
+    img {
+      width: 18px;
+      height: 18px;
+      opacity: 0.54;
+    }
+
+    &:hover {
+      background-color: #5f636828;
+    }
+  }
+}

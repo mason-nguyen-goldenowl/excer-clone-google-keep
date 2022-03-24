@@ -6,30 +6,44 @@ import React, { useEffect, useRef, useState } from "react";
 import search from "../../asset/menuTopIcon/search.svg";
 import logo from "../../asset/menuTopIcon/pngwing.com.png";
 
-import { SEARCH } from "../../redux/type/noteType";
 import { LOG_OUT } from "../../redux/type/userType";
 import { CHANGE_LIST_CLASS } from "../../redux/type/menuType";
 
 import "./Menu.scss";
+import { searchNote } from "../../redux/action/noteAction";
 
 export default function Menu(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const action = searchNote;
   const searchRef = useRef("");
+  const [searchInput, setSearchInput] = useState(null);
 
   const [isListActive, setIsListActive] = useState(false);
-  let searchInput;
+
+  const debounce = (callback, timeout) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(callback, timeout);
+    };
+  };
+
   const handleChangeInput = (e) => {
     if (e.target.value.length === 0) {
-      searchInput = "";
+      debounce(dispatch(action({ keyWord: null })), 1500);
     }
-    searchInput = e.target.value;
+    debounce(dispatch(action({ keyWord: searchInput })), 1500);
+    setSearchInput(e.target.value);
+  };
 
-    dispatch({
-      type: SEARCH,
-      searchInput,
-    });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (searchInput.length > 0) {
+      dispatch(action({ keyWord: searchInput }));
+    } else {
+      dispatch(action({ keyWord: null }));
+    }
   };
 
   const logOut = async () => {
@@ -38,6 +52,7 @@ export default function Menu(props) {
       await Cookies.remove("access_token");
       await Cookies.remove("isLogged");
       localStorage.removeItem("access_token");
+      localStorage.removeItem("sub");
       navigate("/login");
       await dispatch({
         type: LOG_OUT,
@@ -51,7 +66,7 @@ export default function Menu(props) {
     if (props.title === "Search") {
       searchRef.current.focus();
     }
-  });
+  }, [props.title]);
 
   return (
     <div className="menu-wrapter">
@@ -82,8 +97,8 @@ export default function Menu(props) {
           </div>
           <div className="menu__search">
             <Link to="/search" className="search__input">
-              <div className="search__wrap">
-                <div className="menu__btn">
+              <form onSubmit={handleSubmit} className="search__wrap">
+                <div className="menu__btn search-btn">
                   <img src={search} alt="..." />
                 </div>
 
@@ -92,7 +107,7 @@ export default function Menu(props) {
                   placeholder="Search"
                   onChange={handleChangeInput}
                 />
-              </div>
+              </form>
             </Link>
           </div>
           <div className="menu__acount">

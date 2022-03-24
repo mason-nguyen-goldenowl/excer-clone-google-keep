@@ -22,7 +22,11 @@ const googleKeepApi = {
   },
 
   getNote: () => {
-    return axiosClient.get("/note");
+    return axiosClient.post("/note", localStorage.getItem("sub"));
+  },
+
+  searchNote: (note) => {
+    return axiosClient.post("/note/search", note);
   },
 
   createNote: (note) => {
@@ -47,6 +51,10 @@ const googleKeepApi = {
 
   clearLabelName: (note) => {
     return axiosClient.delete("/note/clear-label", { data: note });
+  },
+
+  clearImage: (note) => {
+    return axiosClient.delete("/note/clear-image", { data: note });
   },
 
   restoreNote: (note) => {

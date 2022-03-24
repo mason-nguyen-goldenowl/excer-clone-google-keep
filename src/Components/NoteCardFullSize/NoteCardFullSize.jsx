@@ -12,6 +12,7 @@ import { ContentState, convertFromHTML, Editor, EditorState } from "draft-js";
 
 import time from "../../asset/editorIcon/time.svg";
 import trash from "../../asset/editorIcon/trash.svg";
+import image from "../../asset/editorIcon/image.svg";
 import labelIcon from "../../asset/editorIcon/label.svg";
 import editIcon from "../../asset/sideMenuIcon/Edit.svg";
 import archive from "../../asset/editorIcon/archive.svg";
@@ -23,6 +24,7 @@ import ComfirmNote from "../Comfirm/ComfirmNote";
 import useOnClickOutside from "../../hook/useClickOutside";
 import {
   archiveNote,
+  clearImageAction,
   clearLabelAction,
   clearRemindAction,
   deleteNote,
@@ -46,9 +48,11 @@ export default function NoteCardFullSize(props) {
   const [title, setTitle] = useState(note.title);
   const [remindDate, setRemindDate] = useState();
   const [isLabelNameActive, setIsLabelNameActive] = useState(false);
-  const [labelName, setLabelName] = useState(note.label_name);
+  const [labelName, setLabelName] = useState(note.labelName);
   const [isReminderActive, setReminderActive] = useState(false);
   const [onRead, setOnRead] = useState(true);
+  const [imgSrc, setImgSrc] = useState();
+  const [imgFile, setImgFile] = useState(null);
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(state)
   );
@@ -58,7 +62,7 @@ export default function NoteCardFullSize(props) {
   const now = new Date();
 
   let remindTime = new Date(note.remind).getTime();
-  let remainingTime = remindTime - now.getTime();
+  let remainingTime = remindDate - now.getTime();
   const deleteAction = () => {
     const action = deleteNote;
     dispatch(action({ note_id: note._id }));
@@ -82,6 +86,22 @@ export default function NoteCardFullSize(props) {
   const changeReadToEdit = () => {
     setOnRead(!onRead);
   };
+  const handleChangeFile = async (e) => {
+    let file = e.target.files[0];
+    if (
+      file.type === "image/jpeg" ||
+      file.type === "image/jpg" ||
+      file.type === "image/png"
+    ) {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = (e) => {
+        setImgSrc(e.target.result);
+      };
+    }
+
+    setImgFile(file);
+  };
 
   const clearRemind = () => {
     if (note.remind) {
@@ -91,45 +111,61 @@ export default function NoteCardFullSize(props) {
     }
     setRemindDate(undefined);
   };
+
   const clearLabelName = () => {
-    if (note.label_name) {
+    if (note.labelName) {
       const action = clearLabelAction;
       dispatch(action(note));
       setLabelName("");
     }
   };
-
+  const clearImage = () => {
+    if (note.imageUrl) {
+      const action = clearImageAction;
+      dispatch(action(note));
+    }
+    setImgSrc();
+    setImgFile();
+  };
   const onSubmit = async (e) => {
     e.preventDefault();
     let contentLength = editorState.getSelection().getStartOffset();
     let content = stateToHTML(editorState.getCurrentContent());
     props.setOpenModal(false);
+
     if (!note.deleted) {
       if (
         title !== note.title ||
         content !== note.content ||
-        remindDate - now > 0 ||
-        labelName !== note.label_name
+        remainingTime > 0 ||
+        labelName !== note.labelName ||
+        imgSrc
       ) {
-        note.title = title;
-        note.content = content;
-        note.label_name = labelName;
-        note.contentLength = contentLength;
+        let noteData = new FormData();
+        noteData.append("_id", note._id);
+        noteData.append("creator", note.creator);
+        noteData.append("title", title.trim());
+        noteData.append("content", content);
+        if (labelName) {
+          noteData.append("labelName", labelName);
+        }
+        noteData.append("contentLength", contentLength);
         if (remindDate - now) {
           if (remindDate) {
-            note.remind = remindDate;
-          } else {
-            note.remind = null;
+            noteData.append("remind", remindDate);
           }
         }
+        if (imgFile) {
+          noteData.append("image", imgFile);
+        }
         const action = editNote;
-        dispatch(action(note));
+        dispatch(action(noteData));
       }
     }
   };
-  useOnClickOutside(noteFullSizeRef, () => {
-    console.log(remainingTime);
-    if (onRead && !isLabelNameActive && !remindDate) {
+
+  useOnClickOutside(editorComponentRef, () => {
+    if (onRead && !isLabelNameActive && !remindDate && !imgSrc) {
       props.setOpenModal(false);
     } else {
       setModalOpenComfirm(true);
@@ -140,175 +176,201 @@ export default function NoteCardFullSize(props) {
     autosize(document.querySelector(".editor-text_area"));
   }, []);
   return (
-    <div className="editor" ref={noteFullSizeRef}>
-      <form onSubmit={onSubmit} ref={editorComponentRef}>
-        <div className="editor-title">
-          <textarea
-            className="editor-text_area"
-            disabled={onRead}
-            onChange={handleTitle}
-            placeholder="Empty Title"
-            value={title}
-            name="title"
-          />
+    <form className="form-editor" onSubmit={onSubmit} ref={editorComponentRef}>
+      <div className="editor-wrap" ref={noteFullSizeRef}>
+        <div className="editor">
+          {imgSrc || note.imageUrl ? (
+            <div className="editor-image">
+              <img
+                title="Delete Image"
+                src={
+                  imgSrc
+                    ? imgSrc
+                    : `${process.env.REACT_APP_API}/${note.imageUrl}`
+                }
+                alt=""
+              />
+              <span className="clear-image" onClick={clearImage}>
+                <img src={trash} alt=".." />
+              </span>
+            </div>
+          ) : (
+            <div></div>
+          )}
 
-          <div className="editor-title__icon-wrap">
-            {onRead ? (
-              <div
-                className="editor-title__icon tooltip"
-                style={{ cursor: "pointer", zIndex: 99 }}
-                onClick={changeReadToEdit}
-              >
-                <span className="tooltiptext">Edit Note</span>
-                <span>
-                  <img src={editIcon} alt=".." />{" "}
+          <input
+            type="file"
+            id="noteImgEdit"
+            name="image"
+            className="pick-image"
+            onChange={handleChangeFile}
+            accept="image/png, image/jpg, image/jpeg"
+          />
+          <div className="editor-title">
+            <textarea
+              className="editor-text_area"
+              disabled={onRead}
+              onChange={handleTitle}
+              placeholder="Empty Title"
+              value={title}
+              name="title"
+            />
+
+            <div className="editor-title__icon-wrap">
+              {onRead ? (
+                <div
+                  className="editor-title__icon tooltip"
+                  title="Edit Note"
+                  style={{ cursor: "pointer", zIndex: 99 }}
+                  onClick={changeReadToEdit}
+                >
+                  <span>
+                    <img src={editIcon} alt=".." />{" "}
+                  </span>
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </div>
+          </div>
+          <div className="editor-text">
+            <Editor
+              readOnly={onRead}
+              placeholder="Note..."
+              ref={editorRef}
+              editorState={editorState}
+              onChange={(editorState) => setEditorState(editorState)}
+            />
+          </div>
+          <div className="remind-wrap">
+            {remindDate || note.remind ? (
+              <span className="remind-label">
+                <Moment title="Remind time" format="MMMM ddd yyyy, HH:mm">
+                  {remindDate}
+                </Moment>
+                <span onClick={clearRemind} className="clear-remind">
+                  X
                 </span>
-              </div>
+              </span>
             ) : (
               <div></div>
             )}
-
-            <div
-              className="editor-title__icon tooltip"
-              style={{ cursor: "pointer" }}
-              onClick={() => {
-                props.setOpenModal(false);
-              }}
-            >
-              <span className="tooltiptext">Close Editor</span>
+            {note.labelId || isLabelNameActive ? (
               <span>
-                <img src={closeIcon} alt=".." />
+                {isLabelNameActive ? (
+                  <input
+                    title="Label Name"
+                    value={labelName}
+                    className={`remind-label`}
+                    placeholder="Enter label name..."
+                    onChange={(e) => {
+                      setLabelName(e.target.value);
+                    }}
+                  />
+                ) : (
+                  <span
+                    value={note.labelName}
+                    title="Label Name"
+                    className={`labels`}
+                  >
+                    <Link to={`/labels/${note.labelId}`}>{note.labelName}</Link>
+                    <span onClick={clearLabelName} className="clear-remind">
+                      X
+                    </span>
+                  </span>
+                )}
               </span>
-            </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
-        <div className="editor-text">
-          <Editor
-            readOnly={onRead}
-            placeholder="Note..."
-            ref={editorRef}
-            editorState={editorState}
-            onChange={(editorState) => setEditorState(editorState)}
-          />
-        </div>
-        <div className="remind-wrap">
-          {remindDate || note.remind ? (
-            <span className="remind-label">
-              <Moment title="Remind time" format="MMMM ddd yyyy, HH:mm">
-                {remindDate}
-              </Moment>
-              <span onClick={clearRemind} className="clear-remind">
-                X
-              </span>
-            </span>
-          ) : (
-            <div></div>
-          )}
-          {note.label_id || isLabelNameActive ? (
-            <span>
-              {isLabelNameActive ? (
-                <input
-                  title="Label Name"
-                  value={labelName}
-                  className={`remind-label`}
-                  placeholder="Enter label name..."
-                  onChange={(e) => {
-                    setLabelName(e.target.value);
-                  }}
-                />
-              ) : (
-                <span
-                  value={note.label_name}
-                  title="Label Name"
-                  className={`labels`}
-                >
-                  <Link to={`/labels/${note.label_id}`}>{note.label_name}</Link>
-                  <span onClick={clearLabelName} className="clear-remind">
-                    X
-                  </span>
-                </span>
-              )}
-            </span>
-          ) : (
-            <div></div>
-          )}
-        </div>
+      </div>
+      <div className="editor-feature">
+        <div className="editor-feature__icon">
+          <ul className="editor-icon__list">
+            <li
+              className="editor-icon__item "
+              title="Reminder"
+              onClick={() => {
+                setReminderActive(!isReminderActive);
+              }}
+            >
+              <div className="reminder__btn" title="Reminder">
+                <img src={reminder} alt=".." />
 
-        <div className="editor-feature">
-          <div className="editor-feature__icon">
-            <ul className="editor-icon__list">
-              <li
-                className="editor-icon__item "
-                title="Reminder"
-                onClick={() => {
-                  setReminderActive(!isReminderActive);
-                }}
-              >
-                <div className="reminder__btn" title="Reminder">
-                  <img src={reminder} alt=".." />
+                <div className={`reminder ${reminderClass}`}>
+                  <p>Reminder:</p>
 
-                  <div className={`reminder ${reminderClass}`}>
-                    <p>Reminder:</p>
-
-                    <div className="reminder__items">
-                      <div
-                        className="reminder__item"
-                        onClick={() => {
-                          setReminderActive(true);
+                  <div className="reminder__items">
+                    <div
+                      className="reminder__item"
+                      onClick={() => {
+                        setReminderActive(true);
+                      }}
+                    >
+                      <img src={time} alt="..." />
+                      <span> Pick date & time </span>
+                    </div>
+                    <div className="reminder__item">
+                      <DatePicker
+                        selected={remindDate || now}
+                        showTimeSelect
+                        dateFormat="MMMM dd yyyy, HH:mm "
+                        onChange={(date) => {
+                          setRemindDate(date);
                         }}
-                      >
-                        <img src={time} alt="..." />
-                        <span> Pick date & time </span>
-                      </div>
-                      <div className="reminder__item">
-                        <DatePicker
-                          selected={remindDate || now}
-                          showTimeSelect
-                          dateFormat="MMMM dd yyyy, HH:mm "
-                          onChange={(date) => {
-                            setRemindDate(date);
-                          }}
-                        />
-                      </div>
+                      />
                     </div>
                   </div>
                 </div>
-              </li>
+              </div>
+            </li>
 
-              <li
-                className="editor-icon__item"
-                title={note.archive ? "Unarchive" : "Archive"}
-                onClick={note.archive ? unArchiveAction : archiveAction}
-              >
-                <img src={archive} alt=".." />
-              </li>
-              <li
-                title="Change Label"
-                className="editor-icon__item "
-                onClick={() => {
-                  setIsLabelNameActive(!isLabelNameActive);
-                }}
-              >
-                <div className="reminder__btn">
-                  <img src={labelIcon} alt=".." />
-                </div>
-              </li>
-              <li
-                className="editor-icon__item "
-                title="Delete"
-                onClick={deleteAction}
-              >
-                <img src={trash} alt=".." />
-              </li>
-            </ul>
-          </div>
-          <div className="editor-feature__close">
-            <Button className="btn-bg" disabled={onRead} type="submit">
-              Submit
-            </Button>
-          </div>
+            <li
+              className="editor-icon__item"
+              title={note.archive ? "Unarchive" : "Archive"}
+              onClick={note.archive ? unArchiveAction : archiveAction}
+            >
+              <img src={archive} alt=".." />
+            </li>
+            <li
+              title="Change Label"
+              className="editor-icon__item "
+              onClick={() => {
+                setIsLabelNameActive(!isLabelNameActive);
+              }}
+            >
+              <div className="reminder__btn">
+                <img src={labelIcon} alt=".." />
+              </div>
+            </li>
+            <li
+              className="editor-icon__item "
+              title="Add Image"
+              onClick={() => {
+                document.querySelector("#noteImgEdit").click();
+              }}
+            >
+              <div className="reminder__btn">
+                <img src={image} alt=".." />
+              </div>
+            </li>
+            <li
+              className="editor-icon__item "
+              title="Delete"
+              onClick={deleteAction}
+            >
+              <img src={trash} alt=".." />
+            </li>
+          </ul>
         </div>
-      </form>
+        <div className="editor-feature__close">
+          <Button className="btn-bg" disabled={onRead} type="submit">
+            Submit
+          </Button>
+        </div>
+      </div>
       {modalOpenComfirm && (
         <Modal
           setOpenModalComfirm={setModalOpenComfirm}
@@ -323,6 +385,6 @@ export default function NoteCardFullSize(props) {
           }
         />
       )}
-    </div>
+    </form>
   );
 }

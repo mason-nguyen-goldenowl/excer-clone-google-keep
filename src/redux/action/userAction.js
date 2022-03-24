@@ -1,7 +1,13 @@
 import googleKeepApi from "../../axios/googleKeepApi";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
-import { LOGIN, REQUEST_RESET_PASSWORD, SIGN_UP } from "../type/userType";
+import {
+  LOGGING,
+  LOGIN,
+  REQUEST_RESET_PASSWORD,
+  SIGN_UP,
+} from "../type/userType";
+import { serviceWorker } from "../../service-worker";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -15,11 +21,15 @@ const Toast = Swal.mixin({
   },
 });
 
-export const loginAction = (user) => {
+export const loginAction = (user, setIsDisable) => {
   return async (dispatch) => {
     try {
+      serviceWorker();
       const result = await googleKeepApi.login(user);
-
+      dispatch({
+        type: LOGGING,
+        isDisableLogginBTN: false,
+      });
       await Cookies.set("refresh_token", result.refreshToken, {
         expires: 7,
       });
@@ -33,6 +43,10 @@ export const loginAction = (user) => {
         email: result.email,
       });
     } catch (error) {
+      dispatch({
+        type: LOGGING,
+        isDisableLogginBTN: false,
+      });
       Toast.fire({
         icon: "error",
         title: "Please check your information",

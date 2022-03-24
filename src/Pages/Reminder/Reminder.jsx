@@ -51,7 +51,7 @@ export default function Reminder() {
           <SideMenu active="reminders" />
         </div>
         <div className="right">
-          <div className="editor-wrap">
+          <div className="create-note-wrap">
             <NoteText />
           </div>
           <div className="note__content grid">

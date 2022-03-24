@@ -28,7 +28,7 @@ const Labels = () => {
   const [modalOpenComfirm, setModalOpenComfirm] = useState(false);
   const arrNote = useSelector((state) => state.note.arrNote);
 
-  const arrLabel = arrNote.filter((item) => item.label_id === id);
+  const arrLabel = arrNote.filter((item) => item.labelId === id);
 
   const renderNoteCard = () => {
     return arrLabel.map((note) => {
@@ -58,7 +58,7 @@ const Labels = () => {
           <SideMenu active={labelName} />
         </div>
         <div className="right">
-          <div className="editor-wrap">
+          <div className="create-note-wrap">
             <NoteText label={id} />
           </div>
           <div className="edit-label">

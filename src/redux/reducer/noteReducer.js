@@ -82,22 +82,21 @@ export const NoteReducer = (state = stateDefaut, action) => {
     }
 
     case SEARCH: {
-      console.log(action.searchInput.length);
-      if (action.searchInput.length > 0) {
-        let searchInNote = state.arrNote.filter(
-          (note) =>
-            note.title
-              .toLowerCase()
-              .includes(action.searchInput.toLowerCase()) ||
-            note.content
-              .toLowerCase()
-              .includes(action.searchInput.toLowerCase())
-        );
+      // if (action.searchInput.length > 0) {
+      //   let searchInNote = state.arrNote.filter(
+      //     (note) =>
+      //       note.title
+      //         .toLowerCase()
+      //         .includes(action.searchInput.toLowerCase()) ||
+      //       note.content
+      //         .toLowerCase()
+      //         .includes(action.searchInput.toLowerCase())
+      //   );
 
-        state.arrSearch = [...searchInNote];
-      } else {
-        state.arrSearch = [];
-      }
+      state.arrSearch = action.arrSearch;
+      // } else {
+      //   state.arrSearch = [];
+      // }
 
       return { ...state };
     }

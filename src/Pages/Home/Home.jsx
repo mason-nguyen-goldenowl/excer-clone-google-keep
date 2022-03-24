@@ -14,6 +14,7 @@ import NoteText from "../../Components/NoteText/NoteText";
 import SideMenu from "../../Components/SideMenu/SideMenu";
 
 import "./Home.scss";
+import { serviceWorker } from "../../service-worker";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -36,15 +37,15 @@ export default function Home() {
       }
     });
   };
-
+  serviceWorker();
+  setTimeout(() => {
+    setIsLoaded(true);
+  }, 1000);
   useEffect(() => {
     if (!isLogged || !refreshToken) {
       navigate("/login");
     }
 
-    setTimeout(() => {
-      setIsLoaded(true);
-    }, 2500);
     const action = getNoteAction;
     dispatch(action());
   }, [dispatch, isLogged, navigate, refreshToken]);
@@ -57,7 +58,7 @@ export default function Home() {
           <SideMenu active="notes" />
         </div>
         <div className="right">
-          <div className="editor-wrap">
+          <div className="create-note-wrap">
             <NoteText />
           </div>
           <div className="note__content grid">
@@ -65,7 +66,7 @@ export default function Home() {
               {isLoaded ? (
                 renderNoteCard()
               ) : (
-                <div style={{ display: "flex" }}>
+                <div className="skeleton-wrap">
                   <Skeleton margin={"5"}>
                     <NoteCard content={noteSket} />
                   </Skeleton>
