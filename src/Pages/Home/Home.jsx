@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,7 +14,6 @@ import NoteText from "../../Components/NoteText/NoteText";
 import SideMenu from "../../Components/SideMenu/SideMenu";
 
 import "./Home.scss";
-import { serviceWorker } from "../../serviceWorker";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -22,7 +21,7 @@ export default function Home() {
   const isLogged = Cookies.get("isLogged");
   const refreshToken = Cookies.get("refresh_token");
   const arrNote = useSelector((state) => state.note.arrNote);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const { isLoaded } = useSelector((state) => state.note);
 
   let noteSket = { title: "abc", content: "content" };
 
@@ -37,10 +36,7 @@ export default function Home() {
       }
     });
   };
-  // serviceWorker();
-  setTimeout(() => {
-    setIsLoaded(true);
-  }, 1000);
+
   useEffect(() => {
     if (!isLogged || !refreshToken) {
       navigate("/login");

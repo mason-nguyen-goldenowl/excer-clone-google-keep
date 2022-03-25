@@ -6,5 +6,6 @@ export const serviceWorker = async () => {
     userVisibleOnly: true,
     applicationServerKey: process.env.REACT_APP_VAPID_KEY,
   });
+
   localStorage.setItem("sub", JSON.stringify(subscription));
 };

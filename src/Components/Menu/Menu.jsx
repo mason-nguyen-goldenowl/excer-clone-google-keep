@@ -52,7 +52,7 @@ export default function Menu(props) {
       await Cookies.remove("access_token");
       await Cookies.remove("isLogged");
       localStorage.removeItem("access_token");
-      localStorage.removeItem("sub");
+
       navigate("/login");
       await dispatch({
         type: LOG_OUT,

@@ -58,7 +58,7 @@ export const loginAction = (user, setIsDisable) => {
 export const signUp = (user) => {
   return async (dispatch) => {
     try {
-      const result = await googleKeepApi.signUp(user);
+      await googleKeepApi.signUp(user);
       dispatch({
         type: SIGN_UP,
         signUpSuccess: true,
@@ -83,7 +83,7 @@ export const requestResetPassword = (user) => {
         icon: "info",
         title: "Request reset password is loading",
       });
-      const result = await googleKeepApi.requestResetPassword(user);
+      await googleKeepApi.requestResetPassword(user);
       dispatch({
         type: REQUEST_RESET_PASSWORD,
         isRequest: true,
@@ -108,7 +108,7 @@ export const resetPassword = (user) => {
         icon: "info",
         title: "System is reseting your password",
       });
-      const result = await googleKeepApi.resetPassword(user);
+      await googleKeepApi.resetPassword(user);
       dispatch({
         type: REQUEST_RESET_PASSWORD,
         isRequest: false,

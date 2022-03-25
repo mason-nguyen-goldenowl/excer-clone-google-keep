@@ -39,6 +39,7 @@ export const getNoteAction = () => {
       dispatch({
         type: GET_NOTE,
         arrNote: result.notes,
+        isLoaded: true,
       });
     } catch (error) {
       console.log(error.response);

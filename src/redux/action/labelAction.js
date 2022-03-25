@@ -68,7 +68,10 @@ export const createLabels = (label) => {
         newArrLabel: result.newArrLabel,
       });
     } catch (error) {
-      console.log(error);
+      Toast.fire({
+        icon: "error",
+        title: "Create label failed",
+      });
     }
   };
 };
@@ -92,7 +95,10 @@ export const editLabel = (label) => {
         newArrNote: result.newArrNote,
       });
     } catch (error) {
-      console.log(error);
+      Toast.fire({
+        icon: "error",
+        title: "Edit Label failed",
+      });
     }
   };
 };
@@ -115,7 +121,10 @@ export const deleteLabel = (label) => {
         newArrNote: result.newArrNote,
       });
     } catch (error) {
-      console.log(error);
+      Toast.fire({
+        icon: "error",
+        title: "Delete Label failed",
+      });
     }
   };
 };

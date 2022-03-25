@@ -100,7 +100,7 @@ const Labels = () => {
         <Modal
           setOpenModal={setModalOpenComfirm}
           children={
-            <Comfirmlabel label_id={id} setOpenModal={setModalOpenComfirm} />
+            <Comfirmlabel labelId={id} setOpenModal={setModalOpenComfirm} />
           }
         />
       )}

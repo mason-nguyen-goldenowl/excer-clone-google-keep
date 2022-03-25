@@ -24,13 +24,14 @@ const stateDefaut = {
   arrSearch: [],
   label: [],
   labelName: "",
+  isLoaded: false,
 };
 
 export const NoteReducer = (state = stateDefaut, action) => {
   switch (action.type) {
     case GET_NOTE: {
       state.arrNote = action.arrNote.reverse();
-
+      state.isLoaded = action.isLoaded;
       return { ...state };
     }
     case ADD_NOTE: {

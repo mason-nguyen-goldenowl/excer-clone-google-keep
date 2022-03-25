@@ -13,7 +13,7 @@ const Comfirmlabel = (props) => {
 
   const deleteLabelAction = () => {
     const action = deleteLabel;
-    dispatch(action({ label_id: props.label_id }));
+    dispatch(action({ labelId: props.labelId }));
 
     navigate(`/`);
   };
