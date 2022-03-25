@@ -39,8 +39,10 @@ const Labels = () => {
           </div>
         );
       }
+      return null;
     });
   };
+
   useEffect(() => {
     if (!isLogged || !refreshToken) {
       navigate("/login");
@@ -50,6 +52,7 @@ const Labels = () => {
     const action = getLabelName;
     dispatch(action(id));
   }, [dispatch, id, isLogged, navigate, refreshToken]);
+
   return (
     <div>
       <Menu title={labelName} />

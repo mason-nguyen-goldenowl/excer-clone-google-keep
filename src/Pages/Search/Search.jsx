@@ -1,22 +1,19 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 import Cookies from "js-cookie";
 import Masonry from "react-masonry-component";
 
 import Menu from "../../Components/Menu/Menu";
 import NoteCard from "../../Components/NoteCard/NoteCard";
 import SideMenu from "../../Components/SideMenu/SideMenu";
-import { searchNote } from "../../redux/action/noteAction";
 
 const Search = () => {
+  const navigate = useNavigate();
   const { arrSearch } = useSelector((state) => state.note);
-  const dispatch = useDispatch();
   const isLogged = Cookies.get("isLogged");
   const refreshToken = Cookies.get("refresh_token");
-  let navigate = useNavigate();
-  const action = searchNote;
+
   const renderNoteCard = () => {
     return arrSearch.map((note) => {
       return (

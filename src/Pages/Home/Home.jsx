@@ -35,12 +35,16 @@ export default function Home() {
           </div>
         );
       }
+      return null;
     });
   };
+
   serviceWorker();
+
   setTimeout(() => {
     setIsLoaded(true);
   }, 1000);
+
   useEffect(() => {
     if (!isLogged || !refreshToken) {
       navigate("/login");
@@ -49,6 +53,7 @@ export default function Home() {
     const action = getNoteAction;
     dispatch(action());
   }, [dispatch, isLogged, navigate, refreshToken]);
+
   return (
     <div>
       <Menu title="Keep" />

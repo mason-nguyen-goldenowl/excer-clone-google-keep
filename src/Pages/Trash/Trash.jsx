@@ -33,6 +33,7 @@ export default function Trash() {
           </div>
         );
       }
+      return null;
     });
   };
   useEffect(() => {

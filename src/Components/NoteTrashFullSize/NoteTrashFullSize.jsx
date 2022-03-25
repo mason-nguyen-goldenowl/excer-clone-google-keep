@@ -38,7 +38,7 @@ export default function NoteTrashFullSize(props) {
     >
       <div className="editor-image">
         {note.imageUrl ? (
-          <img src={`${process.env.REACT_APP_API}/${note.imageUrl}`} />
+          <img src={`${process.env.REACT_APP_API}/${note.imageUrl}`} alt="" />
         ) : (
           <span></span>
         )}

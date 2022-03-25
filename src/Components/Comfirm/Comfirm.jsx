@@ -10,7 +10,7 @@ const Comfirm = (props) => {
   const dispatch = useDispatch();
   let noteTrashId = [];
 
-  props.trashArr.map((note) => {
+  props.trashArr.forEach((note) => {
     noteTrashId.push(note._id);
   });
 

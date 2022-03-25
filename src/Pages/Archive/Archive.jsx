@@ -30,8 +30,10 @@ export default function Archive() {
           </div>
         );
       }
+      return null;
     });
   };
+
   useEffect(() => {
     if (!isLogged || !refreshToken) {
       navigate("/login");
@@ -39,6 +41,7 @@ export default function Archive() {
     const action = getNoteAction;
     dispatch(action());
   }, [dispatch, isLogged, isLogin, navigate, refreshToken]);
+
   return (
     <div>
       <Menu title="Archive" />

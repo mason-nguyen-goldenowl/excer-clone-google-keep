@@ -58,7 +58,7 @@ const Notecardtrash = (props) => {
           <Moment format="MMM DD, YYYY, hh:mm:A">{note.remind}</Moment>
         </span>
         {note.imageUrl ? (
-          <img src={`${process.env.REACT_APP_API}/${note.imageUrl}`} />
+          <img src={`${process.env.REACT_APP_API}/${note.imageUrl}`} alt="" />
         ) : (
           <span></span>
         )}

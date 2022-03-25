@@ -1,13 +1,14 @@
-import googleKeepApi from "../../axios/googleKeepApi";
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+
 import {
-  LOGGING,
   LOGIN,
-  REQUEST_RESET_PASSWORD,
   SIGN_UP,
+  LOGGING,
+  REQUEST_RESET_PASSWORD,
 } from "../type/userType";
 import { serviceWorker } from "../../service-worker";
+import googleKeepApi from "../../axios/googleKeepApi";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -30,10 +31,10 @@ export const loginAction = (user, setIsDisable) => {
         type: LOGGING,
         isDisableLogginBTN: false,
       });
-      await Cookies.set("refresh_token", result.refreshToken, {
+      Cookies.set("refresh_token", result.refreshToken, {
         expires: 7,
       });
-      await Cookies.set("isLogged", true, { expires: 1 });
+      Cookies.set("isLogged", true, { expires: 1 });
 
       localStorage.setItem("access_token", result.accessToken);
 
@@ -58,7 +59,7 @@ export const loginAction = (user, setIsDisable) => {
 export const signUp = (user) => {
   return async (dispatch) => {
     try {
-      const result = await googleKeepApi.signUp(user);
+      await googleKeepApi.signUp(user);
       dispatch({
         type: SIGN_UP,
         signUpSuccess: true,
@@ -83,7 +84,7 @@ export const requestResetPassword = (user) => {
         icon: "info",
         title: "Request reset password is loading",
       });
-      const result = await googleKeepApi.requestResetPassword(user);
+      await googleKeepApi.requestResetPassword(user);
       dispatch({
         type: REQUEST_RESET_PASSWORD,
         isRequest: true,
@@ -108,7 +109,7 @@ export const resetPassword = (user) => {
         icon: "info",
         title: "System is reseting your password",
       });
-      const result = await googleKeepApi.resetPassword(user);
+      await googleKeepApi.resetPassword(user);
       dispatch({
         type: REQUEST_RESET_PASSWORD,
         isRequest: false,

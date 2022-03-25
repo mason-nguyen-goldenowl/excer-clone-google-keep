@@ -16,7 +16,6 @@ import image from "../../asset/editorIcon/image.svg";
 import labelIcon from "../../asset/editorIcon/label.svg";
 import editIcon from "../../asset/sideMenuIcon/Edit.svg";
 import archive from "../../asset/editorIcon/archive.svg";
-import closeIcon from "../../asset/menuTopIcon/delete.svg";
 import reminder from "../../asset/editorIcon/reminder.svg";
 
 import Modal from "../Modal/Modal";
@@ -61,7 +60,6 @@ export default function NoteCardFullSize(props) {
   const editorComponentRef = useRef();
   const now = new Date();
 
-  let remindTime = new Date(note.remind).getTime();
   let remainingTime = remindDate - now.getTime();
   const deleteAction = () => {
     const action = deleteNote;

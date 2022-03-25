@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import time from "../../asset/editorIcon/time.svg";
-import logo from "../../asset/menuTopIcon/pngwing.com.png";
 import trash from "../../asset/editorIcon/trash.svg";
 import archive from "../../asset/editorIcon/archive.svg";
 

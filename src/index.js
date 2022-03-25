@@ -1,11 +1,11 @@
 import React from "react";
+import Swal from "sweetalert2";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { store } from "./redux/configStore";
 import { ChakraProvider } from "@chakra-ui/react";
-import Swal from "sweetalert2";
+
 import App from "./App";
-import { serviceWorker } from "./service-worker";
 
 const Toast = Swal.mixin({
   toast: true,
