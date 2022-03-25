@@ -14,7 +14,7 @@ import NoteText from "../../Components/NoteText/NoteText";
 import SideMenu from "../../Components/SideMenu/SideMenu";
 
 import "./Home.scss";
-import { serviceWorker } from "../../service-worker";
+import { serviceWorker } from "../../serviceWorker";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export default function Home() {
       }
     });
   };
-  serviceWorker();
+  // serviceWorker();
   setTimeout(() => {
     setIsLoaded(true);
   }, 1000);

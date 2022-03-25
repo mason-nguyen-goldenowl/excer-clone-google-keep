@@ -7,7 +7,7 @@ import {
   REQUEST_RESET_PASSWORD,
   SIGN_UP,
 } from "../type/userType";
-import { serviceWorker } from "../../service-worker";
+import { serviceWorker } from "../../serviceWorker";
 
 const Toast = Swal.mixin({
   toast: true,

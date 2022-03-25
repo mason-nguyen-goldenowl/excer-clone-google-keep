@@ -229,7 +229,10 @@ export const deleteNote = (note) => {
         newArrNote: result.newArrNote,
       });
     } catch (error) {
-      console.log(error.response);
+      Toast.fire({
+        icon: "error",
+        title: "Delete note unsuccessful",
+      });
     }
   };
 };
