@@ -16,7 +16,6 @@ import image from "../../asset/editorIcon/image.svg";
 import labelIcon from "../../asset/editorIcon/label.svg";
 import editIcon from "../../asset/sideMenuIcon/Edit.svg";
 import archive from "../../asset/editorIcon/archive.svg";
-import closeIcon from "../../asset/menuTopIcon/delete.svg";
 import reminder from "../../asset/editorIcon/reminder.svg";
 
 import Modal from "../Modal/Modal";
@@ -38,7 +37,7 @@ export default function NoteCardFullSize(props) {
   const noteFullSizeRef = useRef();
   const dispatch = useDispatch();
 
-  const note = props.content;
+  let note = props.content;
   let reminderClass = "";
   const blocksFromHTML = convertFromHTML(note.content);
   const state = ContentState.createFromBlockArray(

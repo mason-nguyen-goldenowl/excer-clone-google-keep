@@ -16,6 +16,7 @@ import { getLabelName } from "../../redux/action/labelAction";
 import { getNoteAction } from "../../redux/action/noteAction";
 
 import "./Label.scss";
+import { selectNotes } from "../../redux/features/noteSlice";
 
 const Labels = () => {
   const { id } = useParams();
@@ -23,10 +24,9 @@ const Labels = () => {
   const refreshToken = Cookies.get("refresh_token");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const labelName = useSelector((state) => state.note.labelName);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalOpenComfirm, setModalOpenComfirm] = useState(false);
-  const arrNote = useSelector((state) => state.note.arrNote);
+  const { arrNote, labelName } = useSelector(selectNotes);
 
   const arrLabel = arrNote.filter((item) => item.labelId === id);
 
@@ -42,9 +42,9 @@ const Labels = () => {
     });
   };
   useEffect(() => {
-    if (!isLogged || !refreshToken) {
-      navigate("/login");
-    }
+    // if (!isLogged || !refreshToken) {
+    //   navigate("/login");
+    // }
     const actionget = getNoteAction;
     dispatch(actionget());
     const action = getLabelName;

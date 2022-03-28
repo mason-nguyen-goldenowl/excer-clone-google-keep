@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import Modal from "../Modal/Modal";
 
 import CreateLabels from "../CreateLabels/CreateLabels";
-import { getLabels } from "../../redux/action/labelAction";
+import { getLabelsAction } from "../../redux/action/labelAction";
 
 import labelIcon from "../../asset/editorIcon/label.svg";
 import { ReactComponent as EditIcon } from "../../asset/sideMenuIcon/Edit.svg";
@@ -17,12 +17,13 @@ import { ReactComponent as RemindIcon } from "../../asset/sideMenuIcon/Remind.sv
 import { ReactComponent as ArchiveIcon } from "../../asset/sideMenuIcon/Archive.svg";
 
 import "./SideMenu.scss";
+import { selectNotes } from "../../redux/features/noteSlice";
 
 export default function SideMenu(props) {
   const dispatch = useDispatch();
-  const { isListActive } = useSelector((state) => state.menu);
+  // const { isListActive } = useSelector((state) => state.menu);
 
-  const arrLabel = useSelector((state) => state.note.arrLabel);
+  const { arrLabel } = useSelector(selectNotes);
 
   const [listClass, setListClass] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
@@ -47,21 +48,20 @@ export default function SideMenu(props) {
   };
 
   useEffect(() => {
-    const action = getLabels();
-    dispatch(action);
-
-    if (isListActive) {
-      setListClass("active");
-    } else {
-      setListClass("");
-    }
+    const action = getLabelsAction;
+    dispatch(action());
+    // if (isListActive) {
+    //   setListClass("active");
+    // } else {
+    //   setListClass("");
+    // }
 
     for (let item of document.querySelectorAll(".list-item__item")) {
       item.classList.remove("active");
     }
     document.getElementById(`${props.active}`)?.classList.add("active");
-  }, [dispatch, isListActive, props.active]);
-
+  }, [dispatch, props.active]);
+  // isListActive
   return (
     <div className="side-menu">
       <ul className={`list-item ${listClass}`}>

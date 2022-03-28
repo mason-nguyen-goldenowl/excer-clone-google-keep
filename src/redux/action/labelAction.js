@@ -1,12 +1,7 @@
 import googleKeepApi from "../../axios/googleKeepApi";
 import Swal from "sweetalert2";
-import {
-  ADD_LABEL,
-  DELETE_LABEL,
-  GET_LABELS,
-  GET_LABEL_NAME,
-  UPDATE_LABEL,
-} from "../type/noteType";
+import { getLabels, updateArrLabel, updateNote } from "../features/noteSlice";
+import { GET_LABEL_NAME } from "../type/noteType";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -23,14 +18,12 @@ const Toast = Swal.mixin({
   },
 });
 
-export const getLabels = () => {
+export const getLabelsAction = () => {
   return async (dispatch) => {
     try {
       const result = await googleKeepApi.getLabels();
-      dispatch({
-        type: GET_LABELS,
-        arrLabels: result.labels,
-      });
+
+      dispatch(getLabels(result.labels));
     } catch (error) {
       console.log(error);
     }
@@ -41,6 +34,7 @@ export const getLabelName = (label_id) => {
   return async (dispatch) => {
     try {
       const result = await googleKeepApi.getLabelName({ label_id });
+
       dispatch({
         type: GET_LABEL_NAME,
         labelName: result.labelName,
@@ -63,10 +57,7 @@ export const createLabels = (label) => {
         icon: "success",
         title: result.message,
       });
-      dispatch({
-        type: ADD_LABEL,
-        newArrLabel: result.newArrLabel,
-      });
+      dispatch(updateArrLabel({ newArrLabel: result.newArrLabel }));
     } catch (error) {
       Toast.fire({
         icon: "error",
@@ -88,12 +79,12 @@ export const editLabel = (label) => {
         icon: "success",
         title: "Your label have been updated",
       });
-
-      dispatch({
-        type: UPDATE_LABEL,
-        newArrLabel: result.newArrLabels,
-        newArrNote: result.newArrNote,
-      });
+      dispatch(
+        updateNote({
+          newArrLabel: result.newArrLabels,
+          newArrNote: result.newArrNote,
+        })
+      );
     } catch (error) {
       Toast.fire({
         icon: "error",
@@ -115,11 +106,12 @@ export const deleteLabel = (label) => {
         icon: "success",
         title: "Your label have been deleted",
       });
-      dispatch({
-        type: DELETE_LABEL,
-        newArrLabel: result.newArrLabels,
-        newArrNote: result.newArrNote,
-      });
+      dispatch(
+        updateNote({
+          newArrLabel: result.newArrLabels,
+          newArrNote: result.newArrNote,
+        })
+      );
     } catch (error) {
       Toast.fire({
         icon: "error",

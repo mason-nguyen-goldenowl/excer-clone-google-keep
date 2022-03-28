@@ -1,1 +1,0 @@
-export const CHANGE_LIST_CLASS = "CHANGE_LIST_CLASS";

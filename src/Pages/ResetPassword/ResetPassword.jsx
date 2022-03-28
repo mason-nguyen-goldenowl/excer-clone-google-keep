@@ -6,13 +6,14 @@ import {
   requestResetPassword,
   resetPassword,
 } from "../../redux/action/userAction";
+import { selectUsers } from "../../redux/features/userSlice";
 
 import "./ResetPassword.scss";
 
 const Resetpassword = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isRequest = useSelector((state) => state.user.isRequest);
+  const { isRequest } = useSelector(selectUsers);
 
   const {
     register,
@@ -20,9 +21,9 @@ const Resetpassword = () => {
     formState: { errors },
   } = useForm();
 
-  const handleRequestResetPassword = async (data) => {
+  const handleRequestResetPassword = (data) => {
     const action = requestResetPassword;
-    await dispatch(action(data));
+    dispatch(action(data));
   };
 
   const onSubmit = async (data) => {

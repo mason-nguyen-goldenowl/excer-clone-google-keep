@@ -18,23 +18,16 @@ export default function CreateLabels(props) {
     setLabel(e.target.value);
   };
 
-  const addLabel = async () => {
+  const addLabel = () => {
     props.setOpenModal(false);
     if (label.length > 0) {
       const action = createLabels;
-      await dispatch(action({ label_name: label }));
+      dispatch(action({ label_name: label }));
       createRef.current.value = "";
     }
   };
 
-  useOnClickOutside(editLabelRef, async () => {
-    props.setOpenModal(false);
-    if (label.length > 0) {
-      const action = createLabels;
-      await dispatch(action({ label_name: label }));
-      createRef.current.value = "";
-    }
-  });
+  useOnClickOutside(editLabelRef, addLabel);
 
   return (
     <div className="create-labels" ref={editLabelRef}>

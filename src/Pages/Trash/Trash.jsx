@@ -14,13 +14,14 @@ import { getNoteAction } from "../../redux/action/noteAction";
 import NoteCardTrash from "../../Components/NoteCard/NoteCardTrash";
 
 import "./Trash.scss";
+import { selectNotes } from "../../redux/features/noteSlice";
 
 export default function Trash() {
   const navigate = useNavigate();
   const isLogged = Cookies.get("isLogged");
   const refreshToken = Cookies.get("refresh_token");
   const dispatch = useDispatch();
-  const arrNote = useSelector((state) => state.note.arrNote);
+  const { arrNote } = useSelector(selectNotes);
   const trashArr = arrNote.filter((note) => note.deleted === true);
   const [modalOpen, setModalOpen] = useState(false);
 

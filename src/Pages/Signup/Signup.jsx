@@ -10,11 +10,12 @@ import logo from "../../asset/menuTopIcon/pngwing.com.png";
 import { ReactComponent as Account } from "../../asset/formIcon/Account.svg";
 
 import "./Signup.scss";
+import { selectUsers } from "../../redux/features/userSlice";
 
 const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isSuccess = useSelector((state) => state.user.signUpSuccess);
+  const isSuccess = useSelector(selectUsers);
   const isLogged = Cookies.get("isLogged");
   const [isDisable, setIsDisable] = useState(false);
 
