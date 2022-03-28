@@ -12,13 +12,14 @@ import SideMenu from "../../Components/SideMenu/SideMenu";
 import { getNoteAction } from "../../redux/action/noteAction";
 
 import "./Reminder.scss";
+import { selectNotes } from "../../redux/features/noteSlice";
 
 export default function Reminder() {
   const isLogged = Cookies.get("isLogged");
   const refreshToken = Cookies.get("refresh_token");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const arrNote = useSelector((state) => state.note.arrNote);
+  const { arrNote } = useSelector(selectNotes);
 
   const renderNoteCard = () => {
     return arrNote?.map((note) => {

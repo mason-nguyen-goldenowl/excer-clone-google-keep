@@ -1,19 +1,6 @@
 import googleKeepApi from "../../axios/googleKeepApi";
 import Swal from "sweetalert2";
-
-import {
-  ADD_NOTE,
-  ARCHIVE_NOTE,
-  CLEAR_LABEL_NAME,
-  CLEAR_REMIND,
-  DELETE_NOTE,
-  EDIT_NOTE,
-  EMPTY_TRASH,
-  GET_NOTE,
-  REMOVE_NOTE,
-  RESTORE,
-  SEARCH,
-} from "../type/noteType";
+import { getNotes, search, updateNote } from "../features/noteSlice";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -35,11 +22,7 @@ export const getNoteAction = () => {
   return async (dispatch) => {
     try {
       const result = await googleKeepApi.getNote();
-
-      dispatch({
-        type: GET_NOTE,
-        arrNote: result.notes,
-      });
+      dispatch(getNotes({ arrNote: result.notes, isLoaded: true }));
     } catch (error) {
       console.log(error.response);
     }
@@ -54,14 +37,12 @@ export const archiveNote = (note) => {
         title: "Your note is archiving",
       });
       const result = await googleKeepApi.archiveNote(note);
+      console.log("aa", result);
       Toast.fire({
         icon: "success",
         title: "Your note has been archived",
       });
-      dispatch({
-        type: ARCHIVE_NOTE,
-        newArrNote: result.newArrNote,
-      });
+      dispatch(updateNote({ newArrNote: result.newArrNote.reverse() }));
     } catch (error) {
       Toast.fire({
         icon: "error",
@@ -83,10 +64,7 @@ export const unArchiveNote = (note) => {
         title: "Your note has been unarchived",
       });
 
-      dispatch({
-        type: ARCHIVE_NOTE,
-        newArrNote: result.newArrNote,
-      });
+      dispatch(updateNote({ newArrNote: result.newArrNote.reverse() }));
     } catch (error) {
       Toast.fire({
         icon: "error",
@@ -108,12 +86,12 @@ export const createNote = (note) => {
         icon: "success",
         title: "Create note successfully",
       });
-
-      dispatch({
-        type: ADD_NOTE,
-        newArrLabel: result.newArrLabel,
-        newArrNote: result.newArrNote,
-      });
+      dispatch(
+        updateNote({
+          newArrNote: result.newArrNote.reverse(),
+          newArrLabel: result.newArrLabel.reverse(),
+        })
+      );
     } catch (error) {
       Toast.fire({
         icon: "error",
@@ -127,10 +105,8 @@ export const searchNote = (note) => {
   return async (dispatch) => {
     try {
       const result = await googleKeepApi.searchNote(note);
-      dispatch({
-        type: SEARCH,
-        arrSearch: result.notes,
-      });
+
+      dispatch(search({ arrSearch: result.notes }));
     } catch (error) {
       console.log(error.response);
     }
@@ -150,11 +126,12 @@ export const editNote = (note) => {
         title: "Your note has been eddited",
       });
       googleKeepApi.getNote();
-      dispatch({
-        type: EDIT_NOTE,
-        newArrNote: result.newArrNote,
-        newArrLabel: result.newArrLabel,
-      });
+      dispatch(
+        updateNote({
+          newArrNote: result.newArrNote.reverse(),
+          newArrLabel: result.newArrLabel.reverse(),
+        })
+      );
     } catch (error) {
       Toast.fire({
         icon: "error",
@@ -168,10 +145,7 @@ export const clearRemindAction = (note) => {
   return async (dispatch) => {
     try {
       const result = await googleKeepApi.clearRemind(note);
-      dispatch({
-        type: CLEAR_REMIND,
-        newArrNote: result.newArrNote,
-      });
+      dispatch(updateNote({ newArrNote: result.newArrNote.reverse() }));
     } catch (error) {
       Toast.fire({
         icon: "error",
@@ -185,15 +159,14 @@ export const clearLabelAction = (note) => {
   return async (dispatch) => {
     try {
       const result = await googleKeepApi.clearLabelName(note);
-      dispatch({
-        type: CLEAR_LABEL_NAME,
-        newArrNote: result.newArrNote,
-      });
+
+      dispatch(updateNote({ newArrNote: result.newArrNote.reverse() }));
     } catch (error) {
       Toast.fire({
         icon: "error",
         title: "Cleare label of note unsuccessfully",
       });
+      console.log(error);
     }
   };
 };
@@ -202,10 +175,7 @@ export const clearImageAction = (note) => {
   return async (dispatch) => {
     try {
       const result = await googleKeepApi.clearImage(note);
-      dispatch({
-        type: CLEAR_LABEL_NAME,
-        newArrNote: result.newArrNote,
-      });
+      dispatch(updateNote({ newArrNote: result.newArrNote.reverse() }));
     } catch (error) {
       console.log(error.response);
     }
@@ -224,12 +194,12 @@ export const deleteNote = (note) => {
         icon: "success",
         title: "Your note has been deleted",
       });
-      dispatch({
-        type: DELETE_NOTE,
-        newArrNote: result.newArrNote,
-      });
+      dispatch(updateNote({ newArrNote: result.newArrNote.reverse() }));
     } catch (error) {
-      console.log(error.response);
+      Toast.fire({
+        icon: "error",
+        title: "Delete note unsuccessful",
+      });
     }
   };
 };
@@ -247,10 +217,7 @@ export const restoreNote = (note) => {
         title: "Your note has been restored",
       });
 
-      dispatch({
-        type: RESTORE,
-        newArrNote: result.newArrNote,
-      });
+      dispatch(updateNote({ newArrNote: result.newArrNote.reverse() }));
     } catch (error) {
       Toast.fire({
         icon: "error",
@@ -273,10 +240,7 @@ export const removeNote = (note) => {
         title: "Your note has been removed",
       });
 
-      dispatch({
-        type: REMOVE_NOTE,
-        newArrNote: result.newArrNote,
-      });
+      dispatch(updateNote({ newArrNote: result.newArrNote.reverse() }));
     } catch (error) {
       Toast.fire({
         icon: "error",
@@ -298,10 +262,7 @@ export const emptyTrash = (arrNoteId) => {
         icon: "success",
         title: "Your trash has been empty",
       });
-      dispatch({
-        type: EMPTY_TRASH,
-        newArrNote: result.newArrNote,
-      });
+      dispatch(updateNote({ newArrNote: result.newArrNote.reverse() }));
     } catch (error) {
       Toast.fire({
         icon: "error",

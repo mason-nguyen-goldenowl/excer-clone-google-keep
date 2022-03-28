@@ -12,14 +12,14 @@ import SideMenu from "../../Components/SideMenu/SideMenu";
 import { getNoteAction } from "../../redux/action/noteAction";
 
 import "./Archive.scss";
+import { selectNotes } from "../../redux/features/noteSlice";
 
 export default function Archive() {
   const isLogged = Cookies.get("isLogged");
   const refreshToken = Cookies.get("refresh_token");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const arrNote = useSelector((state) => state.note.arrNote);
-  const isLogin = useSelector((state) => state.user.isLogin);
+  const { arrNote } = useSelector(selectNotes);
 
   const renderNoteCard = () => {
     return arrNote?.map((note) => {
@@ -38,7 +38,8 @@ export default function Archive() {
     }
     const action = getNoteAction;
     dispatch(action());
-  }, [dispatch, isLogged, isLogin, navigate, refreshToken]);
+  }, [dispatch, isLogged, navigate, refreshToken]);
+
   return (
     <div>
       <Menu title="Archive" />

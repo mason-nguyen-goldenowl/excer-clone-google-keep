@@ -5,7 +5,7 @@ import { store } from "./redux/configStore";
 import { ChakraProvider } from "@chakra-ui/react";
 import Swal from "sweetalert2";
 import App from "./App";
-import { serviceWorker } from "./service-worker";
+import { serviceWorker } from "./serviceWorker";
 
 const Toast = Swal.mixin({
   toast: true,
@@ -45,3 +45,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
+serviceWorker();

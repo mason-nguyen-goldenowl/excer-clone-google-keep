@@ -1,17 +1,10 @@
-import { applyMiddleware, combineReducers, createStore } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
+import noteSlice from "./features/noteSlice";
+import userSlice from "./features/userSlice";
 
-import thunkMidleWare from "redux-thunk";
-
-import { MenuReducer } from "./reducer/menuReducer";
-import { NoteReducer } from "./reducer/noteReducer";
-import { UserReducer } from "./reducer/userReducer";
-
-const rootReducer = combineReducers({
-  menu: MenuReducer,
-  note: NoteReducer,
-  user: UserReducer,
+export const store = configureStore({
+  reducer: {
+    notes: noteSlice,
+    users: userSlice,
+  },
 });
-
-const store = createStore(rootReducer, applyMiddleware(thunkMidleWare));
-
-export { store };

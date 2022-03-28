@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,14 +10,14 @@ import { loginAction } from "../../redux/action/userAction";
 import logo from "../../asset/menuTopIcon/pngwing.com.png";
 
 import "./Login.scss";
-import { LOGGING } from "../../redux/type/userType";
+import { logging, selectUsers } from "../../redux/features/userSlice";
 
 export default function Login() {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const isLogged = Cookies.get("isLogged");
   const refreshToken = Cookies.get("refresh_token");
-  const { isDisableLogginBTN } = useSelector((state) => state.user);
+  const { isDisableLogginBTN } = useSelector(selectUsers);
   const {
     register,
     handleSubmit,
@@ -26,10 +26,8 @@ export default function Login() {
 
   const onSubmit = (data) => {
     const action = loginAction;
-    dispatch({
-      type: LOGGING,
-      isDisableLogginBTN: true,
-    });
+    dispatch(logging({ isDisableLogginBTN: true }));
+
     dispatch(action(data));
     if (isLogged && refreshToken) {
       navigate("/");

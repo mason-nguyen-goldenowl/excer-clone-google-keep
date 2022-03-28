@@ -6,9 +6,6 @@ import React, { useEffect, useRef, useState } from "react";
 import search from "../../asset/menuTopIcon/search.svg";
 import logo from "../../asset/menuTopIcon/pngwing.com.png";
 
-import { LOG_OUT } from "../../redux/type/userType";
-import { CHANGE_LIST_CLASS } from "../../redux/type/menuType";
-
 import "./Menu.scss";
 import { searchNote } from "../../redux/action/noteAction";
 
@@ -52,11 +49,8 @@ export default function Menu(props) {
       await Cookies.remove("access_token");
       await Cookies.remove("isLogged");
       localStorage.removeItem("access_token");
-      localStorage.removeItem("sub");
+
       navigate("/login");
-      await dispatch({
-        type: LOG_OUT,
-      });
     } catch (error) {
       console.log(error);
     }
@@ -78,10 +72,6 @@ export default function Menu(props) {
                 className="menu__btn"
                 onClick={() => {
                   setIsListActive(!isListActive);
-                  dispatch({
-                    type: CHANGE_LIST_CLASS,
-                    isListActive,
-                  });
                 }}
               >
                 <svg focusable="false" viewBox="0 0 24 24">

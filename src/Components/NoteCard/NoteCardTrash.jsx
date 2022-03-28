@@ -11,13 +11,14 @@ import NoteTrashFullSize from "../NoteTrashFullSize/NoteTrashFullSize";
 import Modal from "../Modal/Modal";
 
 import "./NoteCard.scss";
+import { selectNotes } from "../../redux/features/noteSlice";
 
 const Notecardtrash = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const arrLabel = useSelector((state) => state.note.arrLabel);
+  const { arrLabel } = useSelector(selectNotes);
   const dispatch = useDispatch();
 
-  const note = props.content;
+  let note = props.content;
 
   const deleteForeverAction = () => {
     const action = removeNote;
@@ -30,7 +31,7 @@ const Notecardtrash = (props) => {
   };
   const label = arrLabel?.find((label) => label._id === note.labelId);
   if (label) {
-    note.labelName = label.labelName;
+    note = { ...note, labelName: label.labelName };
   }
   let statusActive = "";
   let labelClass = "";

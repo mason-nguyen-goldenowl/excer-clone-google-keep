@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -7,6 +7,7 @@ import { Skeleton } from "@chakra-ui/react";
 import Masonry from "react-masonry-component";
 
 import { getNoteAction } from "../../redux/action/noteAction";
+import { selectNotes } from "../../redux/features/noteSlice";
 
 import Menu from "../../Components/Menu/Menu";
 import NoteCard from "../../Components/NoteCard/NoteCard";
@@ -14,15 +15,13 @@ import NoteText from "../../Components/NoteText/NoteText";
 import SideMenu from "../../Components/SideMenu/SideMenu";
 
 import "./Home.scss";
-import { serviceWorker } from "../../service-worker";
 
 export default function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLogged = Cookies.get("isLogged");
   const refreshToken = Cookies.get("refresh_token");
-  const arrNote = useSelector((state) => state.note.arrNote);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const { arrNote, isLoaded } = useSelector(selectNotes);
 
   let noteSket = { title: "abc", content: "content" };
 
@@ -37,10 +36,7 @@ export default function Home() {
       }
     });
   };
-  serviceWorker();
-  setTimeout(() => {
-    setIsLoaded(true);
-  }, 1000);
+
   useEffect(() => {
     if (!isLogged || !refreshToken) {
       navigate("/login");

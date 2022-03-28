@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import time from "../../asset/editorIcon/time.svg";
-import logo from "../../asset/menuTopIcon/pngwing.com.png";
 import trash from "../../asset/editorIcon/trash.svg";
 import archive from "../../asset/editorIcon/archive.svg";
 
@@ -22,11 +21,12 @@ import NoteCardFullSize from "../NoteCardFullSize/NoteCardFullSize";
 import NoteTrashFullSize from "../NoteTrashFullSize/NoteTrashFullSize";
 
 import "./NoteCard.scss";
+import { selectNotes } from "../../redux/features/noteSlice";
 
 export default function NoteCard(props) {
-  const note = props.content;
+  let note = props.content;
   const dispatch = useDispatch();
-  const arrLabel = useSelector((state) => state.note.arrLabel);
+  const { arrLabel } = useSelector(selectNotes);
   const [modalOpen, setModalOpen] = useState(false);
 
   const clearLabelName = () => {
@@ -38,7 +38,7 @@ export default function NoteCard(props) {
   const label = arrLabel?.find((label) => label._id === note.labelId);
 
   if (label) {
-    note.labelName = label.labelName;
+    note = { ...note, labelName: label.labelName };
   }
 
   let statusActive = "";
@@ -81,12 +81,12 @@ export default function NoteCard(props) {
       clearRemind();
     }, remainingTime);
   }
-
-  useEffect(() => {
-    if (remainingTime < 0) {
-      note.remind = undefined;
-    }
-  }, [note, remainingTime]);
+  // console.log(note.remind);
+  // useEffect(() => {
+  //   if (remainingTime < 0) {
+  //     note.remind = undefined;
+  //   }
+  // }, [note, remainingTime]);
 
   return (
     <div className="note-card">
